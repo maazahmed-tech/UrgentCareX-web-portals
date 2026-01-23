@@ -1,8 +1,18 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import { ArrowLeft, MapPin, Phone, Mail, Clock, Calendar, CreditCard } from 'lucide-react';
+import { ArrowLeft, MapPin, Phone, Mail, CreditCard, AlertTriangle, CheckCircle, Eye, ThumbsUp, Star } from 'lucide-react';
 import { DashboardLayout } from '@/app/components/layouts/DashboardLayout';
 import { Button } from '@/app/components/ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/app/components/ui/alert-dialog';
 
 interface FacilityDetail {
   id: string;
@@ -13,33 +23,23 @@ interface FacilityDetail {
   city: string;
   state: string;
   zip: string;
-  status: 'active' | 'inactive';
+  status: 'active' | 'suspended';
   subscription: {
     plan: 'Trial' | 'Monthly' | 'Annual';
     startDate: string;
     renewalDate: string;
     amount: string;
   };
-  operatingHours: {
-    monday: string;
-    tuesday: string;
-    wednesday: string;
-    thursday: string;
-    friday: string;
-    saturday: string;
-    sunday: string;
-  };
-  services: string[];
-  doctors: Array<{
-    id: string;
-    name: string;
-    specialty: string;
-    email: string;
-  }>;
-  stats: {
-    totalAppointments: number;
-    avgWaitTime: string;
-    patientsSeen: number;
+  profileCompletion: number;
+  profileViews: number;
+  profileViewsThisWeek: number;
+  recommendations: number;
+  reviews: {
+    five: number;
+    four: number;
+    three: number;
+    two: number;
+    one: number;
   };
 }
 
@@ -59,27 +59,18 @@ const mockFacilityDetails: Record<string, FacilityDetail> = {
       plan: 'Annual',
       startDate: '2025-06-15',
       renewalDate: '2026-06-15',
-      amount: '$999/year',
+      amount: '$499/year',
     },
-    operatingHours: {
-      monday: '8:00 AM - 8:00 PM',
-      tuesday: '8:00 AM - 8:00 PM',
-      wednesday: '8:00 AM - 8:00 PM',
-      thursday: '8:00 AM - 8:00 PM',
-      friday: '8:00 AM - 8:00 PM',
-      saturday: '9:00 AM - 5:00 PM',
-      sunday: '10:00 AM - 4:00 PM',
-    },
-    services: ['General Medicine', 'Pediatrics', 'X-Ray', 'Lab Tests', 'Vaccinations', 'Minor Surgery'],
-    doctors: [
-      { id: '1', name: 'Dr. Sarah Johnson', specialty: 'Family Medicine', email: 'sjohnson@downtownmed.com' },
-      { id: '2', name: 'Dr. Michael Chen', specialty: 'Pediatrics', email: 'mchen@downtownmed.com' },
-      { id: '3', name: 'Dr. Emily Rodriguez', specialty: 'Internal Medicine', email: 'erodriguez@downtownmed.com' },
-    ],
-    stats: {
-      totalAppointments: 1247,
-      avgWaitTime: '15 min',
-      patientsSeen: 892,
+    profileCompletion: 75,
+    profileViews: 892,
+    profileViewsThisWeek: 56,
+    recommendations: 234,
+    reviews: {
+      five: 892,
+      four: 248,
+      three: 74,
+      two: 25,
+      one: 8,
     },
   },
 };
@@ -87,15 +78,29 @@ const mockFacilityDetails: Record<string, FacilityDetail> = {
 export function FacilityDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const facility = id ? mockFacilityDetails[id] : null;
+  const [facility, setFacility] = useState<FacilityDetail | null>(null);
+  const [showActivateDialog, setShowActivateDialog] = useState(false);
+  const [showSuspendDialog, setShowSuspendDialog] = useState(false);
 
   useEffect(() => {
-    if (!facility) {
+    if (id && mockFacilityDetails[id]) {
+      setFacility(mockFacilityDetails[id]);
+    } else {
       navigate('/admin/facilities');
     }
-  }, [facility, navigate]);
+  }, [id, navigate]);
 
   if (!facility) return null;
+
+  const handleActivate = () => {
+    setFacility({ ...facility, status: 'active' });
+    setShowActivateDialog(false);
+  };
+
+  const handleSuspend = () => {
+    setFacility({ ...facility, status: 'suspended' });
+    setShowSuspendDialog(false);
+  };
 
   const getSubscriptionColor = (plan: string) => {
     switch (plan) {
@@ -108,6 +113,12 @@ export function FacilityDetails() {
       default:
         return 'bg-gray-600';
     }
+  };
+
+  const totalReviews = facility.reviews.five + facility.reviews.four + facility.reviews.three + facility.reviews.two + facility.reviews.one;
+
+  const getReviewBarWidth = (count: number) => {
+    return `${(count / totalReviews) * 100}%`;
   };
 
   return (
@@ -147,7 +158,7 @@ export function FacilityDetails() {
             </div>
             <span
               className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white ${
-                facility.status === 'active' ? 'bg-green-600' : 'bg-gray-600'
+                facility.status === 'active' ? 'bg-green-600' : 'bg-red-600'
               }`}
             >
               {facility.status.charAt(0).toUpperCase() + facility.status.slice(1)}
@@ -155,122 +166,181 @@ export function FacilityDetails() {
           </div>
         </div>
 
-        {/* Stats Cards */}
+        {/* Profile Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Profile Completion */}
           <div className="bg-white rounded-xl p-6 border border-gray-200">
-            <p className="text-sm text-gray-600">Total Appointments</p>
-            <p className="text-3xl font-bold mt-1">{facility.stats.totalAppointments}</p>
+            <p className="text-sm text-gray-600 mb-2">Profile Completion</p>
+            <p className="text-3xl font-bold text-gray-900">{facility.profileCompletion}%</p>
+            <div className="mt-3 w-full bg-gray-200 rounded-full h-2">
+              <div
+                className="bg-green-600 h-2 rounded-full"
+                style={{ width: `${facility.profileCompletion}%` }}
+              ></div>
+            </div>
           </div>
+
+          {/* Profile Views */}
           <div className="bg-white rounded-xl p-6 border border-gray-200">
-            <p className="text-sm text-gray-600">Avg Wait Time</p>
-            <p className="text-3xl font-bold mt-1">{facility.stats.avgWaitTime}</p>
+            <div className="flex items-center gap-2 mb-2">
+              <Eye className="w-4 h-4 text-gray-600" />
+              <p className="text-sm text-gray-600">Profile Views</p>
+            </div>
+            <p className="text-3xl font-bold text-gray-900">{facility.profileViews.toLocaleString()}</p>
+            <p className="text-sm text-green-600 mt-1">+{facility.profileViewsThisWeek} this week</p>
           </div>
+
+          {/* Recommendations */}
           <div className="bg-white rounded-xl p-6 border border-gray-200">
-            <p className="text-sm text-gray-600">Patients Seen</p>
-            <p className="text-3xl font-bold mt-1">{facility.stats.patientsSeen}</p>
+            <div className="flex items-center gap-2 mb-2">
+              <ThumbsUp className="w-4 h-4 text-gray-600" />
+              <p className="text-sm text-gray-600">Recommendations</p>
+            </div>
+            <p className="text-3xl font-bold text-gray-900">{facility.recommendations}</p>
+            <p className="text-sm text-gray-500 mt-1">Times recommended to patients</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Subscription Info */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
-            <div className="flex items-center gap-2 mb-4">
-              <CreditCard className="w-5 h-5 text-gray-600" />
-              <h3 className="text-lg font-semibold">Subscription</h3>
-            </div>
-            <div className="space-y-3">
-              <div>
-                <p className="text-sm text-gray-600">Plan</p>
-                <span
-                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-white ${getSubscriptionColor(
-                    facility.subscription.plan
-                  )} mt-1`}
-                >
-                  {facility.subscription.plan}
-                </span>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Amount</p>
-                <p className="text-sm font-medium text-gray-900">{facility.subscription.amount}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Start Date</p>
-                <p className="text-sm font-medium text-gray-900">
-                  {new Date(facility.subscription.startDate).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Renewal Date</p>
-                <p className="text-sm font-medium text-gray-900">
-                  {new Date(facility.subscription.renewalDate).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Operating Hours */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
-            <div className="flex items-center gap-2 mb-4">
-              <Clock className="w-5 h-5 text-gray-600" />
-              <h3 className="text-lg font-semibold">Operating Hours</h3>
-            </div>
-            <div className="space-y-2">
-              {Object.entries(facility.operatingHours).map(([day, hours]) => (
-                <div key={day} className="flex justify-between text-sm">
-                  <span className="text-gray-600 capitalize">{day}</span>
-                  <span className="font-medium text-gray-900">{hours}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Services */}
+        {/* Review Summary */}
         <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 className="text-lg font-semibold mb-4">Services Offered</h3>
-          <div className="flex flex-wrap gap-2">
-            {facility.services.map((service) => (
-              <span
-                key={service}
-                className="px-3 py-1 bg-gray-100 text-gray-900 text-sm rounded-lg"
-              >
-                {service}
-              </span>
-            ))}
+          <div className="flex items-center gap-2 mb-4">
+            <Star className="w-5 h-5 text-gray-600" />
+            <h3 className="text-lg font-semibold">Review Summary</h3>
           </div>
-        </div>
-
-        {/* Doctors */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 className="text-lg font-semibold mb-4">Doctors ({facility.doctors.length})</h3>
           <div className="space-y-3">
-            {facility.doctors.map((doctor) => (
-              <div key={doctor.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <div>
-                  <p className="font-medium text-gray-900">{doctor.name}</p>
-                  <p className="text-sm text-gray-600">{doctor.specialty}</p>
-                  <p className="text-sm text-gray-500">{doctor.email}</p>
+            {[
+              { stars: 5, count: facility.reviews.five },
+              { stars: 4, count: facility.reviews.four },
+              { stars: 3, count: facility.reviews.three },
+              { stars: 2, count: facility.reviews.two },
+              { stars: 1, count: facility.reviews.one },
+            ].map((review) => (
+              <div key={review.stars} className="flex items-center gap-3">
+                <span className="text-sm text-gray-600 w-16">{review.stars} stars</span>
+                <div className="flex-1 bg-gray-200 rounded-full h-2">
+                  <div
+                    className="bg-yellow-400 h-2 rounded-full"
+                    style={{ width: getReviewBarWidth(review.count) }}
+                  ></div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => navigate(`/admin/doctors/${doctor.id}`)}
-                >
-                  View Profile
-                </Button>
+                <span className="text-sm text-gray-600 w-24 text-right">{review.count.toLocaleString()} reviews</span>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Subscription Info */}
+        <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="flex items-center gap-2 mb-4">
+            <CreditCard className="w-5 h-5 text-gray-600" />
+            <h3 className="text-lg font-semibold">Subscription</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <p className="text-sm text-gray-600">Plan</p>
+              <span
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-white ${getSubscriptionColor(
+                  facility.subscription.plan
+                )} mt-1`}
+              >
+                {facility.subscription.plan}
+              </span>
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Amount</p>
+              <p className="text-sm font-medium text-gray-900">{facility.subscription.amount}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Start Date</p>
+              <p className="text-sm font-medium text-gray-900">
+                {new Date(facility.subscription.startDate).toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                })}
+              </p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Renewal Date</p>
+              <p className="text-sm font-medium text-gray-900">
+                {new Date(facility.subscription.renewalDate).toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                })}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Account Actions */}
+        <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <h3 className="text-lg font-semibold mb-4">Account Actions</h3>
+          <div className="flex flex-wrap gap-3">
+            {facility.status === 'suspended' ? (
+              <Button
+                onClick={() => setShowActivateDialog(true)}
+                className="bg-green-600 hover:bg-green-700"
+              >
+                <CheckCircle className="w-4 h-4 mr-2" />
+                Activate Account
+              </Button>
+            ) : (
+              <Button
+                onClick={() => setShowSuspendDialog(true)}
+                variant="destructive"
+              >
+                <AlertTriangle className="w-4 h-4 mr-2" />
+                Suspend Account
+              </Button>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Activate Confirmation Dialog */}
+      <AlertDialog open={showActivateDialog} onOpenChange={setShowActivateDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Activate Facility Account</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to activate the account for {facility.name}? This will restore
+              their access to the platform.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleActivate}
+              className="bg-green-600 hover:bg-green-700"
+            >
+              Activate Account
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Suspend Confirmation Dialog */}
+      <AlertDialog open={showSuspendDialog} onOpenChange={setShowSuspendDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Suspend Facility Account</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to suspend the account for {facility.name}? This will
+              temporarily restrict their access to the platform.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleSuspend}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Suspend Account
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </DashboardLayout>
   );
 }

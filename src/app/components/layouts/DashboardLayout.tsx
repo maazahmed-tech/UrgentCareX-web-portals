@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
-import { 
-  Home, 
-  Building2, 
-  UserCog, 
-  Settings, 
-  LogOut, 
-  Menu, 
+import {
+  Home,
+  Building2,
+  UserCog,
+  Settings,
+  LogOut,
+  Menu,
   X,
   Bell,
   ChevronDown,
@@ -18,7 +18,8 @@ import {
   Shield,
   HelpCircle,
   Clock,
-  AlertTriangle
+  AlertTriangle,
+  Send
 } from 'lucide-react';
 import { logout, getCurrentUser } from '@/lib/auth';
 import { Button } from '@/app/components/ui/button';
@@ -174,9 +175,11 @@ export function DashboardLayout({ children, title, role }: DashboardLayoutProps)
     if (role === 'admin') {
       return [
         { icon: Home, label: 'Dashboard', path: '/admin/dashboard' },
+        { icon: Users, label: 'Patients', path: '/admin/patients' },
         { icon: Building2, label: 'Facilities', path: '/admin/facilities' },
         { icon: UserCog, label: 'Doctors', path: '/admin/doctors' },
-        { icon: Settings, label: 'Settings', path: '/admin/settings' },
+        { icon: CreditCard, label: 'Subscriptions', path: '/admin/subscriptions' },
+        { icon: Send, label: 'Notifications', path: '/admin/notifications' },
       ];
     } else if (role === 'facility') {
       return [
@@ -220,13 +223,15 @@ export function DashboardLayout({ children, title, role }: DashboardLayoutProps)
           </div>
 
           <div className="flex items-center gap-3">
-            <button 
-              onClick={() => navigate(`/${role}/notifications`)}
-              className="p-2 hover:bg-gray-100 rounded-lg relative"
-            >
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
+            {role !== 'admin' && (
+              <button
+                onClick={() => navigate(`/${role}/notifications`)}
+                className="p-2 hover:bg-gray-100 rounded-lg relative"
+              >
+                <Bell className="w-5 h-5" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
+            )}
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

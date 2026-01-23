@@ -16,8 +16,8 @@ interface Facility {
   id: string;
   name: string;
   location: string;
-  status: 'active' | 'inactive';
-  subscription: 'Trial' | 'Monthly' | 'Annual';
+  status: 'active' | 'suspended';
+  subscription: 'Trial' | 'Monthly' | 'Yearly';
   doctors: number;
   email: string;
   phone: string;
@@ -30,10 +30,10 @@ const mockFacilities: Facility[] = [
     name: 'Downtown Medical Center',
     location: 'New York, NY',
     status: 'active',
-    subscription: 'Annual',
+    subscription: 'Yearly',
     doctors: 8,
-    email: 'contact@downtownmed.com',
-    phone: '(212) 555-0123',
+    email: 'info@downtownmed.com',
+    phone: '(212) 555-0100',
     joinedDate: '2025-06-15',
   },
   {
@@ -62,7 +62,7 @@ const mockFacilities: Facility[] = [
     id: '4',
     name: 'Bay Area Medical',
     location: 'San Francisco, CA',
-    status: 'inactive',
+    status: 'suspended',
     subscription: 'Monthly',
     doctors: 6,
     email: 'hello@bayareamedical.com',
@@ -74,7 +74,7 @@ const mockFacilities: Facility[] = [
     name: 'Summit Health Center',
     location: 'Denver, CO',
     status: 'active',
-    subscription: 'Annual',
+    subscription: 'Yearly',
     doctors: 12,
     email: 'info@summithealth.com',
     phone: '(303) 555-0654',
@@ -103,7 +103,7 @@ export function FacilitiesList() {
   });
 
   const getStatusColor = (status: string) => {
-    return status === 'active' ? 'bg-green-600' : 'bg-gray-600';
+    return status === 'active' ? 'bg-green-600' : 'bg-red-600';
   };
 
   const getSubscriptionColor = (subscription: string) => {
@@ -112,7 +112,7 @@ export function FacilitiesList() {
         return 'bg-yellow-500';
       case 'Monthly':
         return 'bg-gray-900';
-      case 'Annual':
+      case 'Yearly':
         return 'bg-green-600';
       default:
         return 'bg-gray-600';
@@ -148,7 +148,7 @@ export function FacilitiesList() {
                 <SelectContent>
                   <SelectItem value="all">All Status</SelectItem>
                   <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="inactive">Inactive</SelectItem>
+                  <SelectItem value="suspended">Suspended</SelectItem>
                 </SelectContent>
               </Select>
             </div>

@@ -5,12 +5,14 @@ import { PortalSelection } from '@/app/components/PortalSelection';
 // Admin Components
 import { AdminLogin } from '@/app/components/admin/AdminLogin';
 import { AdminDashboard } from '@/app/components/admin/AdminDashboard';
+import { PatientsList } from '@/app/components/admin/PatientsList';
+import { PatientDetails } from '@/app/components/admin/PatientDetails';
 import { FacilitiesList } from '@/app/components/admin/FacilitiesList';
 import { FacilityDetails } from '@/app/components/admin/FacilityDetails';
 import { DoctorsList } from '@/app/components/admin/DoctorsList';
 import { DoctorDetails } from '@/app/components/admin/DoctorDetails';
-import { AdminSettings } from '@/app/components/admin/AdminSettings';
-import { ChangePassword } from '@/app/components/admin/ChangePassword';
+import { AdminSubscriptionOverview } from '@/app/components/admin/SubscriptionOverview';
+import { PushNotifications } from '@/app/components/admin/PushNotifications';
 
 // Facility Components
 import { FacilityLogin } from '@/app/components/facility/FacilityLogin';
@@ -43,9 +45,6 @@ import { AvailabilityCalendar } from '@/app/components/doctor/AvailabilityCalend
 import { AddTimeSlot } from '@/app/components/doctor/AddTimeSlot';
 import { EditTimeSlot } from '@/app/components/doctor/EditTimeSlot';
 import { AddTimeOff } from '@/app/components/doctor/AddTimeOff';
-import { AppointmentsToday } from '@/app/components/doctor/AppointmentsToday';
-import { AppointmentsUpcoming } from '@/app/components/doctor/AppointmentsUpcoming';
-import { AppointmentsPast } from '@/app/components/doctor/AppointmentsPast';
 import { AppointmentsCalendarWeek } from '@/app/components/doctor/AppointmentsCalendarWeek';
 import { DoctorAppointmentDetails } from '@/app/components/doctor/DoctorAppointmentDetails';
 import { PatientPreview } from '@/app/components/doctor/PatientPreview';
@@ -83,12 +82,14 @@ export default function App() {
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/patients" element={<PatientsList />} />
+        <Route path="/admin/patients/:id" element={<PatientDetails />} />
         <Route path="/admin/facilities" element={<FacilitiesList />} />
         <Route path="/admin/facilities/:id" element={<FacilityDetails />} />
         <Route path="/admin/doctors" element={<DoctorsList />} />
         <Route path="/admin/doctors/:id" element={<DoctorDetails />} />
-        <Route path="/admin/settings" element={<AdminSettings />} />
-        <Route path="/admin/change-password" element={<ChangePassword />} />
+        <Route path="/admin/subscriptions" element={<AdminSubscriptionOverview />} />
+        <Route path="/admin/notifications" element={<PushNotifications />} />
         
         {/* Facility Routes - Simplified: Profile & Subscription Only */}
         <Route path="/facility" element={<FacilityLogin />} />
@@ -121,9 +122,6 @@ export default function App() {
         <Route path="/doctor/add-time-slot" element={<AddTimeSlot />} />
         <Route path="/doctor/edit-time-slot/:id" element={<EditTimeSlot />} />
         <Route path="/doctor/add-time-off" element={<AddTimeOff />} />
-        <Route path="/doctor/appointments-today" element={<AppointmentsToday />} />
-        <Route path="/doctor/appointments-upcoming" element={<AppointmentsUpcoming />} />
-        <Route path="/doctor/appointments-past" element={<AppointmentsPast />} />
         <Route path="/doctor/appointments-calendar-week" element={<AppointmentsCalendarWeek />} />
         <Route path="/doctor/appointments/:id" element={<DoctorAppointmentDetails />} />
         <Route path="/doctor/patient-preview/:id" element={<PatientPreview />} />

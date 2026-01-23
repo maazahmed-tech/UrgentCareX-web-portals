@@ -19,23 +19,16 @@ export function AdminDashboard() {
   }, []);
 
   const stats = [
-    { label: 'Total Users', value: '1,247', icon: Users, color: 'text-blue-600' },
+    { label: 'Patients', value: '1,247', icon: Users, color: 'text-blue-600' },
     { label: 'Facilities', value: '89', icon: Building2, color: 'text-green-600' },
     { label: 'Doctors', value: '156', icon: UserCog, color: 'text-purple-600' },
     { label: 'Active Subs', value: '198', icon: CreditCard, color: 'text-orange-600' },
   ];
 
   const subscriptions = [
-    { label: 'Trial (14-day)', count: '23', color: 'bg-yellow-500' },
-    { label: 'Monthly', count: '112', color: 'bg-gray-900' },
-    { label: 'Annual', count: '63', color: 'bg-green-600' },
-  ];
-
-  const recentActivity = [
-    { icon: Building2, text: 'Downtown Medical registered', time: '2 hours ago' },
-    { icon: UserCog, text: 'Dr. Sarah Johnson joined', time: '5 hours ago' },
-    { icon: Building2, text: 'HealthFirst Clinic registered', time: 'Yesterday' },
-    { icon: UserCog, text: 'Dr. Michael Chen joined', time: 'Yesterday' },
+    { label: 'Trial (14-day)', count: '23', color: 'bg-yellow-500', price: '$0' },
+    { label: 'Monthly', count: '112', color: 'bg-gray-900', price: '$49' },
+    { label: 'Yearly', count: '63', color: 'bg-green-600', price: '$499' },
   ];
 
   return (
@@ -71,21 +64,6 @@ export function AdminDashboard() {
           </div>
         </div>
 
-        {/* Recent Activity */}
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
-          <div className="bg-white rounded-xl border border-gray-200 divide-y">
-            {recentActivity.map((activity, index) => (
-              <div key={index} className="p-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <activity.icon className="w-5 h-5 text-gray-600" />
-                  <span className="text-gray-900">{activity.text}</span>
-                </div>
-                <span className="text-sm text-gray-500">{activity.time}</span>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </DashboardLayout>
   );

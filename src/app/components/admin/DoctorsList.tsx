@@ -20,8 +20,8 @@ interface Doctor {
   phone: string;
   facility: string;
   location: string;
-  status: 'active' | 'inactive';
-  subscription: 'Trial' | 'Monthly' | 'Annual';
+  status: 'active' | 'suspended';
+  subscription: 'Trial' | 'Monthly' | 'Yearly';
   joinedDate: string;
   patientsSeen: number;
   rating: number;
@@ -32,12 +32,12 @@ const mockDoctors: Doctor[] = [
     id: '1',
     name: 'Dr. Sarah Johnson',
     specialty: 'Family Medicine',
-    email: 'sjohnson@downtownmed.com',
-    phone: '(212) 555-0199',
+    email: 'dr.johnson@downtownmed.com',
+    phone: '(555) 123-4567',
     facility: 'Downtown Medical Center',
     location: 'New York, NY',
     status: 'active',
-    subscription: 'Annual',
+    subscription: 'Yearly',
     joinedDate: '2025-06-20',
     patientsSeen: 342,
     rating: 4.8,
@@ -65,7 +65,7 @@ const mockDoctors: Doctor[] = [
     facility: 'HealthFirst Clinic',
     location: 'Los Angeles, CA',
     status: 'active',
-    subscription: 'Annual',
+    subscription: 'Yearly',
     joinedDate: '2025-05-10',
     patientsSeen: 456,
     rating: 4.7,
@@ -92,7 +92,7 @@ const mockDoctors: Doctor[] = [
     phone: '(415) 555-0555',
     facility: 'Bay Area Medical',
     location: 'San Francisco, CA',
-    status: 'inactive',
+    status: 'suspended',
     subscription: 'Monthly',
     joinedDate: '2025-04-08',
     patientsSeen: 178,
@@ -107,7 +107,7 @@ const mockDoctors: Doctor[] = [
     facility: 'Summit Health Center',
     location: 'Denver, CO',
     status: 'active',
-    subscription: 'Annual',
+    subscription: 'Yearly',
     joinedDate: '2025-03-25',
     patientsSeen: 523,
     rating: 4.9,
@@ -135,7 +135,7 @@ const mockDoctors: Doctor[] = [
     facility: 'HealthFirst Clinic',
     location: 'Los Angeles, CA',
     status: 'active',
-    subscription: 'Annual',
+    subscription: 'Yearly',
     joinedDate: '2025-08-30',
     patientsSeen: 298,
     rating: 4.7,
@@ -168,7 +168,7 @@ export function DoctorsList() {
   });
 
   const getStatusColor = (status: string) => {
-    return status === 'active' ? 'bg-green-600' : 'bg-gray-600';
+    return status === 'active' ? 'bg-green-600' : 'bg-red-600';
   };
 
   const getSubscriptionColor = (subscription: string) => {
@@ -177,7 +177,7 @@ export function DoctorsList() {
         return 'bg-yellow-500';
       case 'Monthly':
         return 'bg-gray-900';
-      case 'Annual':
+      case 'Yearly':
         return 'bg-green-600';
       default:
         return 'bg-gray-600';
@@ -230,7 +230,7 @@ export function DoctorsList() {
                 <SelectContent>
                   <SelectItem value="all">All Status</SelectItem>
                   <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="inactive">Inactive</SelectItem>
+                  <SelectItem value="suspended">Suspended</SelectItem>
                 </SelectContent>
               </Select>
             </div>
