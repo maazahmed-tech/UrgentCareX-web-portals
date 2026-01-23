@@ -1,0 +1,36 @@
+List of files that need console logging:
+
+ADMIN PORTAL:
+✅ AdminDashboard.tsx
+✅ AdminLogin.tsx
+- AdminSettings.tsx
+- ChangePassword.tsx
+- DoctorDetails.tsx
+- DoctorsList.tsx
+- FacilitiesList.tsx
+- FacilityDetails.tsx
+
+DOCTOR PORTAL:
+✅ DoctorDashboard.tsx
+✅ DoctorProfile.tsx
+✅ DoctorAppointmentDetails.tsx
+- DoctorLogin.tsx
+- DoctorRegistration.tsx
+- DoctorSettings.tsx
+- AppointmentsToday.tsx
+- AppointmentsUpcoming.tsx
+- AppointmentsPast.tsx
+- AppointmentsCalendarWeek.tsx
+- AvailabilityCalendar.tsx
+- DoctorSubscriptionOverview.tsx
+- DoctorServicesEquipment.tsx
+- ManageCredentials.tsx
+
+FACILITY PORTAL:
+- FacilityDashboard.tsx
+- FacilityLogin.tsx
+- FacilityRegistration.tsx
+- FacilityProfile.tsx
+- FacilitySettings.tsx
+- SubscriptionOverview.tsx
+- FacilityAnalytics.tsx
