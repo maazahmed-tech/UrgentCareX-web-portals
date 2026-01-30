@@ -1,0 +1,336 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { Calendar, Plus, Trash2, Clock, Copy, Check } from 'lucide-react';
+import { getCurrentUser } from '@/lib/auth';
+import { DashboardLayout } from '@/app/components/layouts/DashboardLayout';
+
+interface TimeSlot {
+  id: string;
+  startTime: string;
+  endTime: string;
+}
+
+interface DaySchedule {
+  day: string;
+  enabled: boolean;
+  slots: TimeSlot[];
+}
+
+export function FacilityAvailabilityCalendar() {
+  const navigate = useNavigate();
+  const user = getCurrentUser();
+
+  useEffect(() => {
+    if (!user || user.role !== 'facility') {
+      navigate('/facility');
+      return;
+    }
+    // Check if facility accepts appointments
+    const acceptsAppointments = localStorage.getItem('facilityAcceptsAppointments');
+    if (acceptsAppointments === 'false') {
+      navigate('/facility/dashboard');
+    }
+  }, [user, navigate]);
+
+  const [schedule, setSchedule] = useState<DaySchedule[]>([
+    { day: 'Monday', enabled: true, slots: [{ id: '1', startTime: '08:00', endTime: '20:00' }] },
+    { day: 'Tuesday', enabled: true, slots: [{ id: '2', startTime: '08:00', endTime: '20:00' }] },
+    { day: 'Wednesday', enabled: true, slots: [{ id: '3', startTime: '08:00', endTime: '20:00' }] },
+    { day: 'Thursday', enabled: true, slots: [{ id: '4', startTime: '08:00', endTime: '20:00' }] },
+    { day: 'Friday', enabled: true, slots: [{ id: '5', startTime: '08:00', endTime: '18:00' }] },
+    { day: 'Saturday', enabled: true, slots: [{ id: '6', startTime: '09:00', endTime: '14:00' }] },
+    { day: 'Sunday', enabled: false, slots: [] },
+  ]);
+
+  const [savedMessage, setSavedMessage] = useState(false);
+  const [appointmentDuration, setAppointmentDuration] = useState<number>(30);
+
+  const toggleDay = (dayIndex: number) => {
+    setSchedule(prev => {
+      const updated = [...prev];
+      updated[dayIndex].enabled = !updated[dayIndex].enabled;
+      // If enabling and no slots exist, add a default slot
+      if (updated[dayIndex].enabled && updated[dayIndex].slots.length === 0) {
+        updated[dayIndex].slots = [{ id: Date.now().toString(), startTime: '08:00', endTime: '20:00' }];
+      }
+      return updated;
+    });
+  };
+
+  const updateSlot = (dayIndex: number, slotIndex: number, field: 'startTime' | 'endTime', value: string) => {
+    setSchedule(prev => {
+      const updated = [...prev];
+      updated[dayIndex].slots[slotIndex][field] = value;
+      return updated;
+    });
+  };
+
+  const addSlot = (dayIndex: number) => {
+    setSchedule(prev => {
+      const updated = [...prev];
+      const newSlot: TimeSlot = {
+        id: Date.now().toString(),
+        startTime: '09:00',
+        endTime: '17:00'
+      };
+      updated[dayIndex].slots.push(newSlot);
+      return updated;
+    });
+  };
+
+  const removeSlot = (dayIndex: number, slotIndex: number) => {
+    setSchedule(prev => {
+      const updated = [...prev];
+      updated[dayIndex].slots.splice(slotIndex, 1);
+      return updated;
+    });
+  };
+
+  const copyToAllWeekdays = (dayIndex: number) => {
+    const sourceDay = schedule[dayIndex];
+    setSchedule(prev => {
+      const updated = [...prev];
+      // Apply to Monday-Friday (indices 0-4)
+      for (let i = 0; i < 5; i++) {
+        if (i !== dayIndex) {
+          updated[i].enabled = sourceDay.enabled;
+          updated[i].slots = sourceDay.slots.map(slot => ({
+            ...slot,
+            id: `${i}-${Date.now()}-${Math.random()}`
+          }));
+        }
+      }
+      return updated;
+    });
+  };
+
+  const copyToAllDays = (dayIndex: number) => {
+    const sourceDay = schedule[dayIndex];
+    setSchedule(prev => {
+      const updated = [...prev];
+      for (let i = 0; i < updated.length; i++) {
+        if (i !== dayIndex) {
+          updated[i].enabled = sourceDay.enabled;
+          updated[i].slots = sourceDay.slots.map(slot => ({
+            ...slot,
+            id: `${i}-${Date.now()}-${Math.random()}`
+          }));
+        }
+      }
+      return updated;
+    });
+  };
+
+  const handleSave = () => {
+    // In a real app, save to backend
+    setSavedMessage(true);
+    setTimeout(() => setSavedMessage(false), 3000);
+  };
+
+  // Calculate total appointment slots for a given day
+  const calculateSlotsForDay = (daySchedule: DaySchedule) => {
+    if (!daySchedule.enabled) return 0;
+
+    let totalSlots = 0;
+    daySchedule.slots.forEach(slot => {
+      const [startHour, startMin] = slot.startTime.split(':').map(Number);
+      const [endHour, endMin] = slot.endTime.split(':').map(Number);
+      const startMinutes = startHour * 60 + startMin;
+      const endMinutes = endHour * 60 + endMin;
+      const durationMinutes = endMinutes - startMinutes;
+      totalSlots += Math.floor(durationMinutes / appointmentDuration);
+    });
+
+    return totalSlots;
+  };
+
+  return (
+    <DashboardLayout title="Availability Calendar" role="facility">
+      <div className="max-w-6xl">
+        {/* Save Button & Success Message */}
+        <div className="mb-6 flex items-center justify-between">
+          <p className="text-gray-600">Set your facility's weekly availability schedule</p>
+          <div className="flex items-center gap-3">
+            {savedMessage && (
+              <div className="flex items-center gap-2 text-green-600">
+                <Check className="w-4 h-4" />
+                <span className="text-sm">Changes saved!</span>
+              </div>
+            )}
+            <button
+              onClick={handleSave}
+              className="bg-gray-900 text-white px-6 h-11 rounded-lg hover:bg-gray-800"
+            >
+              Save Schedule
+            </button>
+          </div>
+        </div>
+
+        {/* Appointment Duration Settings */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Appointment Duration</h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Set the fixed time interval for each patient appointment
+              </p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+                {[15, 20, 30, 45, 60, 90, 120].map((duration) => (
+                  <button
+                    key={duration}
+                    onClick={() => setAppointmentDuration(duration)}
+                    className={`h-11 px-4 rounded-lg border-2 transition-all ${
+                      appointmentDuration === duration
+                        ? 'border-gray-900 bg-gray-900 text-white'
+                        : 'border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50'
+                    }`}
+                  >
+                    {duration} min
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Summary Info */}
+            <div className="ml-6 bg-blue-50 border border-blue-200 rounded-lg p-4 min-w-[200px]">
+              <div className="text-sm text-blue-900 font-medium mb-1">Slots per 8-hour day</div>
+              <div className="text-2xl font-bold text-blue-600">
+                {Math.floor(480 / appointmentDuration)}
+              </div>
+              <div className="text-xs text-blue-700 mt-1">
+                Based on {appointmentDuration} min appointments
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Weekly Schedule Section */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-4">Weekly Schedule</h2>
+
+          <div className="space-y-3">
+            {schedule.map((daySchedule, dayIndex) => (
+              <div
+                key={daySchedule.day}
+                className={`bg-white rounded-xl border-2 transition-all ${
+                  daySchedule.enabled
+                    ? 'border-green-200 bg-green-50/30'
+                    : 'border-gray-200 bg-gray-50/50'
+                }`}
+              >
+                <div className="p-5">
+                  {/* Day Header with Toggle */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-4">
+                      <button
+                        onClick={() => toggleDay(dayIndex)}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                          daySchedule.enabled ? 'bg-green-600' : 'bg-gray-300'
+                        }`}
+                      >
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            daySchedule.enabled ? 'translate-x-6' : 'translate-x-1'
+                          }`}
+                        />
+                      </button>
+                      <h3 className={`text-lg font-semibold ${
+                        daySchedule.enabled ? 'text-gray-900' : 'text-gray-400'
+                      }`}>
+                        {daySchedule.day}
+                      </h3>
+                      {!daySchedule.enabled && (
+                        <span className="text-sm text-gray-500">Closed</span>
+                      )}
+                      {daySchedule.enabled && (
+                        <span className="text-sm px-3 py-1 bg-green-100 text-green-700 rounded-full">
+                          {calculateSlotsForDay(daySchedule)} appointment slots
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Quick Actions */}
+                    {daySchedule.enabled && (
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => copyToAllWeekdays(dayIndex)}
+                          className="text-xs flex items-center gap-1.5 px-3 py-1.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                          title="Copy to all weekdays"
+                        >
+                          <Copy className="w-3 h-3" />
+                          Copy to Weekdays
+                        </button>
+                        <button
+                          onClick={() => copyToAllDays(dayIndex)}
+                          className="text-xs flex items-center gap-1.5 px-3 py-1.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                          title="Copy to all days"
+                        >
+                          <Copy className="w-3 h-3" />
+                          Copy to All
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Time Slots */}
+                  {daySchedule.enabled && (
+                    <div className="space-y-3">
+                      {daySchedule.slots.map((slot, slotIndex) => (
+                        <div key={slot.id} className="flex items-center gap-3">
+                          <Clock className="w-4 h-4 text-gray-400 flex-shrink-0" />
+
+                          {/* Start Time */}
+                          <div className="flex-1">
+                            <input
+                              type="time"
+                              value={slot.startTime}
+                              onChange={(e) => updateSlot(dayIndex, slotIndex, 'startTime', e.target.value)}
+                              className="w-full h-10 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                            />
+                          </div>
+
+                          <span className="text-gray-400">to</span>
+
+                          {/* End Time */}
+                          <div className="flex-1">
+                            <input
+                              type="time"
+                              value={slot.endTime}
+                              onChange={(e) => updateSlot(dayIndex, slotIndex, 'endTime', e.target.value)}
+                              className="w-full h-10 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                            />
+                          </div>
+
+                          {/* Remove Slot */}
+                          {daySchedule.slots.length > 1 && (
+                            <button
+                              onClick={() => removeSlot(dayIndex, slotIndex)}
+                              className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
+                              title="Remove time slot"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          )}
+                        </div>
+                      ))}
+
+                      {/* Add Another Slot */}
+                      <button
+                        onClick={() => addSlot(dayIndex)}
+                        className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mt-2"
+                      >
+                        <Plus className="w-4 h-4" />
+                        Add another time slot
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
+  );
+}

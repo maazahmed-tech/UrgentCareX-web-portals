@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { ChevronLeft, ChevronRight, Calendar, Clock, User, Filter } from 'lucide-react';
 import { DashboardLayout } from '@/app/components/layouts/DashboardLayout';
+import { getCurrentUser } from '@/lib/auth';
 
 interface Appointment {
   id: string;
@@ -11,18 +12,33 @@ interface Appointment {
   patientName: string;
   age: number;
   gender: string;
+  doctorName: string;
   status: 'Pending Confirmation' | 'Confirmed' | 'Completed' | 'Cancelled';
 }
 
-export function AppointmentsCalendarWeek() {
+export function FacilityAppointmentsCalendar() {
   const navigate = useNavigate();
+  const user = getCurrentUser();
+
+  useEffect(() => {
+    if (!user || user.role !== 'facility') {
+      navigate('/facility');
+      return;
+    }
+    // Check if facility accepts appointments
+    const acceptsAppointments = localStorage.getItem('facilityAcceptsAppointments');
+    if (acceptsAppointments === 'false') {
+      navigate('/facility/dashboard');
+    }
+  }, [user, navigate]);
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [viewMode, setViewMode] = useState<'week' | 'list'>('week');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [selectedDay, setSelectedDay] = useState(new Date()); // For mobile day view
 
-  // Mock appointments data
+  // Mock appointments data for facility
   const appointments: Appointment[] = [
     // January 20 (Monday)
     {
@@ -33,6 +49,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'John Smith',
       age: 45,
       gender: 'Male',
+      doctorName: 'Dr. Sarah Johnson',
       status: 'Completed',
     },
     {
@@ -43,6 +60,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Mary Wilson',
       age: 32,
       gender: 'Female',
+      doctorName: 'Dr. Michael Chen',
       status: 'Completed',
     },
     {
@@ -53,6 +71,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Bob Johnson',
       age: 58,
       gender: 'Male',
+      doctorName: 'Dr. Sarah Johnson',
       status: 'Completed',
     },
     // January 21 (Tuesday)
@@ -64,6 +83,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Lisa Park',
       age: 28,
       gender: 'Female',
+      doctorName: 'Dr. Emily Davis',
       status: 'Cancelled',
     },
     {
@@ -74,6 +94,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'David Chen',
       age: 42,
       gender: 'Male',
+      doctorName: 'Dr. Michael Chen',
       status: 'Pending Confirmation',
     },
     // January 22 (Wednesday) - TODAY
@@ -85,6 +106,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Sarah Anderson',
       age: 35,
       gender: 'Female',
+      doctorName: 'Dr. Sarah Johnson',
       status: 'Confirmed',
     },
     {
@@ -95,6 +117,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Michael Brown',
       age: 50,
       gender: 'Male',
+      doctorName: 'Dr. Emily Davis',
       status: 'Pending Confirmation',
     },
     {
@@ -105,6 +128,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Grace Thompson',
       age: 27,
       gender: 'Female',
+      doctorName: 'Dr. Michael Chen',
       status: 'Confirmed',
     },
     // January 23 (Thursday)
@@ -116,6 +140,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Emily Davis',
       age: 29,
       gender: 'Female',
+      doctorName: 'Dr. Sarah Johnson',
       status: 'Confirmed',
     },
     {
@@ -126,6 +151,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Robert Martinez',
       age: 55,
       gender: 'Male',
+      doctorName: 'Dr. Emily Davis',
       status: 'Confirmed',
     },
     // January 24 (Friday)
@@ -137,6 +163,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'James Wilson',
       age: 62,
       gender: 'Male',
+      doctorName: 'Dr. Michael Chen',
       status: 'Confirmed',
     },
     {
@@ -147,6 +174,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Patricia Taylor',
       age: 41,
       gender: 'Female',
+      doctorName: 'Dr. Sarah Johnson',
       status: 'Pending Confirmation',
     },
     // January 25 (Saturday)
@@ -158,6 +186,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Christopher Lee',
       age: 37,
       gender: 'Male',
+      doctorName: 'Dr. Emily Davis',
       status: 'Confirmed',
     },
     {
@@ -168,6 +197,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Sophia Rodriguez',
       age: 24,
       gender: 'Female',
+      doctorName: 'Dr. Michael Chen',
       status: 'Confirmed',
     },
     // January 26 (Sunday)
@@ -179,6 +209,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Jennifer White',
       age: 33,
       gender: 'Female',
+      doctorName: 'Dr. Sarah Johnson',
       status: 'Confirmed',
     },
     // January 27 (Monday - Week 2)
@@ -190,6 +221,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Daniel Harris',
       age: 48,
       gender: 'Male',
+      doctorName: 'Dr. Emily Davis',
       status: 'Confirmed',
     },
     {
@@ -200,6 +232,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Nancy Clark',
       age: 52,
       gender: 'Female',
+      doctorName: 'Dr. Michael Chen',
       status: 'Pending Confirmation',
     },
     // January 28 (Tuesday)
@@ -211,6 +244,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Kevin Lewis',
       age: 39,
       gender: 'Male',
+      doctorName: 'Dr. Sarah Johnson',
       status: 'Confirmed',
     },
     {
@@ -221,6 +255,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Amanda Walker',
       age: 26,
       gender: 'Female',
+      doctorName: 'Dr. Emily Davis',
       status: 'Confirmed',
     },
     // January 29 (Wednesday)
@@ -232,6 +267,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Steven Hall',
       age: 44,
       gender: 'Male',
+      doctorName: 'Dr. Michael Chen',
       status: 'Pending Confirmation',
     },
     {
@@ -242,6 +278,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Michelle Young',
       age: 31,
       gender: 'Female',
+      doctorName: 'Dr. Sarah Johnson',
       status: 'Confirmed',
     },
     // January 30 (Thursday)
@@ -253,6 +290,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Brian King',
       age: 56,
       gender: 'Male',
+      doctorName: 'Dr. Emily Davis',
       status: 'Confirmed',
     },
     {
@@ -263,6 +301,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Karen Wright',
       age: 47,
       gender: 'Female',
+      doctorName: 'Dr. Michael Chen',
       status: 'Confirmed',
     },
     // January 31 (Friday)
@@ -274,6 +313,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Richard Lopez',
       age: 59,
       gender: 'Male',
+      doctorName: 'Dr. Sarah Johnson',
       status: 'Pending Confirmation',
     },
     {
@@ -284,6 +324,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Barbara Hill',
       age: 38,
       gender: 'Female',
+      doctorName: 'Dr. Emily Davis',
       status: 'Confirmed',
     },
     // February 1 (Saturday)
@@ -295,6 +336,7 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Thomas Scott',
       age: 43,
       gender: 'Male',
+      doctorName: 'Dr. Michael Chen',
       status: 'Confirmed',
     },
     // February 2 (Sunday)
@@ -306,70 +348,8 @@ export function AppointmentsCalendarWeek() {
       patientName: 'Elizabeth Green',
       age: 36,
       gender: 'Female',
+      doctorName: 'Dr. Sarah Johnson',
       status: 'Confirmed',
-    },
-    // February 3 (Monday - Week 3)
-    {
-      id: '26',
-      date: '2026-02-03',
-      startTime: '09:00',
-      endTime: '09:30',
-      patientName: 'George Martinez',
-      age: 51,
-      gender: 'Male',
-      status: 'Confirmed',
-    },
-    {
-      id: '27',
-      date: '2026-02-03',
-      startTime: '14:00',
-      endTime: '14:30',
-      patientName: 'Helen Carter',
-      age: 34,
-      gender: 'Female',
-      status: 'Pending Confirmation',
-    },
-    // February 4 (Tuesday)
-    {
-      id: '28',
-      date: '2026-02-04',
-      startTime: '10:30',
-      endTime: '11:00',
-      patientName: 'Ian Mitchell',
-      age: 40,
-      gender: 'Male',
-      status: 'Confirmed',
-    },
-    {
-      id: '29',
-      date: '2026-02-04',
-      startTime: '16:00',
-      endTime: '16:30',
-      patientName: 'Julia Roberts',
-      age: 29,
-      gender: 'Female',
-      status: 'Confirmed',
-    },
-    // February 5 (Wednesday)
-    {
-      id: '30',
-      date: '2026-02-05',
-      startTime: '08:00',
-      endTime: '08:30',
-      patientName: 'Kenneth Adams',
-      age: 63,
-      gender: 'Male',
-      status: 'Confirmed',
-    },
-    {
-      id: '31',
-      date: '2026-02-05',
-      startTime: '11:30',
-      endTime: '12:00',
-      patientName: 'Laura Bennett',
-      age: 46,
-      gender: 'Female',
-      status: 'Pending Confirmation',
     },
   ];
 
@@ -468,7 +448,7 @@ export function AppointmentsCalendarWeek() {
   ];
 
   return (
-    <DashboardLayout title="Appointments Calendar" role="doctor">
+    <DashboardLayout title="Appointments Calendar" role="facility">
       <div className="space-y-4 md:space-y-6">
         {/* Desktop Header with Navigation */}
         <div className="hidden md:flex items-center justify-between">
@@ -568,7 +548,7 @@ export function AppointmentsCalendarWeek() {
           {/* Date Display */}
           <div className="text-center">
             <h2 className="text-lg font-semibold text-gray-900">
-              {viewMode === 'week' 
+              {viewMode === 'week'
                 ? selectedDay.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
                 : `Week of ${weekDates[0].toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${weekDates[6].toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
               }
@@ -679,7 +659,7 @@ export function AppointmentsCalendarWeek() {
                         {dayAppointments.map((apt) => (
                           <button
                             key={apt.id}
-                            onClick={() => navigate(`/doctor/appointments/${apt.id}`)}
+                            onClick={() => navigate(`/facility/appointments/${apt.id}`)}
                             onMouseEnter={() => setSelectedAppointment(apt)}
                             onMouseLeave={() => setSelectedAppointment(null)}
                             className={`w-full text-left p-2 rounded-lg border-l-4 ${getStatusColor(
@@ -749,7 +729,7 @@ export function AppointmentsCalendarWeek() {
                           {dayAppointments.map((apt) => (
                             <button
                               key={apt.id}
-                              onClick={() => navigate(`/doctor/appointments/${apt.id}`)}
+                              onClick={() => navigate(`/facility/appointments/${apt.id}`)}
                               className={`w-full text-left p-3 rounded-lg border-l-4 ${getStatusColor(
                                 apt.status
                               )} active:opacity-70 transition-all`}
@@ -761,9 +741,6 @@ export function AppointmentsCalendarWeek() {
                                   </p>
                                   <p className="text-xs text-gray-600 mt-1">
                                     {apt.startTime} - {apt.endTime}
-                                  </p>
-                                  <p className="text-xs text-gray-500 mt-1">
-                                    {apt.age} yrs, {apt.gender}
                                   </p>
                                 </div>
                                 <span
@@ -798,7 +775,7 @@ export function AppointmentsCalendarWeek() {
                 appointments: getAppointmentsForDate(date)
                   .filter(apt => filterStatus === 'all' || apt.status === filterStatus)
               })).filter(day => day.appointments.length > 0);
-              
+
               if (weekAppointments.length === 0) {
                 return (
                   <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
@@ -819,7 +796,7 @@ export function AppointmentsCalendarWeek() {
                     {appointments.map((apt) => (
                       <button
                         key={apt.id}
-                        onClick={() => navigate(`/doctor/appointments/${apt.id}`)}
+                        onClick={() => navigate(`/facility/appointments/${apt.id}`)}
                         className="w-full p-4 md:p-6 hover:bg-gray-50 active:bg-gray-100 transition-colors text-left"
                       >
                         {/* Desktop Layout */}
@@ -832,7 +809,7 @@ export function AppointmentsCalendarWeek() {
                               </span>
                             </div>
                             <div className="flex-1">
-                              <div className="flex items-center gap-3 mb-2">
+                              <div className="flex items-center gap-3">
                                 <h4 className="font-semibold text-gray-900">
                                   {apt.patientName}, {apt.age} yrs
                                 </h4>
@@ -847,7 +824,7 @@ export function AppointmentsCalendarWeek() {
                             </div>
                           </div>
                           <span className="text-sm text-gray-900 hover:underline whitespace-nowrap">
-                            View Details →
+                            View Details
                           </span>
                         </div>
 
@@ -898,7 +875,7 @@ export function AppointmentsCalendarWeek() {
                 onClick={() => setSelectedAppointment(null)}
                 className="text-gray-400 hover:text-gray-600"
               >
-                ×
+                x
               </button>
             </div>
             <div className="space-y-2">
@@ -919,7 +896,7 @@ export function AppointmentsCalendarWeek() {
               </div>
             </div>
             <button
-              onClick={() => navigate(`/doctor/appointments/${selectedAppointment.id}`)}
+              onClick={() => navigate(`/facility/appointments/${selectedAppointment.id}`)}
               className="w-full mt-4 bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
             >
               View Full Details

@@ -137,7 +137,24 @@ export function DoctorHelpSupport() {
 
   const handleSubmitQuery = (e: React.FormEvent) => {
     e.preventDefault();
-    // Mock submission
+
+    // Create new support ticket
+    const newTicket = {
+      id: `doctor-${Date.now()}`,
+      name: contactForm.name,
+      email: contactForm.email,
+      subject: contactForm.subject,
+      message: contactForm.message,
+      source: 'doctor' as const,
+      submittedAt: new Date().toISOString()
+    };
+
+    // Save to localStorage
+    const existingTickets = localStorage.getItem('supportTickets');
+    const tickets = existingTickets ? JSON.parse(existingTickets) : [];
+    tickets.unshift(newTicket); // Add to beginning (newest first)
+    localStorage.setItem('supportTickets', JSON.stringify(tickets));
+
     setSubmitSuccess(true);
     setContactForm({
       name: '',

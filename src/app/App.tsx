@@ -13,6 +13,7 @@ import { DoctorsList } from '@/app/components/admin/DoctorsList';
 import { DoctorDetails } from '@/app/components/admin/DoctorDetails';
 import { AdminSubscriptionOverview } from '@/app/components/admin/SubscriptionOverview';
 import { PushNotifications } from '@/app/components/admin/PushNotifications';
+import { SupportTickets } from '@/app/components/admin/SupportTickets';
 
 // Facility Components
 import { FacilityLogin } from '@/app/components/facility/FacilityLogin';
@@ -32,6 +33,9 @@ import { FacilityChangePassword } from '@/app/components/facility/FacilityChange
 import { NotificationsPanel } from '@/app/components/facility/NotificationsPanel';
 import { HelpSupport } from '@/app/components/facility/HelpSupport';
 import { FacilityAnalytics } from '@/app/components/facility/FacilityAnalytics';
+import { FacilityAvailabilityCalendar } from '@/app/components/facility/FacilityAvailabilityCalendar';
+import { FacilityAppointmentsCalendar } from '@/app/components/facility/FacilityAppointmentsCalendar';
+import { FacilityAppointmentDetails } from '@/app/components/facility/FacilityAppointmentDetails';
 
 // Doctor Components
 import { DoctorLogin } from '@/app/components/doctor/DoctorLogin';
@@ -90,7 +94,8 @@ export default function App() {
         <Route path="/admin/doctors/:id" element={<DoctorDetails />} />
         <Route path="/admin/subscriptions" element={<AdminSubscriptionOverview />} />
         <Route path="/admin/notifications" element={<PushNotifications />} />
-        
+        <Route path="/admin/support-tickets" element={<SupportTickets />} />
+
         {/* Facility Routes - Simplified: Profile & Subscription Only */}
         <Route path="/facility" element={<FacilityLogin />} />
         <Route path="/facility/register" element={<FacilityRegistration />} />
@@ -109,6 +114,9 @@ export default function App() {
         <Route path="/facility/notifications" element={<NotificationsPanel />} />
         <Route path="/facility/help-support" element={<HelpSupport />} />
         <Route path="/facility/analytics" element={<FacilityAnalytics />} />
+        <Route path="/facility/availability-calendar" element={<FacilityAvailabilityCalendar />} />
+        <Route path="/facility/appointments-calendar" element={<FacilityAppointmentsCalendar />} />
+        <Route path="/facility/appointments/:id" element={<FacilityAppointmentDetails />} />
         
         {/* Doctor Routes - Independent Registration & Management */}
         <Route path="/doctor" element={<DoctorLogin />} />

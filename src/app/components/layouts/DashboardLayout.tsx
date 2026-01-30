@@ -19,7 +19,8 @@ import {
   HelpCircle,
   Clock,
   AlertTriangle,
-  Send
+  Send,
+  Headphones
 } from 'lucide-react';
 import { logout, getCurrentUser } from '@/lib/auth';
 import { Button } from '@/app/components/ui/button';
@@ -42,6 +43,7 @@ export function DashboardLayout({ children, title, role }: DashboardLayoutProps)
   const [isSuspended, setIsSuspended] = useState(false);
   const [showTimeoutWarning, setShowTimeoutWarning] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(300); // 5 minutes in seconds
+  const [acceptsAppointments, setAcceptsAppointments] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   const user = getCurrentUser();
@@ -68,10 +70,32 @@ export function DashboardLayout({ children, title, role }: DashboardLayoutProps)
     window.addEventListener('storage', checkSuspension);
     // Listen for custom suspension change event (same tab)
     window.addEventListener('suspensionChange', checkSuspension);
-    
+
     return () => {
       window.removeEventListener('storage', checkSuspension);
       window.removeEventListener('suspensionChange', checkSuspension);
+    };
+  }, [role]);
+
+  // Check for appointment acceptance setting (facility only)
+  useEffect(() => {
+    const checkAppointmentSetting = () => {
+      if (role === 'facility') {
+        const accepts = localStorage.getItem('facilityAcceptsAppointments');
+        setAcceptsAppointments(accepts !== 'false'); // Default to true
+      }
+    };
+
+    checkAppointmentSetting();
+
+    // Listen for storage changes (in case setting is changed from another tab)
+    window.addEventListener('storage', checkAppointmentSetting);
+    // Listen for custom event (same tab)
+    window.addEventListener('appointmentSettingChange', checkAppointmentSetting);
+
+    return () => {
+      window.removeEventListener('storage', checkAppointmentSetting);
+      window.removeEventListener('appointmentSettingChange', checkAppointmentSetting);
     };
   }, [role]);
 
@@ -180,11 +204,14 @@ export function DashboardLayout({ children, title, role }: DashboardLayoutProps)
         { icon: UserCog, label: 'Doctors', path: '/admin/doctors' },
         { icon: CreditCard, label: 'Subscriptions', path: '/admin/subscriptions' },
         { icon: Send, label: 'Notifications', path: '/admin/notifications' },
+        { icon: Headphones, label: 'Support Tickets', path: '/admin/support-tickets' },
       ];
     } else if (role === 'facility') {
       return [
         { icon: Home, label: 'Dashboard', path: '/facility/dashboard' },
         { icon: Building2, label: 'Profile', path: '/facility/profile' },
+        { icon: Calendar, label: 'Availability', path: '/facility/availability-calendar' },
+        { icon: ClipboardList, label: 'Appointments', path: '/facility/appointments-calendar' },
         { icon: Shield, label: 'Insurance & Payers', path: '/facility/insurance-payers' },
         { icon: CreditCard, label: 'Subscription', path: '/facility/subscription' },
         { icon: Settings, label: 'Settings', path: '/facility/settings' },
@@ -257,21 +284,38 @@ export function DashboardLayout({ children, title, role }: DashboardLayoutProps)
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         <nav className="p-4 space-y-1">
-          {navItems.map((item) => (
-            <button
-              key={item.path}
-              onClick={() => {
-                navigate(item.path);
-                setSidebarOpen(false);
-              }}
-              className={`w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors
-                ${location.pathname === item.path ? 'bg-gray-100' : ''}
-              `}
-            >
-              <item.icon className="w-5 h-5" />
-              <span>{item.label}</span>
-            </button>
-          ))}
+          {navItems.map((item) => {
+            // Check if this nav item should be disabled (facility appointments feature)
+            const isAppointmentRelated = role === 'facility' &&
+              (item.path === '/facility/availability-calendar' || item.path === '/facility/appointments-calendar');
+            const isDisabled = isAppointmentRelated && !acceptsAppointments;
+
+            return (
+              <button
+                key={item.path}
+                onClick={() => {
+                  if (!isDisabled) {
+                    navigate(item.path);
+                    setSidebarOpen(false);
+                  }
+                }}
+                disabled={isDisabled}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors
+                  ${isDisabled
+                    ? 'text-gray-300 cursor-not-allowed bg-gray-50'
+                    : 'text-gray-700 hover:bg-gray-100'
+                  }
+                  ${location.pathname === item.path && !isDisabled ? 'bg-gray-100' : ''}
+                `}
+              >
+                <item.icon className={`w-5 h-5 ${isDisabled ? 'text-gray-300' : ''}`} />
+                <span>{item.label}</span>
+                {isDisabled && (
+                  <span className="ml-auto text-xs text-gray-400">Off</span>
+                )}
+              </button>
+            );
+          })}
         </nav>
       </aside>
 

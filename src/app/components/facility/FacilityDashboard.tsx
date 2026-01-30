@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { 
-  Building2, 
-  CreditCard, 
-  Settings, 
-  ToggleLeft, 
-  ToggleRight, 
+import {
+  Building2,
+  CreditCard,
+  Settings,
+  ToggleLeft,
+  ToggleRight,
   CheckCircle,
   Users,
   Eye,
@@ -14,7 +14,8 @@ import {
   AlertCircle,
   BarChart3,
   Stethoscope,
-  Star
+  Star,
+  Calendar
 } from 'lucide-react';
 import { getCurrentUser } from '@/lib/auth';
 import { DashboardLayout } from '@/app/components/layouts/DashboardLayout';
@@ -107,6 +108,10 @@ export function FacilityDashboard() {
   const navigate = useNavigate();
   const user = getCurrentUser();
   const [isActive, setIsActive] = useState(true);
+  const [acceptsAppointments, setAcceptsAppointments] = useState(() => {
+    const stored = localStorage.getItem('facilityAcceptsAppointments');
+    return stored !== 'false'; // Default to true
+  });
   const [selectedMetric, setSelectedMetric] = useState<'reviews' | 'recommendations'>('reviews');
 
   useEffect(() => {
@@ -121,6 +126,14 @@ export function FacilityDashboard() {
 
   const handleToggleStatus = () => {
     setIsActive(!isActive);
+  };
+
+  const handleToggleAppointments = () => {
+    const newValue = !acceptsAppointments;
+    setAcceptsAppointments(newValue);
+    localStorage.setItem('facilityAcceptsAppointments', String(newValue));
+    // Dispatch event so DashboardLayout can react
+    window.dispatchEvent(new Event('appointmentSettingChange'));
   };
 
   const chartData = performanceData.map(facility => ({
@@ -141,8 +154,8 @@ export function FacilityDashboard() {
           <p className="text-gray-600">Here's an overview of your facility performance and profile status.</p>
         </div>
 
-        {/* Top Stats Row - 3 Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Top Stats Row - 4 Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Profile Status */}
           <div className="bg-white rounded-xl p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
@@ -184,6 +197,40 @@ export function FacilityDashboard() {
               <Building2 className="w-5 h-5 text-gray-600" />
             </div>
             <p className="text-3xl font-bold text-gray-900">{profileCompletionData.overallProgress}%</p>
+          </div>
+
+          {/* Accepts Appointments */}
+          <div className={`bg-white rounded-xl p-6 border-2 transition-colors ${
+            acceptsAppointments ? 'border-blue-200 bg-blue-50/30' : 'border-gray-200'
+          }`}>
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-sm text-gray-600">Accepts Appointments</p>
+              <Calendar className={`w-5 h-5 ${acceptsAppointments ? 'text-blue-600' : 'text-gray-400'}`} />
+            </div>
+            <div className="flex items-center justify-between">
+              <p className={`text-3xl font-bold ${acceptsAppointments ? 'text-blue-600' : 'text-gray-400'}`}>
+                {acceptsAppointments ? 'Yes' : 'No'}
+              </p>
+              <button
+                onClick={handleToggleAppointments}
+                className={`p-2 rounded-lg transition-colors ${
+                  acceptsAppointments
+                    ? 'bg-blue-100 text-blue-600 hover:bg-blue-200'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {acceptsAppointments ? (
+                  <ToggleRight className="w-6 h-6" />
+                ) : (
+                  <ToggleLeft className="w-6 h-6" />
+                )}
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 mt-2">
+              {acceptsAppointments
+                ? 'Patients can book appointments'
+                : 'Appointment booking is disabled'}
+            </p>
           </div>
         </div>
 
