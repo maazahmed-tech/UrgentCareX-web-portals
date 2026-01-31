@@ -560,70 +560,70 @@ export function DoctorProfile() {
                   <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Personal Information</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                      <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Full Name</label>
                       {isEditing ? (
                         <input
                           type="text"
                           value={editedData.name}
                           onChange={(e) => handleChange('name', e.target.value)}
-                          className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                          className="w-full h-10 md:h-11 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm md:text-base"
                         />
                       ) : (
-                        <p className="text-gray-900 h-11 flex items-center">{profileData.name}</p>
+                        <p className="text-gray-900 h-10 md:h-11 flex items-center text-sm md:text-base">{profileData.name}</p>
                       )}
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                      <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Phone Number</label>
                       {isEditing ? (
                         <input
                           type="tel"
                           value={editedData.phone}
                           onChange={(e) => handleChange('phone', e.target.value)}
-                          className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                          className="w-full h-10 md:h-11 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm md:text-base"
                         />
                       ) : (
-                        <p className="text-gray-900 h-11 flex items-center">{profileData.phone}</p>
+                        <p className="text-gray-900 h-10 md:h-11 flex items-center text-sm md:text-base">{profileData.phone}</p>
                       )}
                     </div>
 
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                      <p className="text-gray-500 h-11 flex items-center text-sm">
+                      <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Email Address</label>
+                      <p className="text-gray-500 h-10 md:h-11 flex items-center text-xs md:text-sm">
                         {profileData.email} <span className="ml-2 text-xs">(Cannot be changed)</span>
                       </p>
                     </div>
 
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-3">Practice Address</label>
+                      <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2 md:mb-3">Practice Address</label>
                       {isEditing ? (
-                        <div className="space-y-4">
+                        <div className="space-y-3 md:space-y-4">
                           <div>
                             <input
                               type="text"
                               value={editedData.addressStreet}
                               onChange={(e) => handleChange('addressStreet', e.target.value)}
                               placeholder="Street Address"
-                              className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                              className="w-full h-10 md:h-11 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm md:text-base"
                             />
-                            <p className="text-xs text-gray-500 mt-1">Enter your building number and street name (e.g., 123 Medical Plaza)</p>
+                            <p className="text-xs text-gray-500 mt-1">Building number and street name</p>
                           </div>
                           <div>
                             <input
                               type="text"
                               value={editedData.addressSuite}
                               onChange={(e) => handleChange('addressSuite', e.target.value)}
-                              placeholder="Suite / Apartment / Floor (Optional)"
-                              className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                              placeholder="Suite / Apt / Floor (Optional)"
+                              className="w-full h-10 md:h-11 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm md:text-base"
                             />
-                            <p className="text-xs text-gray-500 mt-1">Add suite, building, floor, or unit number if applicable</p>
+                            <p className="text-xs text-gray-500 mt-1">Suite, building, floor, or unit</p>
                           </div>
-                          <div className="grid grid-cols-6 gap-4">
-                            <div className="col-span-3">
+                          <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-4">
+                            <div className="col-span-2 md:col-span-3">
                               <select
                                 value={editedData.addressCity}
                                 onChange={(e) => handleChange('addressCity', e.target.value)}
-                                className="w-full h-11 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                                className="w-full h-11 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm md:text-base"
                               >
                                 {cityOptions.map((city) => (
                                   <option key={city} value={city}>
@@ -631,13 +631,13 @@ export function DoctorProfile() {
                                   </option>
                                 ))}
                               </select>
-                              <p className="text-xs text-gray-500 mt-1">Select your city from the list</p>
+                              <p className="text-xs text-gray-500 mt-1">Select your city</p>
                             </div>
                             <div className="col-span-1">
                               <select
                                 value={editedData.addressState}
                                 onChange={(e) => handleChange('addressState', e.target.value)}
-                                className="w-full h-11 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                                className="w-full h-11 px-2 md:px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm md:text-base"
                               >
                                 {stateOptions.map((state) => (
                                   <option key={state} value={state}>
@@ -647,15 +647,15 @@ export function DoctorProfile() {
                               </select>
                               <p className="text-xs text-gray-500 mt-1">State</p>
                             </div>
-                            <div className="col-span-2">
+                            <div className="col-span-1 md:col-span-2">
                               <input
                                 type="text"
                                 value={editedData.addressZipCode}
                                 onChange={(e) => handleChange('addressZipCode', e.target.value)}
                                 placeholder="ZIP Code"
-                                className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                                className="w-full h-11 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm md:text-base"
                               />
-                              <p className="text-xs text-gray-500 mt-1">5-digit ZIP code</p>
+                              <p className="text-xs text-gray-500 mt-1">ZIP code</p>
                             </div>
                           </div>
                         </div>
@@ -677,12 +677,12 @@ export function DoctorProfile() {
                     <textarea
                       value={editedData.bio}
                       onChange={(e) => handleChange('bio', e.target.value)}
-                      rows={6}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                      rows={5}
+                      className="w-full px-3 md:px-4 py-2.5 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm md:text-base"
                       placeholder="Tell patients about your experience and approach to care..."
                     />
                   ) : (
-                    <p className="text-gray-700 leading-relaxed">{profileData.bio}</p>
+                    <p className="text-sm md:text-base text-gray-700 leading-relaxed">{profileData.bio}</p>
                   )}
                 </div>
 
@@ -693,7 +693,7 @@ export function DoctorProfile() {
                     {(isEditing ? editedData.specialties : profileData.specialties).map((specialty) => (
                       <span
                         key={specialty}
-                        className="inline-flex items-center gap-1 px-3 py-2 bg-gray-100 text-gray-900 text-sm rounded-lg"
+                        className="inline-flex items-center gap-1 px-2.5 md:px-3 py-1.5 md:py-2 bg-gray-100 text-gray-900 text-xs md:text-sm rounded-lg"
                       >
                         {specialty}
                         {isEditing && (
@@ -710,12 +710,12 @@ export function DoctorProfile() {
                       <div className="relative">
                         <button
                           onClick={() => setShowSpecialtyDropdown(!showSpecialtyDropdown)}
-                          className="px-3 py-2 border border-gray-300 text-gray-700 text-sm rounded-lg hover:bg-gray-50"
+                          className="px-2.5 md:px-3 py-1.5 md:py-2 border border-gray-300 text-gray-700 text-xs md:text-sm rounded-lg hover:bg-gray-50"
                         >
                           + Add Specialty
                         </button>
                         {showSpecialtyDropdown && (
-                          <div className="absolute z-10 mt-2 w-64 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                          <div className="absolute z-10 mt-2 w-56 md:w-64 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto right-0 md:right-auto md:left-0">
                             {specialtyOptions
                               .filter(option => !editedData.specialties.includes(option))
                               .map((specialty) => (
@@ -725,7 +725,7 @@ export function DoctorProfile() {
                                     toggleSpecialty(specialty);
                                     setShowSpecialtyDropdown(false);
                                   }}
-                                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50"
+                                  className="w-full text-left px-3 md:px-4 py-2 text-xs md:text-sm hover:bg-gray-50"
                                 >
                                   {specialty}
                                 </button>
@@ -744,7 +744,7 @@ export function DoctorProfile() {
                     {(isEditing ? editedData.languages : profileData.languages).map((language) => (
                       <span
                         key={language}
-                        className="inline-flex items-center gap-1 px-3 py-2 bg-blue-50 border border-blue-200 text-blue-900 text-sm rounded-lg"
+                        className="inline-flex items-center gap-1 px-2.5 md:px-3 py-1.5 md:py-2 bg-blue-50 border border-blue-200 text-blue-900 text-xs md:text-sm rounded-lg"
                       >
                         {language}
                         {isEditing && (
@@ -761,12 +761,12 @@ export function DoctorProfile() {
                       <div className="relative">
                         <button
                           onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
-                          className="px-3 py-2 border border-gray-300 text-gray-700 text-sm rounded-lg hover:bg-gray-50"
+                          className="px-2.5 md:px-3 py-1.5 md:py-2 border border-gray-300 text-gray-700 text-xs md:text-sm rounded-lg hover:bg-gray-50"
                         >
                           + Add Language
                         </button>
                         {showLanguageDropdown && (
-                          <div className="absolute z-10 mt-2 w-64 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                          <div className="absolute z-10 mt-2 w-48 md:w-64 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto right-0 md:right-auto md:left-0">
                             {languageOptions
                               .filter(option => !editedData.languages.includes(option))
                               .map((language) => (
@@ -776,7 +776,7 @@ export function DoctorProfile() {
                                     toggleLanguage(language);
                                     setShowLanguageDropdown(false);
                                   }}
-                                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50"
+                                  className="w-full text-left px-3 md:px-4 py-2 text-xs md:text-sm hover:bg-gray-50"
                                 >
                                   {language}
                                 </button>
@@ -814,42 +814,42 @@ export function DoctorProfile() {
                   <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Education & Training</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Medical School</label>
+                      <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Medical School</label>
                       {isEditing ? (
                         <input
                           type="text"
                           value={editedData.medicalSchool}
                           onChange={(e) => handleChange('medicalSchool', e.target.value)}
-                          className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                          className="w-full h-10 md:h-11 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm md:text-base"
                           placeholder="Enter your medical school"
                         />
                       ) : (
-                        <p className="text-gray-900 h-11 flex items-center">{profileData.medicalSchool}</p>
+                        <p className="text-gray-900 h-10 md:h-11 flex items-center text-sm md:text-base">{profileData.medicalSchool}</p>
                       )}
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Residency Program</label>
+                      <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Residency Program</label>
                       {isEditing ? (
                         <input
                           type="text"
                           value={editedData.residency}
                           onChange={(e) => handleChange('residency', e.target.value)}
-                          className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                          className="w-full h-10 md:h-11 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm md:text-base"
                           placeholder="Enter your residency program"
                         />
                       ) : (
-                        <p className="text-gray-900 h-11 flex items-center">{profileData.residency}</p>
+                        <p className="text-gray-900 h-10 md:h-11 flex items-center text-sm md:text-base">{profileData.residency}</p>
                       )}
                     </div>
 
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Years of Experience</label>
+                      <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Years of Experience</label>
                       {isEditing ? (
                         <select
                           value={editedData.yearsOfExperience}
                           onChange={(e) => handleChange('yearsOfExperience', e.target.value)}
-                          className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                          className="w-full h-10 md:h-11 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm md:text-base"
                         >
                           {yearsOfExperienceOptions.map((option) => (
                             <option key={option} value={option}>
@@ -858,7 +858,7 @@ export function DoctorProfile() {
                           ))}
                         </select>
                       ) : (
-                        <p className="text-gray-900 h-11 flex items-center">{profileData.yearsOfExperience}</p>
+                        <p className="text-gray-900 h-10 md:h-11 flex items-center text-sm md:text-base">{profileData.yearsOfExperience}</p>
                       )}
                     </div>
                   </div>
@@ -868,9 +868,63 @@ export function DoctorProfile() {
 
             {/* Credentials Tab */}
             {activeTab === 'credentials' && (
-              <div className="space-y-6 pt-6">
-                {/* Credentials Table */}
-                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+              <div className="space-y-4 md:space-y-6 pt-4 md:pt-6">
+                {/* Mobile Card View */}
+                <div className="block md:hidden space-y-3">
+                  {credentials.map((credential) => (
+                    <div key={credential.id} className="bg-white rounded-xl border border-gray-200 p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <Award className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                          <span className="text-sm font-semibold text-gray-900">
+                            {credential.type}
+                          </span>
+                        </div>
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(credential.status)}`}>
+                          {credential.status}
+                        </span>
+                      </div>
+
+                      <div className="space-y-2 mb-3">
+                        <div className="flex justify-between">
+                          <span className="text-xs text-gray-500">Number</span>
+                          <span className="text-sm font-medium text-gray-900">{credential.number}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-xs text-gray-500">Issuer</span>
+                          <span className="text-sm text-gray-700 text-right max-w-[60%]">{credential.issuer}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-xs text-gray-500">Issued</span>
+                          <span className="text-sm text-gray-700">{new Date(credential.issuedDate).toLocaleDateString()}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-xs text-gray-500">Expires</span>
+                          <span className="text-sm text-gray-700">{new Date(credential.expiryDate).toLocaleDateString()}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
+                        <button
+                          onClick={() => navigate(`/doctor/credentials/edit/${credential.id}`)}
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg border border-gray-200"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                          Edit
+                        </button>
+                        <button
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg border border-red-200"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Desktop Table View */}
+                <div className="hidden md:block bg-white rounded-xl border border-gray-200 overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full">
                       <thead className="bg-gray-50 border-b border-gray-200">
@@ -933,10 +987,10 @@ export function DoctorProfile() {
                 </div>
 
                 {/* Add Credential Button */}
-                <div className="flex justify-end">
+                <div className="flex justify-center md:justify-end">
                   <button
                     onClick={() => navigate('/doctor/add-credential')}
-                    className="flex items-center gap-2 bg-gray-900 text-white px-4 h-11 rounded-lg hover:bg-gray-800"
+                    className="flex items-center gap-2 bg-gray-900 text-white px-4 h-10 md:h-11 rounded-lg hover:bg-gray-800 text-sm md:text-base w-full md:w-auto justify-center"
                   >
                     <Plus className="w-4 h-4" />
                     Add Credential
@@ -944,8 +998,8 @@ export function DoctorProfile() {
                 </div>
 
                 {/* Info Card */}
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                  <p className="text-sm text-blue-900">
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 md:p-4">
+                  <p className="text-xs md:text-sm text-blue-900">
                     <strong>Note:</strong> Make sure all credentials are current and valid. Expired credentials may affect your ability to accept appointments.
                   </p>
                 </div>
@@ -954,9 +1008,50 @@ export function DoctorProfile() {
 
             {/* Reviews Tab */}
             {activeTab === 'reviews' && (
-              <div className="space-y-6 pt-6">
-                {/* Reviews Table */}
-                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+              <div className="space-y-4 md:space-y-6 pt-4 md:pt-6">
+                {/* Mobile Card View */}
+                <div className="block md:hidden space-y-3">
+                  {reviews.map((review) => (
+                    <div key={review.id} className="bg-white rounded-xl border border-gray-200 p-4">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <User className="w-4 h-4 text-gray-500" />
+                          </div>
+                          <div>
+                            <span className="text-sm font-medium text-gray-900 block">
+                              {review.patientName}
+                            </span>
+                            <span className="text-xs text-gray-500">
+                              {new Date(review.date).toLocaleDateString()}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-0.5">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star
+                              key={star}
+                              className={`w-3.5 h-3.5 ${
+                                star <= review.rating
+                                  ? 'fill-yellow-400 text-yellow-400'
+                                  : 'text-gray-300'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-sm text-gray-700 leading-relaxed">{review.comment}</p>
+                      <div className="mt-2 pt-2 border-t border-gray-100">
+                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                          {review.appointmentType}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Desktop Table View */}
+                <div className="hidden md:block bg-white rounded-xl border border-gray-200 overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full">
                       <thead className="bg-gray-50 border-b border-gray-200">

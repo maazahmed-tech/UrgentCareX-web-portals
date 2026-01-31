@@ -124,7 +124,7 @@ const mockDoctorDetails: Record<string, DoctorDetail> = {
         number: 'CPR-11223',
         issuer: 'American Heart Association',
         issuedDate: '2024-01-14',
-        expiryDate: '2026-01-14',
+        expiryDate: '2025-01-14',
         documentUrl: '/documents/cpr-cert-11223.pdf',
       },
     ],
@@ -176,6 +176,25 @@ export function DoctorDetails() {
   const getReviewBarWidth = (count: number) => {
     return `${(count / totalReviews) * 100}%`;
   };
+
+  const isCredentialExpired = (expiryDate: string) => {
+    return new Date(expiryDate) < new Date();
+  };
+
+  const isCredentialExpiringSoon = (expiryDate: string) => {
+    const expiry = new Date(expiryDate);
+    const today = new Date();
+    const thirtyDaysFromNow = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+    return expiry > today && expiry <= thirtyDaysFromNow;
+  };
+
+  const getCredentialStatus = (expiryDate: string) => {
+    if (isCredentialExpired(expiryDate)) return 'expired';
+    if (isCredentialExpiringSoon(expiryDate)) return 'expiring';
+    return 'valid';
+  };
+
+  const hasExpiredCredentials = doctor.credentials.some(c => isCredentialExpired(c.expiryDate));
 
   return (
     <DashboardLayout title="Doctor Details" role="admin">
@@ -325,38 +344,75 @@ export function DoctorDetails() {
         </div>
 
         {/* Credentials */}
-        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
-          <div className="flex items-center gap-2 mb-4">
-            <FileCheck className="w-5 h-5 text-gray-600" />
-            <h3 className="text-base md:text-lg font-semibold">Credentials</h3>
+        <div className={`bg-white rounded-xl p-4 md:p-6 border ${hasExpiredCredentials ? 'border-red-300 ring-1 ring-red-100' : 'border-gray-200'}`}>
+          <div className="flex items-center justify-between gap-2 mb-4">
+            <div className="flex items-center gap-2">
+              <FileCheck className={`w-5 h-5 ${hasExpiredCredentials ? 'text-red-500' : 'text-gray-600'}`} />
+              <h3 className="text-base md:text-lg font-semibold">Credentials</h3>
+            </div>
+            {hasExpiredCredentials && (
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">
+                <AlertTriangle className="w-3.5 h-3.5" />
+                <span>Expired Credential</span>
+              </div>
+            )}
           </div>
 
           {/* Mobile Card View */}
           <div className="block lg:hidden space-y-3">
-            {doctor.credentials.map((credential, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-3 space-y-2">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <p className="font-medium text-gray-900 text-sm">{credential.type}</p>
-                    <p className="text-xs text-gray-600">{credential.number}</p>
+            {doctor.credentials.map((credential, index) => {
+              const status = getCredentialStatus(credential.expiryDate);
+              const isExpired = status === 'expired';
+              const isExpiring = status === 'expiring';
+
+              return (
+                <div
+                  key={index}
+                  className={`rounded-lg p-3 space-y-2 ${
+                    isExpired
+                      ? 'border-2 border-red-300 bg-red-50'
+                      : isExpiring
+                        ? 'border-2 border-yellow-300 bg-yellow-50'
+                        : 'border border-gray-200'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <p className="font-medium text-gray-900 text-sm">{credential.type}</p>
+                        {isExpired && (
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700">
+                            Expired
+                          </span>
+                        )}
+                        {isExpiring && (
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-700">
+                            Expiring Soon
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-gray-600">{credential.number}</p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => window.open(credential.documentUrl, '_blank')}
+                      className="h-7 text-xs"
+                    >
+                      <ExternalLink className="w-3 h-3 mr-1" />
+                      View
+                    </Button>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => window.open(credential.documentUrl, '_blank')}
-                    className="h-7 text-xs"
-                  >
-                    <ExternalLink className="w-3 h-3 mr-1" />
-                    View
-                  </Button>
+                  <p className="text-xs text-gray-600">{credential.issuer}</p>
+                  <div className={`flex justify-between text-xs pt-1 border-t ${isExpired ? 'border-red-200' : isExpiring ? 'border-yellow-200' : 'border-gray-100'}`}>
+                    <span className="text-gray-500">Issued: {new Date(credential.issuedDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
+                    <span className={isExpired ? 'text-red-600 font-medium' : isExpiring ? 'text-yellow-600 font-medium' : 'text-gray-500'}>
+                      Expires: {new Date(credential.expiryDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                    </span>
+                  </div>
                 </div>
-                <p className="text-xs text-gray-600">{credential.issuer}</p>
-                <div className="flex justify-between text-xs text-gray-500 pt-1 border-t border-gray-100">
-                  <span>Issued: {new Date(credential.issuedDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
-                  <span>Expires: {new Date(credential.expiryDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Desktop Table View */}
@@ -369,41 +425,75 @@ export function DoctorDetails() {
                   <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Issuer</th>
                   <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Issued Date</th>
                   <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Expiry Date</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Status</th>
                   <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Document</th>
                 </tr>
               </thead>
               <tbody>
-                {doctor.credentials.map((credential, index) => (
-                  <tr key={index} className="border-b border-gray-100 last:border-b-0">
-                    <td className="py-3 px-4 text-sm font-medium text-gray-900">{credential.type}</td>
-                    <td className="py-3 px-4 text-sm text-gray-600">{credential.number}</td>
-                    <td className="py-3 px-4 text-sm text-gray-600">{credential.issuer}</td>
-                    <td className="py-3 px-4 text-sm text-gray-600">
-                      {new Date(credential.issuedDate).toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                      })}
-                    </td>
-                    <td className="py-3 px-4 text-sm text-gray-600">
-                      {new Date(credential.expiryDate).toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                      })}
-                    </td>
-                    <td className="py-3 px-4">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => window.open(credential.documentUrl, '_blank')}
-                      >
-                        <ExternalLink className="w-3 h-3 mr-1" />
-                        View
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
+                {doctor.credentials.map((credential, index) => {
+                  const status = getCredentialStatus(credential.expiryDate);
+                  const isExpired = status === 'expired';
+                  const isExpiring = status === 'expiring';
+
+                  return (
+                    <tr
+                      key={index}
+                      className={`border-b last:border-b-0 ${
+                        isExpired
+                          ? 'bg-red-50 border-red-100'
+                          : isExpiring
+                            ? 'bg-yellow-50 border-yellow-100'
+                            : 'border-gray-100'
+                      }`}
+                    >
+                      <td className="py-3 px-4 text-sm font-medium text-gray-900">{credential.type}</td>
+                      <td className="py-3 px-4 text-sm text-gray-600">{credential.number}</td>
+                      <td className="py-3 px-4 text-sm text-gray-600">{credential.issuer}</td>
+                      <td className="py-3 px-4 text-sm text-gray-600">
+                        {new Date(credential.issuedDate).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric',
+                        })}
+                      </td>
+                      <td className={`py-3 px-4 text-sm ${isExpired ? 'text-red-600 font-medium' : isExpiring ? 'text-yellow-600 font-medium' : 'text-gray-600'}`}>
+                        {new Date(credential.expiryDate).toLocaleDateString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric',
+                        })}
+                      </td>
+                      <td className="py-3 px-4">
+                        {isExpired ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                            <AlertTriangle className="w-3 h-3" />
+                            Expired
+                          </span>
+                        ) : isExpiring ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+                            <AlertTriangle className="w-3 h-3" />
+                            Expiring Soon
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                            <CheckCircle className="w-3 h-3" />
+                            Valid
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-3 px-4">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open(credential.documentUrl, '_blank')}
+                        >
+                          <ExternalLink className="w-3 h-3 mr-1" />
+                          View
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
