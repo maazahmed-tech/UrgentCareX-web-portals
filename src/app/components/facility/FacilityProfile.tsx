@@ -224,32 +224,32 @@ export function FacilityProfile() {
     <DashboardLayout title="Facility Profile" role="facility">
       <div className="max-w-5xl h-full flex flex-col">
         {/* Profile Header with Progress - Fixed */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200 mb-6 flex-shrink-0">
-          <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200 mb-4 md:mb-6 flex-shrink-0">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
             {/* Facility Logo */}
-            <div className="flex flex-col items-center">
-              <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-blue-700 text-2xl font-semibold relative overflow-hidden shadow-lg border-2 border-blue-300">
+            <div className="flex flex-col items-center w-full md:w-auto">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-lg bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-blue-700 text-2xl font-semibold relative overflow-hidden shadow-lg border-2 border-blue-300">
                 {formData.logoUrl ? (
                   <img src={formData.logoUrl} alt="Facility Logo" className="w-full h-full object-cover" />
                 ) : (
-                  <Building2 className="w-12 h-12" />
+                  <Building2 className="w-10 h-10 md:w-12 md:h-12" />
                 )}
               </div>
-              <button className="mt-3 flex items-center gap-2 px-3 h-8 border border-gray-300 rounded-lg hover:bg-gray-50 text-xs">
+              <button className="mt-2 md:mt-3 flex items-center gap-2 px-3 h-8 border border-gray-300 rounded-lg hover:bg-gray-50 text-xs">
                 <Camera className="w-3 h-3" />
                 Upload Logo
               </button>
             </div>
 
             {/* Facility Summary */}
-            <div className="flex-1">
-              <h1 className="text-2xl font-semibold text-gray-900 mb-4">{formData.name}</h1>
+            <div className="flex-1 w-full">
+              <h1 className="text-xl md:text-2xl font-semibold text-gray-900 mb-3 md:mb-4">{formData.name}</h1>
 
               {/* Profile Completion Progress */}
-              <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">Profile Completion</span>
-                  <span className="text-sm font-semibold text-gray-900">
+              <div className="bg-gray-50 rounded-lg p-3 md:p-4 border border-gray-200">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-1">
+                  <span className="text-xs md:text-sm font-medium text-gray-700">Profile Completion</span>
+                  <span className="text-xs md:text-sm font-semibold text-gray-900">
                     {completeness}% • {completedSections}/{profileSections.length} sections
                   </span>
                 </div>
@@ -261,7 +261,7 @@ export function FacilityProfile() {
                 </div>
 
                 {/* Checklist */}
-                <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                   {profileSections.map((section) => (
                     <div key={section.name} className="flex items-center gap-2">
                       {section.completed ? (
@@ -278,7 +278,7 @@ export function FacilityProfile() {
 
                 {completeness < 100 && (
                   <p className="text-xs text-gray-600 mt-3 pt-3 border-t border-gray-200">
-                    Complete your facility profile to increase patient bookings and trust
+                    Complete your facility profile to increase patient bookings
                   </p>
                 )}
               </div>
@@ -287,8 +287,8 @@ export function FacilityProfile() {
         </div>
 
         {/* Tabs Navigation - Fixed */}
-        <div className="bg-white rounded-t-xl border border-b-0 border-gray-200 flex-shrink-0">
-          <div className="flex border-b border-gray-200">
+        <div className="bg-white rounded-t-xl border border-b-0 border-gray-200 flex-shrink-0 overflow-x-auto">
+          <div className="flex border-b border-gray-200 min-w-max">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
@@ -301,7 +301,7 @@ export function FacilityProfile() {
                     setIsEditingSpecialists(false);
                     setEditedData(formData);
                   }}
-                  className={`flex-1 flex items-center justify-center gap-2 px-6 py-4 text-sm font-medium transition-all ${
+                  className={`flex-1 flex items-center justify-center gap-1 md:gap-2 px-3 md:px-6 py-3 md:py-4 text-xs md:text-sm font-medium transition-all whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'text-gray-900 border-b-2 border-gray-900 bg-gray-50'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
@@ -319,29 +319,29 @@ export function FacilityProfile() {
         <div className="bg-white rounded-b-xl border border-gray-200 flex-1 flex flex-col overflow-hidden">
           {/* Edit/Save Buttons - Only for Basic Info Tab */}
           {activeTab === 'basic' && (
-            <div className="flex justify-end px-6 pt-6 pb-4 border-b border-gray-200 flex-shrink-0">
+            <div className="flex justify-end px-4 md:px-6 pt-4 md:pt-6 pb-3 md:pb-4 border-b border-gray-200 flex-shrink-0">
               {!isEditingBasic ? (
                 <button
                   onClick={() => setIsEditingBasic(true)}
-                  className="flex items-center gap-2 bg-gray-900 text-white px-6 h-11 rounded-lg hover:bg-gray-800"
+                  className="flex items-center gap-2 bg-gray-900 text-white px-4 md:px-6 h-10 md:h-11 rounded-lg hover:bg-gray-800 text-sm w-full sm:w-auto justify-center"
                 >
                   <Edit2 className="w-4 h-4" />
                   Edit Basic Info
                 </button>
               ) : (
-                <div className="flex gap-3">
+                <div className="flex gap-2 md:gap-3 w-full sm:w-auto">
                   <button
                     onClick={handleCancelBasic}
-                    className="border border-gray-300 text-gray-700 px-6 h-11 rounded-lg hover:bg-gray-50"
+                    className="flex-1 sm:flex-none border border-gray-300 text-gray-700 px-4 md:px-6 h-10 md:h-11 rounded-lg hover:bg-gray-50 text-sm"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleSaveBasic}
-                    className="flex items-center gap-2 bg-gray-900 text-white px-6 h-11 rounded-lg hover:bg-gray-800"
+                    className="flex-1 sm:flex-none flex items-center gap-2 bg-gray-900 text-white px-4 md:px-6 h-10 md:h-11 rounded-lg hover:bg-gray-800 text-sm justify-center"
                   >
                     <Save className="w-4 h-4" />
-                    Save Changes
+                    Save
                   </button>
                 </div>
               )}
@@ -349,14 +349,14 @@ export function FacilityProfile() {
           )}
 
           {/* Scrollable Content Area */}
-          <div className={`flex-1 overflow-y-auto px-6 pb-6 ${activeTab === 'basic' ? '' : 'pt-6'}`}>
+          <div className={`flex-1 overflow-y-auto px-4 md:px-6 pb-4 md:pb-6 ${activeTab === 'basic' ? '' : 'pt-4 md:pt-6'}`}>
             {/* BASIC INFO TAB */}
             {activeTab === 'basic' && (
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {/* Facility Information */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Facility Information</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Facility Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Facility Name</label>
                       {isEditingBasic ? (
@@ -429,26 +429,26 @@ export function FacilityProfile() {
 
                 {/* Location */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Location</h3>
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Location</h3>
                   {isEditingBasic ? (
-                    <div className="space-y-4">
+                    <div className="space-y-3 md:space-y-4">
                       <div>
                         <input
                           type="text"
                           value={editedData.address}
                           onChange={(e) => setEditedData({ ...editedData, address: e.target.value })}
                           placeholder="Street Address"
-                          className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                          className="w-full h-10 md:h-11 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm"
                         />
                       </div>
-                      <div className="grid grid-cols-6 gap-4">
-                        <div className="col-span-3">
+                      <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 md:gap-4">
+                        <div className="col-span-2 sm:col-span-3">
                           <input
                             type="text"
                             value={editedData.city}
                             onChange={(e) => setEditedData({ ...editedData, city: e.target.value })}
                             placeholder="City"
-                            className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                            className="w-full h-10 md:h-11 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm"
                           />
                         </div>
                         <div className="col-span-1">
@@ -458,16 +458,16 @@ export function FacilityProfile() {
                             onChange={(e) => setEditedData({ ...editedData, state: e.target.value })}
                             placeholder="State"
                             maxLength={2}
-                            className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                            className="w-full h-10 md:h-11 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm"
                           />
                         </div>
-                        <div className="col-span-2">
+                        <div className="col-span-1 sm:col-span-2">
                           <input
                             type="text"
                             value={editedData.zipCode}
                             onChange={(e) => setEditedData({ ...editedData, zipCode: e.target.value })}
                             placeholder="ZIP Code"
-                            className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                            className="w-full h-10 md:h-11 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm"
                           />
                         </div>
                       </div>
@@ -482,17 +482,17 @@ export function FacilityProfile() {
 
                 {/* About */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">About</h3>
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">About</h3>
                   {isEditingBasic ? (
                     <textarea
                       value={editedData.description}
                       onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
-                      rows={6}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                      rows={5}
+                      className="w-full px-3 md:px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm"
                       placeholder="Tell patients about your facility..."
                     />
                   ) : (
-                    <p className="text-gray-700 leading-relaxed">{formData.description}</p>
+                    <p className="text-gray-700 leading-relaxed text-sm md:text-base">{formData.description}</p>
                   )}
                 </div>
               </div>
@@ -500,30 +500,30 @@ export function FacilityProfile() {
 
             {/* OPERATIONS TAB */}
             {activeTab === 'operations' && (
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {/* Operating Hours */}
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900">Operating Hours</h3>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 md:mb-4">
+                    <h3 className="text-base md:text-lg font-semibold text-gray-900">Operating Hours</h3>
                     {!isEditingHours ? (
                       <button
                         onClick={() => setIsEditingHours(true)}
-                        className="flex items-center gap-2 text-sm bg-gray-900 text-white px-4 h-10 rounded-lg hover:bg-gray-800"
+                        className="flex items-center gap-2 text-sm bg-gray-900 text-white px-4 h-9 md:h-10 rounded-lg hover:bg-gray-800 w-full sm:w-auto justify-center"
                       >
                         <Edit2 className="w-4 h-4" />
                         Edit Hours
                       </button>
                     ) : (
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 w-full sm:w-auto">
                         <button
                           onClick={handleCancelHours}
-                          className="text-sm border border-gray-300 text-gray-700 px-4 h-10 rounded-lg hover:bg-gray-50"
+                          className="flex-1 sm:flex-none text-sm border border-gray-300 text-gray-700 px-4 h-9 md:h-10 rounded-lg hover:bg-gray-50"
                         >
                           Cancel
                         </button>
                         <button
                           onClick={handleSaveHours}
-                          className="flex items-center gap-2 text-sm bg-gray-900 text-white px-4 h-10 rounded-lg hover:bg-gray-800"
+                          className="flex-1 sm:flex-none flex items-center gap-2 text-sm bg-gray-900 text-white px-4 h-9 md:h-10 rounded-lg hover:bg-gray-800 justify-center"
                         >
                           <Save className="w-4 h-4" />
                           Save
@@ -531,10 +531,10 @@ export function FacilityProfile() {
                       </div>
                     )}
                   </div>
-                  <div className="space-y-3">
+                  <div className="space-y-2 md:space-y-3">
                     {Object.entries(isEditingHours ? editedData.operatingHours : formData.operatingHours).map(([day, hours]) => (
-                      <div key={day} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="font-medium text-gray-900 capitalize w-28">{day}</span>
+                      <div key={day} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-gray-50 rounded-lg">
+                        <span className="font-medium text-gray-900 capitalize text-sm w-24">{day}</span>
                         {isEditingHours ? (
                           <input
                             type="text"
@@ -545,11 +545,11 @@ export function FacilityProfile() {
                                 operatingHours: { ...editedData.operatingHours, [day]: e.target.value },
                               })
                             }
-                            className="flex-1 max-w-xs h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                            className="flex-1 sm:max-w-xs h-10 px-3 md:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm"
                             placeholder="e.g., 8:00 AM - 8:00 PM"
                           />
                         ) : (
-                          <span className="text-gray-600">{hours}</span>
+                          <span className="text-gray-600 text-sm">{hours}</span>
                         )}
                       </div>
                     ))}
@@ -562,28 +562,28 @@ export function FacilityProfile() {
                 </div>
 
                 {/* Specialists */}
-                <div className="pt-6 border-t border-gray-200">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900">Specialists Available</h3>
+                <div className="pt-4 md:pt-6 border-t border-gray-200">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 md:mb-4">
+                    <h3 className="text-base md:text-lg font-semibold text-gray-900">Specialists Available</h3>
                     {!isEditingSpecialists ? (
                       <button
                         onClick={() => setIsEditingSpecialists(true)}
-                        className="flex items-center gap-2 text-sm bg-gray-900 text-white px-4 h-10 rounded-lg hover:bg-gray-800"
+                        className="flex items-center gap-2 text-sm bg-gray-900 text-white px-4 h-9 md:h-10 rounded-lg hover:bg-gray-800 w-full sm:w-auto justify-center"
                       >
                         <Edit2 className="w-4 h-4" />
                         Edit Specialists
                       </button>
                     ) : (
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 w-full sm:w-auto">
                         <button
                           onClick={handleCancelSpecialists}
-                          className="text-sm border border-gray-300 text-gray-700 px-4 h-10 rounded-lg hover:bg-gray-50"
+                          className="flex-1 sm:flex-none text-sm border border-gray-300 text-gray-700 px-4 h-9 md:h-10 rounded-lg hover:bg-gray-50"
                         >
                           Cancel
                         </button>
                         <button
                           onClick={handleSaveSpecialists}
-                          className="flex items-center gap-2 text-sm bg-gray-900 text-white px-4 h-10 rounded-lg hover:bg-gray-800"
+                          className="flex-1 sm:flex-none flex items-center gap-2 text-sm bg-gray-900 text-white px-4 h-9 md:h-10 rounded-lg hover:bg-gray-800 justify-center"
                         >
                           <Save className="w-4 h-4" />
                           Save
@@ -591,7 +591,7 @@ export function FacilityProfile() {
                       </div>
                     )}
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3 mb-3 md:mb-4">
                     {(isEditingSpecialists ? editedData.specialties : formData.specialties).map((specialty, index) => (
                       <div
                         key={index}
@@ -640,9 +640,9 @@ export function FacilityProfile() {
                 </div>
 
                 {/* Insurance Accepted */}
-                <div className="pt-6 border-t border-gray-200">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Insurance Accepted</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div className="pt-4 md:pt-6 border-t border-gray-200">
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Insurance Accepted</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3">
                     {formData.insuranceAccepted.map((insurance, index) => (
                       <div
                         key={index}
@@ -662,7 +662,7 @@ export function FacilityProfile() {
 
             {/* REVIEWS TAB */}
             {activeTab === 'reviews' && (
-              <div className="space-y-4 pt-6">
+              <div className="space-y-3 md:space-y-4 pt-4 md:pt-6">
                 {formData.patientReviews.map((review) => (
                   <div key={review.id} className="p-4 bg-gray-50 rounded-lg border border-gray-200">
                     <div className="flex items-center gap-2 mb-2">

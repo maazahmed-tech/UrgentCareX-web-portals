@@ -226,47 +226,47 @@ export function AdminSubscriptionOverview() {
 
   return (
     <DashboardLayout title="Subscriptions" role="admin">
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Active Subscriptions</p>
-                <p className="text-3xl font-bold mt-1">{activeSubscriptions}</p>
+                <p className="text-xs md:text-sm text-gray-600">Active Subs</p>
+                <p className="text-xl md:text-3xl font-bold mt-1">{activeSubscriptions}</p>
               </div>
-              <CreditCard className="w-8 h-8 text-blue-600" />
+              <CreditCard className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
             </div>
           </div>
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Trial (14-day)</p>
-                <p className="text-3xl font-bold mt-1">{trialCount}</p>
+                <p className="text-xs md:text-sm text-gray-600">Trial</p>
+                <p className="text-xl md:text-3xl font-bold mt-1">{trialCount}</p>
               </div>
-              <div className="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center text-white text-xl font-bold">
+              <div className="w-8 h-8 md:w-12 md:h-12 bg-yellow-500 rounded-lg flex items-center justify-center text-white text-lg md:text-xl font-bold">
                 T
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Monthly ($49)</p>
-                <p className="text-3xl font-bold mt-1">{monthlyCount}</p>
+                <p className="text-xs md:text-sm text-gray-600">Monthly</p>
+                <p className="text-xl md:text-3xl font-bold mt-1">{monthlyCount}</p>
               </div>
-              <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center text-white text-xl font-bold">
+              <div className="w-8 h-8 md:w-12 md:h-12 bg-gray-900 rounded-lg flex items-center justify-center text-white text-lg md:text-xl font-bold">
                 M
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Yearly ($499)</p>
-                <p className="text-3xl font-bold mt-1">{yearlyCount}</p>
+                <p className="text-xs md:text-sm text-gray-600">Yearly</p>
+                <p className="text-xl md:text-3xl font-bold mt-1">{yearlyCount}</p>
               </div>
-              <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center text-white text-xl font-bold">
+              <div className="w-8 h-8 md:w-12 md:h-12 bg-green-600 rounded-lg flex items-center justify-center text-white text-lg md:text-xl font-bold">
                 Y
               </div>
             </div>
@@ -274,25 +274,25 @@ export function AdminSubscriptionOverview() {
         </div>
 
         {/* Pricing Info */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-          <h3 className="font-semibold text-blue-900 mb-2">Subscription Plans</h3>
-          <div className="flex flex-wrap gap-4 text-sm text-blue-800">
-            <span><strong>Trial:</strong> $0 for 14 days (all features)</span>
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 md:p-4">
+          <h3 className="font-semibold text-blue-900 mb-2 text-sm md:text-base">Subscription Plans</h3>
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-1 sm:gap-4 text-xs md:text-sm text-blue-800">
+            <span><strong>Trial:</strong> $0 for 14 days</span>
             <span><strong>Monthly:</strong> $49/month</span>
-            <span><strong>Yearly:</strong> $499/year (save $89)</span>
+            <span><strong>Yearly:</strong> $499/year</span>
           </div>
         </div>
 
         {/* Filters Section */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
             {/* Search */}
-            <div className="md:col-span-2">
+            <div className="sm:col-span-2">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input
                   type="text"
-                  placeholder="Search by name or email..."
+                  placeholder="Search..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -347,14 +347,71 @@ export function AdminSubscriptionOverview() {
         </div>
 
         {/* Results Count */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between px-1">
           <p className="text-sm text-gray-600">
             Showing {filteredSubscriptions.length} of {mockSubscriptions.length} subscriptions
           </p>
         </div>
 
-        {/* Subscriptions Table */}
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        {/* Mobile Card View */}
+        <div className="block lg:hidden space-y-3">
+          {filteredSubscriptions.map((sub) => (
+            <div
+              key={sub.id}
+              className="bg-white rounded-xl border border-gray-200 p-4 space-y-3"
+            >
+              {/* Header: Name, Type Icon, Status */}
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-2 flex-1 min-w-0">
+                  {sub.entityType === 'facility' ? (
+                    <Building2 className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                  ) : (
+                    <UserCog className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                  )}
+                  <div className="min-w-0">
+                    <h3 className="font-semibold text-gray-900 truncate">{sub.entityName}</h3>
+                    <p className="text-xs text-gray-500 truncate">{sub.email}</p>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <span
+                    className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium text-white ${getStatusColor(
+                      sub.status
+                    )}`}
+                  >
+                    {sub.status.charAt(0).toUpperCase() + sub.status.slice(1)}
+                  </span>
+                  <span
+                    className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium text-white ${getPlanColor(
+                      sub.plan
+                    )}`}
+                  >
+                    {sub.plan}
+                  </span>
+                </div>
+              </div>
+
+              {/* Details */}
+              <div className="flex items-center justify-between text-sm pt-2 border-t border-gray-100">
+                <div className="text-gray-600">
+                  <span className="font-medium">{sub.amount}</span>
+                </div>
+                <div className="text-xs text-gray-500">
+                  Next: {sub.nextBillingDate === '-' ? '-' : new Date(sub.nextBillingDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {filteredSubscriptions.length === 0 && (
+            <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
+              <p className="text-gray-500">No subscriptions found</p>
+            </div>
+          )}
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden lg:block bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">

@@ -148,42 +148,43 @@ export function FacilitySettings() {
 
   return (
     <DashboardLayout title="Settings" role="facility">
-      <div className="max-w-3xl space-y-6">
+      <div className="max-w-3xl space-y-4 md:space-y-6">
         {/* Security */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-              <Lock className="w-5 h-5 text-gray-600" />
+        <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+              <Lock className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">Security</h2>
-              <p className="text-sm text-gray-600">Manage your password and security settings</p>
+              <h2 className="text-base md:text-lg font-semibold text-gray-900">Security</h2>
+              <p className="text-xs md:text-sm text-gray-600">Manage your password and security settings</p>
             </div>
           </div>
 
           <div className="space-y-3">
-            <div className="flex items-center justify-between py-3 border-b border-gray-100">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3 border-b border-gray-100">
               <div>
-                <p className="font-medium text-gray-900">Password</p>
-                <p className="text-sm text-gray-600">Last changed 30 days ago</p>
+                <p className="font-medium text-gray-900 text-sm md:text-base">Password</p>
+                <p className="text-xs md:text-sm text-gray-600">Last changed 30 days ago</p>
               </div>
               <Button
                 onClick={() => navigate('/facility/change-password')}
                 variant="outline"
+                className="w-full sm:w-auto"
               >
                 Change Password
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-3">
-              <div>
-                <p className="font-medium text-gray-900">Two-Factor Authentication</p>
-                <p className="text-sm text-gray-600">Sends a 6-digit OTP code to your registered email</p>
+              <div className="flex-1 mr-4">
+                <p className="font-medium text-gray-900 text-sm md:text-base">Two-Factor Authentication</p>
+                <p className="text-xs md:text-sm text-gray-600">Sends a 6-digit OTP code to your email</p>
               </div>
               <button
                 type="button"
                 onClick={() => setTwoFactorEnabled(!twoFactorEnabled)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors flex-shrink-0 ${
                   twoFactorEnabled ? 'bg-gray-900' : 'bg-gray-300'
                 }`}
               >
@@ -198,78 +199,83 @@ export function FacilitySettings() {
         </div>
 
         {/* Policies */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-              <FileText className="w-5 h-5 text-gray-600" />
+        <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+              <FileText className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">Policies</h2>
-              <p className="text-sm text-gray-600">View our terms and policies</p>
+              <h2 className="text-base md:text-lg font-semibold text-gray-900">Policies</h2>
+              <p className="text-xs md:text-sm text-gray-600">View our terms and policies</p>
             </div>
           </div>
 
           <div className="space-y-3">
             <div className="flex items-center justify-between py-3 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <span className="text-xl">🔒</span>
-                <p className="font-medium text-gray-900">Privacy Policy</p>
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="text-lg md:text-xl">🔒</span>
+                <p className="font-medium text-gray-900 text-sm md:text-base">Privacy Policy</p>
               </div>
               <Button
                 onClick={() => setSelectedPolicy('privacy')}
                 variant="outline"
+                size="sm"
               >
                 View
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-3 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <span className="text-xl">📄</span>
-                <p className="font-medium text-gray-900">Terms of Service</p>
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="text-lg md:text-xl">📄</span>
+                <p className="font-medium text-gray-900 text-sm md:text-base">Terms of Service</p>
               </div>
               <Button
                 onClick={() => setSelectedPolicy('terms')}
                 variant="outline"
+                size="sm"
               >
                 View
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-3 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <span className="text-xl">📋</span>
-                <p className="font-medium text-gray-900">How We Use Your Data</p>
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="text-lg md:text-xl">📋</span>
+                <p className="font-medium text-gray-900 text-sm md:text-base">How We Use Your Data</p>
               </div>
               <Button
                 onClick={() => setSelectedPolicy('data')}
                 variant="outline"
+                size="sm"
               >
                 View
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-3 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <span className="text-xl">⚠️</span>
-                <p className="font-medium text-gray-900">Important Disclaimer</p>
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="text-lg md:text-xl">⚠️</span>
+                <p className="font-medium text-gray-900 text-sm md:text-base">Important Disclaimer</p>
               </div>
               <Button
                 onClick={() => setSelectedPolicy('disclaimer')}
                 variant="outline"
+                size="sm"
               >
                 View
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-3">
-              <div className="flex items-center gap-3">
-                <span className="text-xl">🏥</span>
-                <p className="font-medium text-gray-900">HIPAA Notice</p>
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="text-lg md:text-xl">🏥</span>
+                <p className="font-medium text-gray-900 text-sm md:text-base">HIPAA Notice</p>
               </div>
               <Button
                 onClick={() => setSelectedPolicy('hipaa')}
                 variant="outline"
+                size="sm"
               >
                 View
               </Button>
@@ -278,64 +284,64 @@ export function FacilitySettings() {
         </div>
 
         {/* Contact Support */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-              <HelpCircle className="w-5 h-5 text-gray-600" />
+        <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+              <HelpCircle className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">Contact Support</h2>
-              <p className="text-sm text-gray-600">Need help with your subscription or have questions? Reach out to our support team:</p>
+              <h2 className="text-base md:text-lg font-semibold text-gray-900">Contact Support</h2>
+              <p className="text-xs md:text-sm text-gray-600">Need help? Reach out to our support team</p>
             </div>
           </div>
 
           <div className="space-y-4">
-            <div className="flex items-start gap-4 py-4 border-b border-gray-100">
-              <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Phone className="w-5 h-5 text-gray-600" />
+            <div className="flex items-start gap-3 md:gap-4 py-3 md:py-4 border-b border-gray-100">
+              <div className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Phone className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
               </div>
               <div>
-                <p className="font-medium text-gray-900 mb-1">Phone</p>
-                <p className="text-gray-900">+1 (800) 555-1234</p>
-                <p className="text-sm text-gray-600">Mon-Fri, 9AM-6PM EST</p>
+                <p className="font-medium text-gray-900 mb-1 text-sm md:text-base">Phone</p>
+                <p className="text-gray-900 text-sm md:text-base">+1 (800) 555-1234</p>
+                <p className="text-xs md:text-sm text-gray-600">Mon-Fri, 9AM-6PM EST</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-4 py-4">
-              <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Mail className="w-5 h-5 text-gray-600" />
+            <div className="flex items-start gap-3 md:gap-4 py-3 md:py-4">
+              <div className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Mail className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
               </div>
               <div>
-                <p className="font-medium text-gray-900 mb-1">Email</p>
-                <p className="text-gray-900">support@urgentcarex.com</p>
-                <p className="text-sm text-gray-600">We'll respond within 24 hours</p>
+                <p className="font-medium text-gray-900 mb-1 text-sm md:text-base">Email</p>
+                <p className="text-gray-900 text-sm md:text-base break-all">support@urgentcarex.com</p>
+                <p className="text-xs md:text-sm text-gray-600">We'll respond within 24 hours</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Testing Tools */}
-        <div className="bg-orange-50 rounded-xl border border-orange-200 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-              <ShieldAlert className="w-5 h-5 text-orange-600" />
+        <div className="bg-orange-50 rounded-xl border border-orange-200 p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+              <ShieldAlert className="w-4 h-4 md:w-5 md:h-5 text-orange-600" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">Testing Tools</h2>
-              <p className="text-sm text-gray-600">Developer tools for testing account states</p>
+              <h2 className="text-base md:text-lg font-semibold text-gray-900">Testing Tools</h2>
+              <p className="text-xs md:text-sm text-gray-600">Developer tools for testing account states</p>
             </div>
           </div>
 
           <div className="space-y-3">
-            <div className="flex items-center justify-between py-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3">
               <div>
-                <p className="font-medium text-gray-900">Simulate Account Suspension</p>
-                <p className="text-sm text-gray-600">Test the account suspension overlay and lockdown experience</p>
+                <p className="font-medium text-gray-900 text-sm md:text-base">Simulate Account Suspension</p>
+                <p className="text-xs md:text-sm text-gray-600">Test the suspension overlay experience</p>
               </div>
               <Button
                 onClick={handleSuspendAccount}
                 variant="outline"
-                className="bg-white hover:bg-red-50 hover:border-red-300 hover:text-red-700"
+                className="bg-white hover:bg-red-50 hover:border-red-300 hover:text-red-700 w-full sm:w-auto"
               >
                 Suspend Account
               </Button>
@@ -344,27 +350,27 @@ export function FacilitySettings() {
         </div>
 
         {/* Danger Zone */}
-        <div className="bg-red-50 rounded-xl border-2 border-red-200 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-              <Trash2 className="w-5 h-5 text-red-600" />
+        <div className="bg-red-50 rounded-xl border-2 border-red-200 p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-red-100 rounded-lg flex items-center justify-center">
+              <Trash2 className="w-4 h-4 md:w-5 md:h-5 text-red-600" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-red-900">Danger Zone</h2>
-              <p className="text-sm text-red-700">Irreversible and destructive actions</p>
+              <h2 className="text-base md:text-lg font-semibold text-red-900">Danger Zone</h2>
+              <p className="text-xs md:text-sm text-red-700">Irreversible and destructive actions</p>
             </div>
           </div>
 
           <div className="space-y-3">
-            <div className="flex items-center justify-between py-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3">
               <div>
-                <p className="font-medium text-red-900">Delete Account</p>
-                <p className="text-sm text-red-700">Permanently delete your facility account and all associated data. This action cannot be undone.</p>
+                <p className="font-medium text-red-900 text-sm md:text-base">Delete Account</p>
+                <p className="text-xs md:text-sm text-red-700">Permanently delete your facility account. This cannot be undone.</p>
               </div>
               <Button
                 onClick={() => setShowDeleteModal(true)}
                 variant="outline"
-                className="bg-white border-red-300 text-red-600 hover:bg-red-100 hover:border-red-400"
+                className="bg-white border-red-300 text-red-600 hover:bg-red-100 hover:border-red-400 w-full sm:w-auto"
               >
                 Delete Account
               </Button>

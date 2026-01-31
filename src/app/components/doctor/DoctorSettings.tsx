@@ -148,28 +148,29 @@ export function DoctorSettings() {
 
   return (
     <DashboardLayout title="Settings" role="doctor">
-      <div className="max-w-3xl space-y-6">
+      <div className="max-w-3xl space-y-4 md:space-y-6">
         {/* Security */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-              <Lock className="w-5 h-5 text-gray-600" />
+        <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Lock className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">Security</h2>
-              <p className="text-sm text-gray-600">Manage your password and security settings</p>
+              <h2 className="text-base md:text-lg font-semibold text-gray-900">Security</h2>
+              <p className="text-xs md:text-sm text-gray-600">Manage your password and security settings</p>
             </div>
           </div>
 
           <div className="space-y-3">
-            <div className="flex items-center justify-between py-3 border-b border-gray-100">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3 border-b border-gray-100">
               <div>
-                <p className="font-medium text-gray-900">Password</p>
-                <p className="text-sm text-gray-600">Last changed 45 days ago</p>
+                <p className="text-sm md:text-base font-medium text-gray-900">Password</p>
+                <p className="text-xs md:text-sm text-gray-600">Last changed 45 days ago</p>
               </div>
               <Button
                 onClick={() => navigate('/doctor/change-password')}
                 variant="outline"
+                className="w-full sm:w-auto"
               >
                 Change Password
               </Button>
@@ -177,13 +178,13 @@ export function DoctorSettings() {
 
             <div className="flex items-center justify-between py-3">
               <div>
-                <p className="font-medium text-gray-900">Two-Factor Authentication</p>
-                <p className="text-sm text-gray-600">Sends a 6-digit OTP code to your registered email</p>
+                <p className="text-sm md:text-base font-medium text-gray-900">Two-Factor Authentication</p>
+                <p className="text-xs md:text-sm text-gray-600">Sends a 6-digit OTP code to your registered email</p>
               </div>
               <button
                 type="button"
                 onClick={() => setTwoFactorEnabled(!twoFactorEnabled)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors flex-shrink-0 ${
                   twoFactorEnabled ? 'bg-gray-900' : 'bg-gray-300'
                 }`}
               >
@@ -198,78 +199,83 @@ export function DoctorSettings() {
         </div>
 
         {/* Policies */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-              <FileText className="w-5 h-5 text-gray-600" />
+        <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <FileText className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">Policies</h2>
-              <p className="text-sm text-gray-600">View our terms and policies</p>
+              <h2 className="text-base md:text-lg font-semibold text-gray-900">Policies</h2>
+              <p className="text-xs md:text-sm text-gray-600">View our terms and policies</p>
             </div>
           </div>
 
           <div className="space-y-3">
             <div className="flex items-center justify-between py-3 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <span className="text-xl">🔒</span>
-                <p className="font-medium text-gray-900">Privacy Policy</p>
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="text-lg md:text-xl">🔒</span>
+                <p className="text-sm md:text-base font-medium text-gray-900">Privacy Policy</p>
               </div>
               <Button
                 onClick={() => setSelectedPolicy('privacy')}
                 variant="outline"
+                size="sm"
               >
                 View
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-3 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <span className="text-xl">📄</span>
-                <p className="font-medium text-gray-900">Terms of Service</p>
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="text-lg md:text-xl">📄</span>
+                <p className="text-sm md:text-base font-medium text-gray-900">Terms of Service</p>
               </div>
               <Button
                 onClick={() => setSelectedPolicy('terms')}
                 variant="outline"
+                size="sm"
               >
                 View
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-3 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <span className="text-xl">📋</span>
-                <p className="font-medium text-gray-900">How We Use Your Data</p>
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="text-lg md:text-xl">📋</span>
+                <p className="text-sm md:text-base font-medium text-gray-900">How We Use Your Data</p>
               </div>
               <Button
                 onClick={() => setSelectedPolicy('data')}
                 variant="outline"
+                size="sm"
               >
                 View
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-3 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <span className="text-xl">⚠️</span>
-                <p className="font-medium text-gray-900">Important Disclaimer</p>
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="text-lg md:text-xl">⚠️</span>
+                <p className="text-sm md:text-base font-medium text-gray-900">Important Disclaimer</p>
               </div>
               <Button
                 onClick={() => setSelectedPolicy('disclaimer')}
                 variant="outline"
+                size="sm"
               >
                 View
               </Button>
             </div>
 
             <div className="flex items-center justify-between py-3">
-              <div className="flex items-center gap-3">
-                <span className="text-xl">🏥</span>
-                <p className="font-medium text-gray-900">HIPAA Notice</p>
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="text-lg md:text-xl">🏥</span>
+                <p className="text-sm md:text-base font-medium text-gray-900">HIPAA Notice</p>
               </div>
               <Button
                 onClick={() => setSelectedPolicy('hipaa')}
                 variant="outline"
+                size="sm"
               >
                 View
               </Button>
@@ -278,64 +284,64 @@ export function DoctorSettings() {
         </div>
 
         {/* Contact Support */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-              <HelpCircle className="w-5 h-5 text-gray-600" />
+        <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
+          <div className="flex items-start gap-3 mb-4 md:mb-6">
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <HelpCircle className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">Contact Support</h2>
-              <p className="text-sm text-gray-600">Need help with your subscription or have questions? Reach out to our support team:</p>
+              <h2 className="text-base md:text-lg font-semibold text-gray-900">Contact Support</h2>
+              <p className="text-xs md:text-sm text-gray-600">Need help with your subscription or have questions? Reach out to our support team:</p>
             </div>
           </div>
 
           <div className="space-y-4">
-            <div className="flex items-start gap-4 py-4 border-b border-gray-100">
-              <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Phone className="w-5 h-5 text-gray-600" />
+            <div className="flex items-start gap-3 md:gap-4 py-3 md:py-4 border-b border-gray-100">
+              <div className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Phone className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
               </div>
               <div>
-                <p className="font-medium text-gray-900 mb-1">Phone</p>
-                <p className="text-gray-900">+1 (800) 555-1234</p>
-                <p className="text-sm text-gray-600">Mon-Fri, 9AM-6PM EST</p>
+                <p className="text-sm md:text-base font-medium text-gray-900 mb-1">Phone</p>
+                <p className="text-sm md:text-base text-gray-900">+1 (800) 555-1234</p>
+                <p className="text-xs md:text-sm text-gray-600">Mon-Fri, 9AM-6PM EST</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-4 py-4">
-              <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Mail className="w-5 h-5 text-gray-600" />
+            <div className="flex items-start gap-3 md:gap-4 py-3 md:py-4">
+              <div className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Mail className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
               </div>
               <div>
-                <p className="font-medium text-gray-900 mb-1">Email</p>
-                <p className="text-gray-900">support@urgentcarex.com</p>
-                <p className="text-sm text-gray-600">We'll respond within 24 hours</p>
+                <p className="text-sm md:text-base font-medium text-gray-900 mb-1">Email</p>
+                <p className="text-sm md:text-base text-gray-900 break-all">support@urgentcarex.com</p>
+                <p className="text-xs md:text-sm text-gray-600">We'll respond within 24 hours</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Testing Tools */}
-        <div className="bg-orange-50 rounded-xl border border-orange-200 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-              <ShieldAlert className="w-5 h-5 text-orange-600" />
+        <div className="bg-orange-50 rounded-xl border border-orange-200 p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <ShieldAlert className="w-4 h-4 md:w-5 md:h-5 text-orange-600" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">Testing Tools</h2>
-              <p className="text-sm text-gray-600">Developer tools for testing account states</p>
+              <h2 className="text-base md:text-lg font-semibold text-gray-900">Testing Tools</h2>
+              <p className="text-xs md:text-sm text-gray-600">Developer tools for testing account states</p>
             </div>
           </div>
 
           <div className="space-y-3">
-            <div className="flex items-center justify-between py-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3">
               <div>
-                <p className="font-medium text-gray-900">Simulate Account Suspension</p>
-                <p className="text-sm text-gray-600">Test the account suspension overlay and lockdown experience</p>
+                <p className="text-sm md:text-base font-medium text-gray-900">Simulate Account Suspension</p>
+                <p className="text-xs md:text-sm text-gray-600">Test the account suspension overlay and lockdown experience</p>
               </div>
               <Button
                 onClick={handleSuspendAccount}
                 variant="outline"
-                className="bg-white hover:bg-red-50 hover:border-red-300 hover:text-red-700"
+                className="w-full sm:w-auto bg-white hover:bg-red-50 hover:border-red-300 hover:text-red-700"
               >
                 Suspend Account
               </Button>
@@ -344,27 +350,27 @@ export function DoctorSettings() {
         </div>
 
         {/* Danger Zone */}
-        <div className="bg-red-50 rounded-xl border-2 border-red-200 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-              <Trash2 className="w-5 h-5 text-red-600" />
+        <div className="bg-red-50 rounded-xl border-2 border-red-200 p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Trash2 className="w-4 h-4 md:w-5 md:h-5 text-red-600" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-red-900">Danger Zone</h2>
-              <p className="text-sm text-red-700">Irreversible and destructive actions</p>
+              <h2 className="text-base md:text-lg font-semibold text-red-900">Danger Zone</h2>
+              <p className="text-xs md:text-sm text-red-700">Irreversible and destructive actions</p>
             </div>
           </div>
 
           <div className="space-y-3">
-            <div className="flex items-center justify-between py-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3">
               <div>
-                <p className="font-medium text-red-900">Delete Account</p>
-                <p className="text-sm text-red-700">Permanently delete your doctor account and all associated data. This action cannot be undone.</p>
+                <p className="text-sm md:text-base font-medium text-red-900">Delete Account</p>
+                <p className="text-xs md:text-sm text-red-700">Permanently delete your doctor account and all associated data. This action cannot be undone.</p>
               </div>
               <Button
                 onClick={() => setShowDeleteModal(true)}
                 variant="outline"
-                className="bg-white border-red-300 text-red-600 hover:bg-red-100 hover:border-red-400"
+                className="w-full sm:w-auto bg-white border-red-300 text-red-600 hover:bg-red-100 hover:border-red-400"
               >
                 Delete Account
               </Button>
@@ -376,22 +382,22 @@ export function DoctorSettings() {
       {/* Delete Account Confirmation Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full shadow-2xl">
+          <div className="bg-white rounded-xl p-4 md:p-6 max-w-md w-full shadow-2xl">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
-                <AlertTriangle className="w-6 h-6 text-red-600" />
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                <AlertTriangle className="w-5 h-5 md:w-6 md:h-6 text-red-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900">Delete Account?</h3>
-                <p className="text-sm text-gray-600">This action is permanent</p>
+                <h3 className="text-lg md:text-xl font-semibold text-gray-900">Delete Account?</h3>
+                <p className="text-xs md:text-sm text-gray-600">This action is permanent</p>
               </div>
             </div>
 
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-              <p className="text-sm text-red-800 mb-3">
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3 md:p-4 mb-4 md:mb-6">
+              <p className="text-xs md:text-sm text-red-800 mb-3">
                 <strong>Warning:</strong> This will permanently delete your doctor account including:
               </p>
-              <ul className="text-sm text-red-700 space-y-1 ml-4 list-disc">
+              <ul className="text-xs md:text-sm text-red-700 space-y-1 ml-4 list-disc">
                 <li>All profile and credential information</li>
                 <li>Appointment history and patient records</li>
                 <li>Availability schedule and settings</li>
@@ -399,8 +405,8 @@ export function DoctorSettings() {
               </ul>
             </div>
 
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+            <div className="mb-4 md:mb-6">
+              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2">
                 Type <span className="font-bold text-red-600">DELETE</span> to confirm
               </label>
               <input
@@ -408,24 +414,24 @@ export function DoctorSettings() {
                 value={deleteConfirmText}
                 onChange={(e) => setDeleteConfirmText(e.target.value)}
                 placeholder="Type DELETE here"
-                className="w-full h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                className="w-full h-10 md:h-11 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm md:text-base"
               />
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => {
                   setShowDeleteModal(false);
                   setDeleteConfirmText('');
                 }}
-                className="flex-1 px-4 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
+                className="flex-1 px-4 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors text-sm md:text-base"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDeleteAccount}
                 disabled={deleteConfirmText !== 'DELETE'}
-                className={`flex-1 px-4 py-2.5 rounded-lg font-medium transition-colors ${
+                className={`flex-1 px-4 py-2.5 rounded-lg font-medium transition-colors text-sm md:text-base ${
                   deleteConfirmText === 'DELETE'
                     ? 'bg-red-600 text-white hover:bg-red-700'
                     : 'bg-gray-200 text-gray-400 cursor-not-allowed'

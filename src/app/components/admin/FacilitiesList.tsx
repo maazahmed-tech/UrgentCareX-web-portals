@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { Search, Filter, Eye, MapPin, Phone, Mail } from 'lucide-react';
+import { Search, Eye, MapPin, Phone, Mail, Users, Calendar } from 'lucide-react';
 import { DashboardLayout } from '@/app/components/layouts/DashboardLayout';
 import { Input } from '@/app/components/ui/input';
 import { Button } from '@/app/components/ui/button';
@@ -88,17 +88,17 @@ export function FacilitiesList() {
   const [filterStatus, setFilterStatus] = useState('all');
 
   useEffect(() => {
-    console.log('📍 Current Screen: Admin Facilities List');
+    console.log('Current Screen: Admin Facilities List');
   }, []);
 
   const filteredFacilities = mockFacilities.filter((facility) => {
-    const matchesSearch = 
+    const matchesSearch =
       facility.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       facility.location.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesStatus = 
+
+    const matchesStatus =
       filterStatus === 'all' || facility.status === filterStatus;
-    
+
     return matchesSearch && matchesStatus;
   });
 
@@ -121,12 +121,12 @@ export function FacilitiesList() {
 
   return (
     <DashboardLayout title="Facilities" role="admin">
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Filters Section */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {/* Search */}
-            <div className="md:col-span-2">
+            <div className="sm:col-span-2">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input
@@ -156,14 +156,98 @@ export function FacilitiesList() {
         </div>
 
         {/* Results Count */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between px-1">
           <p className="text-sm text-gray-600">
             Showing {filteredFacilities.length} of {mockFacilities.length} facilities
           </p>
         </div>
 
-        {/* Facilities Table */}
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        {/* Mobile Card View */}
+        <div className="block lg:hidden space-y-3">
+          {filteredFacilities.map((facility) => (
+            <div
+              key={facility.id}
+              className="bg-white rounded-xl border border-gray-200 p-4 space-y-3"
+            >
+              {/* Header: Name, Status, Subscription */}
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-gray-900 truncate">{facility.name}</h3>
+                  <div className="flex items-center gap-1 text-sm text-gray-600 mt-0.5">
+                    <MapPin className="w-3.5 h-3.5 text-gray-400" />
+                    <span>{facility.location}</span>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <span
+                    className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium text-white ${getStatusColor(
+                      facility.status
+                    )}`}
+                  >
+                    {facility.status.charAt(0).toUpperCase() + facility.status.slice(1)}
+                  </span>
+                  <span
+                    className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium text-white ${getSubscriptionColor(
+                      facility.subscription
+                    )}`}
+                  >
+                    {facility.subscription}
+                  </span>
+                </div>
+              </div>
+
+              {/* Contact Info */}
+              <div className="space-y-1.5 text-sm text-gray-600">
+                <div className="flex items-center gap-2">
+                  <Mail className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+                  <span className="truncate">{facility.email}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+                  <span>{facility.phone}</span>
+                </div>
+              </div>
+
+              {/* Stats Row */}
+              <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-1 text-sm text-gray-600">
+                    <Users className="w-4 h-4 text-gray-400" />
+                    <span>{facility.doctors} doctors</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-sm text-gray-600">
+                    <Calendar className="w-3.5 h-3.5 text-gray-400" />
+                    <span>
+                      {new Date(facility.joinedDate).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      })}
+                    </span>
+                  </div>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate(`/admin/facilities/${facility.id}`)}
+                  className="h-8"
+                >
+                  <Eye className="w-4 h-4 mr-1" />
+                  View
+                </Button>
+              </div>
+            </div>
+          ))}
+
+          {filteredFacilities.length === 0 && (
+            <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
+              <p className="text-gray-500">No facilities found</p>
+            </div>
+          )}
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden lg:block bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">

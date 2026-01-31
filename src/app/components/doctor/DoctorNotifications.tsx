@@ -84,22 +84,22 @@ export function DoctorNotifications() {
 
   return (
     <DashboardLayout title="Notifications" role="doctor">
-      <div className="max-w-4xl space-y-6">
+      <div className="max-w-4xl space-y-4 md:space-y-6">
         {/* Header Section */}
         <div>
-          <p className="text-gray-600 mb-6">
+          <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6">
             {unreadCount > 0 ? `${unreadCount} unread notification${unreadCount !== 1 ? 's' : ''}` : 'All caught up!'}
           </p>
         </div>
 
         {/* Notifications List */}
         {notifications.length === 0 ? (
-          <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Bell className="w-8 h-8 text-gray-400" />
+          <div className="bg-white rounded-xl border border-gray-200 p-8 md:p-12 text-center">
+            <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Bell className="w-6 h-6 md:w-8 md:h-8 text-gray-400" />
             </div>
-            <h3 className="text-lg font-medium mb-2">No notifications</h3>
-            <p className="text-gray-600">
+            <h3 className="text-base md:text-lg font-medium mb-2">No notifications</h3>
+            <p className="text-sm md:text-base text-gray-600">
               You don't have any notifications yet
             </p>
           </div>
@@ -113,25 +113,25 @@ export function DoctorNotifications() {
                   notification.isRead
                     ? 'border-gray-200 hover:border-gray-300'
                     : 'border-blue-200 bg-blue-50/30 hover:bg-blue-50/50'
-                } p-5 hover:shadow-md`}
+                } p-4 md:p-5 hover:shadow-md`}
               >
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-3 md:gap-4">
                   {/* Icon */}
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${getIconBgColor(notification.type)}`}>
+                  <div className={`w-9 h-9 md:w-10 md:h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${getIconBgColor(notification.type)}`}>
                     {getIcon(notification.type)}
                   </div>
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-4 mb-1">
-                      <h3 className={`font-medium ${notification.isRead ? 'text-gray-900' : 'text-gray-900 font-semibold'}`}>
+                    <div className="flex items-start justify-between gap-2 md:gap-4 mb-1">
+                      <h3 className={`text-sm md:text-base font-medium ${notification.isRead ? 'text-gray-900' : 'text-gray-900 font-semibold'}`}>
                         {notification.title}
                       </h3>
                       {!notification.isRead && (
-                        <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-2" />
+                        <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-1.5" />
                       )}
                     </div>
-                    <p className="text-sm text-gray-600 mb-3">{notification.message}</p>
+                    <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3">{notification.message}</p>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">{notification.timestamp}</span>
                       <button
@@ -139,7 +139,7 @@ export function DoctorNotifications() {
                         className="text-xs text-gray-500 hover:text-red-600 font-medium flex items-center gap-1 transition-colors"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
-                        Delete
+                        <span className="hidden sm:inline">Delete</span>
                       </button>
                     </div>
                   </div>

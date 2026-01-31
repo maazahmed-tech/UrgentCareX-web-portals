@@ -58,20 +58,20 @@ export function DoctorChangePassword() {
   return (
     <DoctorLayout title="Change Password">
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-xl border border-gray-200 p-8">
-          <div className="flex items-center gap-3 mb-6">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-8">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
             <button
               onClick={() => navigate('/doctor/settings')}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
             >
               <ArrowLeft className="w-5 h-5 text-gray-600" />
             </button>
-            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-              <Lock className="w-6 h-6 text-gray-600" />
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Lock className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
             </div>
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900">Change Your Password</h2>
-              <p className="text-sm text-gray-600">Ensure your password is strong and secure</p>
+            <div className="min-w-0">
+              <h2 className="text-lg md:text-xl font-semibold text-gray-900">Change Your Password</h2>
+              <p className="text-xs md:text-sm text-gray-600">Ensure your password is strong and secure</p>
             </div>
           </div>
 
@@ -188,9 +188,9 @@ export function DoctorChangePassword() {
             </div>
 
             {/* Password Requirements */}
-            <div className="bg-gray-50 rounded-lg p-4">
-              <p className="text-sm font-medium text-gray-900 mb-3">Password Requirements:</p>
-              <div className="space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 md:p-4">
+              <p className="text-xs md:text-sm font-medium text-gray-900 mb-2 md:mb-3">Password Requirements:</p>
+              <div className="space-y-1.5 md:space-y-2">
                 <RequirementItem met={hasMinLength} text="At least 8 characters" />
                 <RequirementItem met={hasUpperCase} text="One uppercase letter" />
                 <RequirementItem met={hasLowerCase} text="One lowercase letter" />
@@ -200,10 +200,10 @@ export function DoctorChangePassword() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-4">
               <Button
                 type="submit"
-                className="flex-1 bg-gray-900 hover:bg-gray-800"
+                className="flex-1 bg-gray-900 hover:bg-gray-800 text-sm md:text-base"
                 disabled={!allRequirementsMet || !passwordsMatch || !currentPassword}
               >
                 Change Password
@@ -212,6 +212,7 @@ export function DoctorChangePassword() {
                 type="button"
                 variant="outline"
                 onClick={() => navigate('/doctor/settings')}
+                className="text-sm md:text-base"
               >
                 Cancel
               </Button>
@@ -219,8 +220,8 @@ export function DoctorChangePassword() {
           </form>
 
           {/* Security Notice */}
-          <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <p className="text-sm text-blue-800">
+          <div className="mt-4 md:mt-6 p-3 md:p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <p className="text-xs md:text-sm text-blue-800">
               <strong>Security Tip:</strong> Use a unique password that you don't use for other accounts.
               Consider using a password manager to keep track of your passwords securely.
             </p>
@@ -236,11 +237,11 @@ function RequirementItem({ met, text }: { met: boolean; text: string }) {
   return (
     <div className="flex items-center gap-2">
       {met ? (
-        <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+        <CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4 text-green-500 flex-shrink-0" />
       ) : (
-        <XCircle className="w-4 h-4 text-gray-300 flex-shrink-0" />
+        <XCircle className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300 flex-shrink-0" />
       )}
-      <span className={`text-sm ${met ? 'text-green-700' : 'text-gray-600'}`}>{text}</span>
+      <span className={`text-xs md:text-sm ${met ? 'text-green-700' : 'text-gray-600'}`}>{text}</span>
     </div>
   );
 }

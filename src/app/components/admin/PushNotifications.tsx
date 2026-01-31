@@ -171,12 +171,12 @@ export function PushNotifications() {
 
   return (
     <DashboardLayout title="Push Notifications" role="admin">
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Compose Notification */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-center gap-2 mb-6">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex items-center gap-2 mb-4 md:mb-6">
             <Bell className="w-5 h-5 text-gray-600" />
-            <h2 className="text-lg font-semibold">Compose Notification</h2>
+            <h2 className="text-base md:text-lg font-semibold">Compose Notification</h2>
           </div>
 
           <div className="space-y-4">
@@ -191,32 +191,32 @@ export function PushNotifications() {
                   <SelectItem value="all">
                     <div className="flex items-center gap-2">
                       <Users className="w-4 h-4" />
-                      All Users (Patients, Facilities & Doctors)
+                      <span className="text-sm">All Users</span>
                     </div>
                   </SelectItem>
                   <SelectItem value="patients">
                     <div className="flex items-center gap-2">
                       <Users className="w-4 h-4" />
-                      All Patients (1,247)
+                      <span className="text-sm">Patients (1,247)</span>
                     </div>
                   </SelectItem>
                   <SelectItem value="facilities">
                     <div className="flex items-center gap-2">
                       <Building2 className="w-4 h-4" />
-                      All Facilities (89)
+                      <span className="text-sm">Facilities (89)</span>
                     </div>
                   </SelectItem>
                   <SelectItem value="doctors">
                     <div className="flex items-center gap-2">
                       <UserCog className="w-4 h-4" />
-                      All Doctors (156)
+                      <span className="text-sm">Doctors (156)</span>
                     </div>
                   </SelectItem>
                 </SelectContent>
               </Select>
               {recipients && (
-                <p className="text-sm text-gray-500 mt-1">
-                  This notification will be sent to {getRecipientCount().toLocaleString()} recipients
+                <p className="text-xs md:text-sm text-gray-500 mt-1">
+                  Sending to {getRecipientCount().toLocaleString()} recipients
                 </p>
               )}
             </div>
@@ -232,7 +232,7 @@ export function PushNotifications() {
                 className="mt-1.5"
                 maxLength={100}
               />
-              <p className="text-sm text-gray-500 mt-1">{title.length}/100 characters</p>
+              <p className="text-xs md:text-sm text-gray-500 mt-1">{title.length}/100 characters</p>
             </div>
 
             {/* Message */}
@@ -243,18 +243,18 @@ export function PushNotifications() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Enter notification message"
-                className="mt-1.5 min-h-[120px]"
+                className="mt-1.5 min-h-[100px] md:min-h-[120px]"
                 maxLength={500}
               />
-              <p className="text-sm text-gray-500 mt-1">{message.length}/500 characters</p>
+              <p className="text-xs md:text-sm text-gray-500 mt-1">{message.length}/500 characters</p>
             </div>
 
             {/* Send Button */}
-            <div className="flex justify-end pt-4">
+            <div className="flex justify-end pt-2 md:pt-4">
               <Button
                 onClick={() => setShowConfirmDialog(true)}
                 disabled={!isFormValid}
-                className="bg-gray-900 hover:bg-gray-800"
+                className="bg-gray-900 hover:bg-gray-800 w-full sm:w-auto"
               >
                 <Send className="w-4 h-4 mr-2" />
                 Send Notification
@@ -264,26 +264,26 @@ export function PushNotifications() {
         </div>
 
         {/* Notification History */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-center gap-2 mb-6">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex items-center gap-2 mb-4 md:mb-6">
             <Clock className="w-5 h-5 text-gray-600" />
-            <h2 className="text-lg font-semibold">Notification History</h2>
+            <h2 className="text-base md:text-lg font-semibold">Notification History</h2>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             {notificationHistory.map((notification) => (
               <div
                 key={notification.id}
-                className="p-4 bg-gray-50 rounded-lg border border-gray-200"
+                className="p-3 md:p-4 bg-gray-50 rounded-lg border border-gray-200"
               >
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     {getRecipientIcon(notification.recipients)}
-                    <span className="text-sm font-medium text-gray-600">
+                    <span className="text-xs md:text-sm font-medium text-gray-600">
                       {getRecipientLabel(notification.recipients)}
                     </span>
-                    <span className="text-gray-300">•</span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-gray-300 hidden sm:inline">•</span>
+                    <span className="text-xs md:text-sm text-gray-500">
                       {notification.recipientCount.toLocaleString()} recipients
                     </span>
                   </div>
@@ -306,10 +306,9 @@ export function PushNotifications() {
                     </span>
                   </div>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1">{notification.title}</h3>
-                <p className="text-sm text-gray-600 mb-2">{notification.message}</p>
+                <h3 className="font-semibold text-gray-900 mb-1 text-sm md:text-base">{notification.title}</h3>
+                <p className="text-xs md:text-sm text-gray-600 mb-2">{notification.message}</p>
                 <p className="text-xs text-gray-400">
-                  Sent by {notification.sentBy} on{' '}
                   {new Date(notification.sentAt).toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',

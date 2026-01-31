@@ -147,86 +147,86 @@ export function FacilityDashboard() {
 
   return (
     <DashboardLayout title="Dashboard" role="facility">
-      <div className="space-y-6 max-w-7xl">
+      <div className="space-y-4 md:space-y-6 max-w-7xl">
         {/* Welcome Message */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h2 className="text-2xl font-bold mb-2">Welcome back, {user?.name || 'Facility'}!</h2>
-          <p className="text-gray-600">Here's an overview of your facility performance and profile status.</p>
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <h2 className="text-xl md:text-2xl font-bold mb-2">Welcome back, {user?.name || 'Facility'}!</h2>
+          <p className="text-sm md:text-base text-gray-600">Here's an overview of your facility performance and profile status.</p>
         </div>
 
         {/* Top Stats Row - 4 Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {/* Profile Status */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-600">Profile Status</p>
-              <CheckCircle className={`w-5 h-5 ${isActive ? 'text-green-600' : 'text-gray-600'}`} />
+              <p className="text-xs md:text-sm text-gray-600">Profile Status</p>
+              <CheckCircle className={`w-4 h-4 md:w-5 md:h-5 ${isActive ? 'text-green-600' : 'text-gray-600'}`} />
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-3xl font-bold">{isActive ? 'Active' : 'Inactive'}</p>
+              <p className="text-xl md:text-3xl font-bold">{isActive ? 'Active' : 'Inactive'}</p>
               <button
                 onClick={handleToggleStatus}
-                className={`p-2 rounded-lg transition-colors ${
+                className={`p-1.5 md:p-2 rounded-lg transition-colors ${
                   isActive
                     ? 'bg-green-100 text-green-600 hover:bg-green-200'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 {isActive ? (
-                  <ToggleRight className="w-6 h-6" />
+                  <ToggleRight className="w-5 h-5 md:w-6 md:h-6" />
                 ) : (
-                  <ToggleLeft className="w-6 h-6" />
+                  <ToggleLeft className="w-5 h-5 md:w-6 md:h-6" />
                 )}
               </button>
             </div>
           </div>
 
           {/* Plan Type */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-600">Plan Type</p>
-              <CreditCard className="w-5 h-5 text-gray-600" />
+              <p className="text-xs md:text-sm text-gray-600">Plan Type</p>
+              <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
             </div>
-            <p className="text-3xl font-bold">Monthly</p>
+            <p className="text-xl md:text-3xl font-bold">Monthly</p>
           </div>
 
           {/* Profile Completion */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-600">Profile Completion</p>
-              <Building2 className="w-5 h-5 text-gray-600" />
+              <p className="text-xs md:text-sm text-gray-600">Profile Completion</p>
+              <Building2 className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
             </div>
-            <p className="text-3xl font-bold text-gray-900">{profileCompletionData.overallProgress}%</p>
+            <p className="text-xl md:text-3xl font-bold text-gray-900">{profileCompletionData.overallProgress}%</p>
           </div>
 
           {/* Accepts Appointments */}
-          <div className={`bg-white rounded-xl p-6 border-2 transition-colors ${
+          <div className={`bg-white rounded-xl p-4 md:p-6 border-2 transition-colors ${
             acceptsAppointments ? 'border-blue-200 bg-blue-50/30' : 'border-gray-200'
           }`}>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-600">Accepts Appointments</p>
-              <Calendar className={`w-5 h-5 ${acceptsAppointments ? 'text-blue-600' : 'text-gray-400'}`} />
+              <p className="text-xs md:text-sm text-gray-600">Accepts Appts</p>
+              <Calendar className={`w-4 h-4 md:w-5 md:h-5 ${acceptsAppointments ? 'text-blue-600' : 'text-gray-400'}`} />
             </div>
             <div className="flex items-center justify-between">
-              <p className={`text-3xl font-bold ${acceptsAppointments ? 'text-blue-600' : 'text-gray-400'}`}>
+              <p className={`text-xl md:text-3xl font-bold ${acceptsAppointments ? 'text-blue-600' : 'text-gray-400'}`}>
                 {acceptsAppointments ? 'Yes' : 'No'}
               </p>
               <button
                 onClick={handleToggleAppointments}
-                className={`p-2 rounded-lg transition-colors ${
+                className={`p-1.5 md:p-2 rounded-lg transition-colors ${
                   acceptsAppointments
                     ? 'bg-blue-100 text-blue-600 hover:bg-blue-200'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 {acceptsAppointments ? (
-                  <ToggleRight className="w-6 h-6" />
+                  <ToggleRight className="w-5 h-5 md:w-6 md:h-6" />
                 ) : (
-                  <ToggleLeft className="w-6 h-6" />
+                  <ToggleLeft className="w-5 h-5 md:w-6 md:h-6" />
                 )}
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-gray-500 mt-2 hidden md:block">
               {acceptsAppointments
                 ? 'Patients can book appointments'
                 : 'Appointment booking is disabled'}
@@ -235,67 +235,67 @@ export function FacilityDashboard() {
         </div>
 
         {/* Platform Statistics - 4 Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {/* Total Providers */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6 text-gray-600" />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                <Users className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Total Providers on Platform</p>
-            <p className="text-3xl font-bold text-gray-900">{platformStats.totalProviders.toLocaleString()}</p>
-            <p className="text-xs text-gray-500 mt-2">+127 this month</p>
+            <p className="text-xs md:text-sm text-gray-600 mb-1">Total Providers</p>
+            <p className="text-xl md:text-3xl font-bold text-gray-900">{platformStats.totalProviders.toLocaleString()}</p>
+            <p className="text-xs text-gray-500 mt-2 hidden md:block">+127 this month</p>
           </div>
 
           {/* Total Patients */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                <Download className="w-6 h-6 text-gray-600" />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                <Download className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Patients on Platform</p>
-            <p className="text-3xl font-bold text-gray-900">{platformStats.totalPatients.toLocaleString()}</p>
-            <p className="text-xs text-gray-500 mt-2">Total app downloads</p>
+            <p className="text-xs md:text-sm text-gray-600 mb-1">Patients</p>
+            <p className="text-xl md:text-3xl font-bold text-gray-900">{platformStats.totalPatients.toLocaleString()}</p>
+            <p className="text-xs text-gray-500 mt-2 hidden md:block">Total app downloads</p>
           </div>
 
           {/* Profile Views */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                <Eye className="w-6 h-6 text-gray-600" />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                <Eye className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Profile Views</p>
-            <p className="text-3xl font-bold text-gray-900">{platformStats.profileViews.toLocaleString()}</p>
-            <p className="text-xs text-gray-500 mt-2">+56 this week</p>
+            <p className="text-xs md:text-sm text-gray-600 mb-1">Profile Views</p>
+            <p className="text-xl md:text-3xl font-bold text-gray-900">{platformStats.profileViews.toLocaleString()}</p>
+            <p className="text-xs text-gray-500 mt-2 hidden md:block">+56 this week</p>
           </div>
 
           {/* Recommendations */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                <UserCheck className="w-6 h-6 text-gray-600" />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                <UserCheck className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Recommendations</p>
-            <p className="text-3xl font-bold text-gray-900">{platformStats.recommendations.toLocaleString()}</p>
-            <p className="text-xs text-gray-500 mt-2">Times recommended to patients</p>
+            <p className="text-xs md:text-sm text-gray-600 mb-1">Recommendations</p>
+            <p className="text-xl md:text-3xl font-bold text-gray-900">{platformStats.recommendations.toLocaleString()}</p>
+            <p className="text-xs text-gray-500 mt-2 hidden md:block">Recommended to patients</p>
           </div>
         </div>
 
         {/* Performance Comparison Chart */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-center justify-between mb-6">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 md:mb-6">
             <div className="flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-gray-600" />
-              <h2 className="text-xl font-semibold">Performance Comparison</h2>
+              <h2 className="text-lg md:text-xl font-semibold">Performance Comparison</h2>
             </div>
             <div className="flex gap-2">
               <button
                 onClick={() => setSelectedMetric('reviews')}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-3 py-1.5 rounded-lg text-xs md:text-sm font-medium transition-colors ${
                   selectedMetric === 'reviews'
                     ? 'bg-gray-900 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -305,7 +305,7 @@ export function FacilityDashboard() {
               </button>
               <button
                 onClick={() => setSelectedMetric('recommendations')}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-3 py-1.5 rounded-lg text-xs md:text-sm font-medium transition-colors ${
                   selectedMetric === 'recommendations'
                     ? 'bg-gray-900 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -316,11 +316,11 @@ export function FacilityDashboard() {
             </div>
           </div>
 
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-xs md:text-sm text-gray-600 mb-4">
             Compare your facility with the top 5 facilities on UrgentCareX
           </p>
 
-          <ResponsiveContainer width="100%" height={350}>
+          <ResponsiveContainer width="100%" height={280} className="md:!h-[350px]">
             <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
               <XAxis 
@@ -360,32 +360,32 @@ export function FacilityDashboard() {
         </div>
 
         {/* Top 3 Specialist Types */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-center gap-2 mb-6">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex items-center gap-2 mb-4 md:mb-6">
             <Stethoscope className="w-5 h-5 text-gray-600" />
-            <h2 className="text-xl font-semibold">Most Requested Specialist Types</h2>
+            <h2 className="text-lg md:text-xl font-semibold">Most Requested Specialist Types</h2>
           </div>
 
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-xs md:text-sm text-gray-600 mb-4">
             Top 3 specialist types most frequently requested by patients on the platform
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
             {topSpecialists.map((specialist, index) => (
-              <div 
+              <div
                 key={specialist.type}
-                className="relative bg-gradient-to-br from-gray-50 to-white p-6 rounded-xl border border-gray-200"
+                className="relative bg-gradient-to-br from-gray-50 to-white p-4 md:p-6 rounded-xl border border-gray-200"
               >
                 {/* Rank Badge */}
-                <div className="absolute top-4 right-4 w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                <div className="absolute top-3 right-3 md:top-4 md:right-4 w-7 h-7 md:w-8 md:h-8 bg-gray-900 text-white rounded-full flex items-center justify-center text-xs md:text-sm font-bold">
                   #{index + 1}
                 </div>
 
                 {/* Icon */}
-                <div className="text-4xl mb-3">{specialist.icon}</div>
+                <div className="text-3xl md:text-4xl mb-2 md:mb-3">{specialist.icon}</div>
 
                 {/* Specialist Type */}
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-base md:text-lg font-semibold text-gray-900">
                   {specialist.type}
                 </h3>
               </div>
@@ -394,10 +394,10 @@ export function FacilityDashboard() {
         </div>
 
         {/* Review Summary */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-center gap-2 mb-6">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex items-center gap-2 mb-4 md:mb-6">
             <Star className="w-5 h-5 text-gray-600" />
-            <h2 className="text-xl font-semibold">Review Summary</h2>
+            <h2 className="text-lg md:text-xl font-semibold">Review Summary</h2>
           </div>
 
           <div className="space-y-3">
@@ -465,49 +465,49 @@ export function FacilityDashboard() {
 
         {/* Quick Actions */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">Quick Actions</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             <button
               onClick={() => navigate('/facility/profile')}
-              className="bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 transition-colors text-left"
+              className="bg-white rounded-xl p-4 md:p-6 border border-gray-200 hover:border-gray-300 transition-colors text-left"
             >
-              <Building2 className="w-8 h-8 text-blue-600 mb-3" />
-              <h3 className="font-semibold text-lg mb-1">Update Profile</h3>
-              <p className="text-sm text-gray-600">Edit facility information, hours, and services</p>
+              <Building2 className="w-6 h-6 md:w-8 md:h-8 text-blue-600 mb-2 md:mb-3" />
+              <h3 className="font-semibold text-base md:text-lg mb-1">Update Profile</h3>
+              <p className="text-xs md:text-sm text-gray-600">Edit facility information, hours, and services</p>
             </button>
-            
+
             <button
               onClick={() => navigate('/facility/subscription')}
-              className="bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 transition-colors text-left"
+              className="bg-white rounded-xl p-4 md:p-6 border border-gray-200 hover:border-gray-300 transition-colors text-left"
             >
-              <CreditCard className="w-8 h-8 text-green-600 mb-3" />
-              <h3 className="font-semibold text-lg mb-1">Manage Subscription</h3>
-              <p className="text-sm text-gray-600">View billing and upgrade your plan</p>
+              <CreditCard className="w-6 h-6 md:w-8 md:h-8 text-green-600 mb-2 md:mb-3" />
+              <h3 className="font-semibold text-base md:text-lg mb-1">Manage Subscription</h3>
+              <p className="text-xs md:text-sm text-gray-600">View billing and upgrade your plan</p>
             </button>
-            
+
             <button
               onClick={() => navigate('/facility/settings')}
-              className="bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 transition-colors text-left"
+              className="bg-white rounded-xl p-4 md:p-6 border border-gray-200 hover:border-gray-300 transition-colors text-left"
             >
-              <Settings className="w-8 h-8 text-purple-600 mb-3" />
-              <h3 className="font-semibold text-lg mb-1">Account Settings</h3>
-              <p className="text-sm text-gray-600">Update preferences and security</p>
+              <Settings className="w-6 h-6 md:w-8 md:h-8 text-purple-600 mb-2 md:mb-3" />
+              <h3 className="font-semibold text-base md:text-lg mb-1">Account Settings</h3>
+              <p className="text-xs md:text-sm text-gray-600">Update preferences and security</p>
             </button>
           </div>
         </div>
 
         {/* Facility Status */}
         <div className="bg-white rounded-xl border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-lg font-semibold">Facility Status</h3>
+          <div className="p-4 md:p-6 border-b border-gray-200">
+            <h3 className="text-base md:text-lg font-semibold">Facility Status</h3>
           </div>
-          <div className="p-6">
-            <div className="flex items-center justify-between">
+          <div className="p-4 md:p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <p className="font-medium text-lg">
+                <p className="font-medium text-base md:text-lg">
                   Your facility is currently {isActive ? 'Active' : 'Inactive'}
                 </p>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-xs md:text-sm text-gray-600 mt-1">
                   {isActive
                     ? 'Patients can view and access your services'
                     : 'Your facility is hidden from patient searches'}
@@ -515,7 +515,7 @@ export function FacilityDashboard() {
               </div>
               <button
                 onClick={handleToggleStatus}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                className={`w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                   isActive
                     ? 'bg-green-600 text-white hover:bg-green-700'
                     : 'bg-gray-600 text-white hover:bg-gray-700'

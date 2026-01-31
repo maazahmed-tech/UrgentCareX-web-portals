@@ -302,7 +302,7 @@ export function FacilityAppointmentDetails() {
 
   return (
     <DashboardLayout title="Appointment Details" role="facility">
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="max-w-4xl mx-auto space-y-4 md:space-y-6">
         {/* Notification Banner */}
         {notification && (
           <div className={`fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 animate-slide-in ${
@@ -322,27 +322,27 @@ export function FacilityAppointmentDetails() {
         {/* Reject Confirmation Modal */}
         {showRejectModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl p-6 max-w-md w-full shadow-2xl">
+            <div className="bg-white rounded-xl p-4 md:p-6 max-w-md w-full shadow-2xl">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
-                  <AlertCircle className="w-6 h-6 text-red-600" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                  <AlertCircle className="w-5 h-5 md:w-6 md:h-6 text-red-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900">Cancel Appointment?</h3>
+                <h3 className="text-lg md:text-xl font-semibold text-gray-900">Cancel Appointment?</h3>
               </div>
-              <p className="text-gray-600 mb-6">
+              <p className="text-sm md:text-base text-gray-600 mb-6">
                 Are you sure you want to cancel this appointment with <strong>{appointment.patientName}</strong>?
                 The patient will be notified and can choose another time slot.
               </p>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={() => setShowRejectModal(false)}
-                  className="flex-1 px-4 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
+                  className="flex-1 px-4 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors text-sm md:text-base"
                 >
                   Keep Appointment
                 </button>
                 <button
                   onClick={confirmReject}
-                  className="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition-colors"
+                  className="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition-colors text-sm md:text-base"
                 >
                   Cancel Appointment
                 </button>
@@ -363,50 +363,50 @@ export function FacilityAppointmentDetails() {
         {/* Main Card */}
         <div className="bg-white rounded-xl border border-[#E5E7EB] overflow-hidden">
           {/* Header */}
-          <div className="border-b border-[#E5E7EB] p-6">
-            <h1 className="text-2xl font-semibold text-[#1F2937] mb-2">Appointment Details</h1>
+          <div className="border-b border-[#E5E7EB] p-4 md:p-6">
+            <h1 className="text-xl md:text-2xl font-semibold text-[#1F2937] mb-2">Appointment Details</h1>
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-full flex items-center justify-center text-xl md:text-2xl flex-shrink-0">
                 {appointment.patientGender === 'Male' ? '👨' : '👩'}
               </div>
-              <div>
-                <p className="font-semibold text-[#1F2937]">{appointment.patientName}</p>
-                <p className="text-sm text-[#6B7280]">
+              <div className="min-w-0">
+                <p className="font-semibold text-[#1F2937] truncate">{appointment.patientName}</p>
+                <p className="text-xs md:text-sm text-[#6B7280]">
                   {appointment.patientAge} yrs, {appointment.patientGender} ({appointment.patientPronouns || 'Not specified'})
                 </p>
               </div>
             </div>
-            <div className="mt-4">
-              <span className={`px-3 py-1.5 rounded-full text-sm font-medium ${getStatusColor(currentStatus)}`}>
+            <div className="mt-3 md:mt-4">
+              <span className={`px-3 py-1.5 rounded-full text-xs md:text-sm font-medium ${getStatusColor(currentStatus)}`}>
                 {currentStatus}
               </span>
             </div>
           </div>
 
           {/* Details Section */}
-          <div className="p-6 border-b border-[#E5E7EB]">
-            <h2 className="font-semibold text-[#1F2937] mb-4">Details</h2>
+          <div className="p-4 md:p-6 border-b border-[#E5E7EB]">
+            <h2 className="font-semibold text-[#1F2937] mb-3 md:mb-4">Details</h2>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <Calendar className="w-5 h-5 text-[#6B7280] mt-0.5" />
+                <Calendar className="w-4 h-4 md:w-5 md:h-5 text-[#6B7280] mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-sm text-[#6B7280]">Date</p>
-                  <p className="font-medium text-[#1F2937]">{appointment.date}</p>
+                  <p className="text-xs md:text-sm text-[#6B7280]">Date</p>
+                  <p className="text-sm md:text-base font-medium text-[#1F2937]">{appointment.date}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <Clock className="w-5 h-5 text-[#6B7280] mt-0.5" />
+                <Clock className="w-4 h-4 md:w-5 md:h-5 text-[#6B7280] mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-sm text-[#6B7280]">Time</p>
-                  <p className="font-medium text-[#1F2937]">{appointment.time}</p>
+                  <p className="text-xs md:text-sm text-[#6B7280]">Time</p>
+                  <p className="text-sm md:text-base font-medium text-[#1F2937]">{appointment.time}</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Patient Medical Information */}
-          <div className="p-6 border-b border-[#E5E7EB]">
-            <h2 className="font-semibold text-[#1F2937] mb-6">Medical History</h2>
+          <div className="p-4 md:p-6 border-b border-[#E5E7EB]">
+            <h2 className="font-semibold text-[#1F2937] mb-4 md:mb-6">Medical History</h2>
 
             <div className="space-y-6">
               {/* Chronic Conditions */}
@@ -524,16 +524,16 @@ export function FacilityAppointmentDetails() {
           </div>
 
           {/* ROS Summary Section */}
-          <div className="p-6 border-b border-[#E5E7EB]">
-            <h2 className="font-semibold text-[#1F2937] mb-4">ROS Summary</h2>
+          <div className="p-4 md:p-6 border-b border-[#E5E7EB]">
+            <h2 className="font-semibold text-[#1F2937] mb-3 md:mb-4">ROS Summary</h2>
             <div className="space-y-3">
               {rosSummary.map((item, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <div className="min-w-[160px]">
-                    <p className="text-sm font-medium text-[#1F2937]">{item.category}</p>
+                <div key={index} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+                  <div className="sm:min-w-[160px]">
+                    <p className="text-xs md:text-sm font-medium text-[#1F2937]">{item.category}</p>
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-[#6B7280]">{item.value}</p>
+                    <p className="text-xs md:text-sm text-[#6B7280]">{item.value}</p>
                   </div>
                 </div>
               ))}
@@ -542,8 +542,8 @@ export function FacilityAppointmentDetails() {
 
           {/* Patient Review Section - Only for Completed Appointments */}
           {currentStatus === 'Completed' && appointment.review && (
-            <div className="p-6 border-b border-[#E5E7EB] bg-gradient-to-br from-blue-50 to-white">
-              <h2 className="font-semibold text-[#1F2937] mb-4">Patient Review</h2>
+            <div className="p-4 md:p-6 border-b border-[#E5E7EB] bg-gradient-to-br from-blue-50 to-white">
+              <h2 className="font-semibold text-[#1F2937] mb-3 md:mb-4">Patient Review</h2>
               <div className="space-y-3">
                 {/* Star Rating */}
                 <div className="flex items-center gap-2">
@@ -581,7 +581,7 @@ export function FacilityAppointmentDetails() {
           )}
 
           {/* Action Buttons Based on Status */}
-          <div className="p-6 bg-[#F3F4F6]">
+          <div className="p-4 md:p-6 bg-[#F3F4F6]">
             {currentStatus === 'Pending Confirmation' && (
               <div className="flex flex-col sm:flex-row gap-3">
                 <button

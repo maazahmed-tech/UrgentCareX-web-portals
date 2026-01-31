@@ -69,7 +69,7 @@ export function DoctorChangePlan() {
 
   return (
     <DashboardLayout title="Change Your Plan" role="doctor">
-      <div className="space-y-6 max-w-6xl">
+      <div className="space-y-4 md:space-y-6 max-w-6xl">
         {/* Back Button */}
         <button
           onClick={() => navigate('/doctor/subscription')}
@@ -80,11 +80,11 @@ export function DoctorChangePlan() {
         </button>
 
         {/* Plans Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {plans.map((plan) => (
             <div
               key={plan.id}
-              className={`bg-white rounded-xl p-6 border-2 relative ${
+              className={`bg-white rounded-xl p-4 md:p-6 border-2 relative ${
                 selectedPlan === plan.id
                   ? 'border-blue-600 shadow-lg'
                   : 'border-gray-200'
@@ -92,7 +92,7 @@ export function DoctorChangePlan() {
             >
               {plan.expired && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="px-3 py-1 bg-red-600 text-white text-sm font-medium rounded-full">
+                  <span className="px-2 md:px-3 py-1 bg-red-600 text-white text-xs md:text-sm font-medium rounded-full whitespace-nowrap">
                     Expired
                   </span>
                 </div>
@@ -100,37 +100,37 @@ export function DoctorChangePlan() {
 
               {plan.id === currentPlan?.id && !plan.expired && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="px-3 py-1 bg-gray-900 text-white text-sm font-medium rounded-full">
+                  <span className="px-2 md:px-3 py-1 bg-gray-900 text-white text-xs md:text-sm font-medium rounded-full whitespace-nowrap">
                     Current Plan
                   </span>
                 </div>
               )}
 
-              <div className="mb-6">
-                <h3 className="text-xl font-semibold mb-2">{plan.name}</h3>
-                <p className="text-sm text-gray-600 mb-4">{plan.description}</p>
+              <div className="mb-4 md:mb-6 mt-2">
+                <h3 className="text-lg md:text-xl font-semibold mb-2">{plan.name}</h3>
+                <p className="text-xs md:text-sm text-gray-600 mb-3 md:mb-4">{plan.description}</p>
                 <div className="mb-2">
-                  <span className="text-4xl font-bold">
+                  <span className="text-3xl md:text-4xl font-bold">
                     ${plan.price}
                   </span>
-                  <span className="text-gray-600">
+                  <span className="text-sm md:text-base text-gray-600">
                     /{plan.duration}
                   </span>
                 </div>
                 {plan.savings && (
-                  <p className="text-sm text-green-600 font-medium">
+                  <p className="text-xs md:text-sm text-green-600 font-medium">
                     {plan.savings}
                   </p>
                 )}
                 {plan.note && (
-                  <p className="text-sm text-gray-500 mt-2">
+                  <p className="text-xs md:text-sm text-gray-500 mt-2">
                     {plan.note}
                   </p>
                 )}
               </div>
 
               <Button
-                className={`w-full mb-6 ${
+                className={`w-full mb-4 md:mb-6 text-sm md:text-base ${
                   plan.expired
                     ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
                     : selectedPlan === plan.id
@@ -151,12 +151,12 @@ export function DoctorChangePlan() {
                   : 'Select Plan'}
               </Button>
 
-              <div className="space-y-3">
-                <p className="text-sm font-medium">Features included:</p>
+              <div className="space-y-2 md:space-y-3">
+                <p className="text-xs md:text-sm font-medium">Features included:</p>
                 {plan.features.map((feature, index) => (
                   <div key={index} className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-700">{feature}</span>
+                    <CheckCircle className="w-3.5 h-3.5 md:w-4 md:h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span className="text-xs md:text-sm text-gray-700">{feature}</span>
                   </div>
                 ))}
               </div>
@@ -165,12 +165,12 @@ export function DoctorChangePlan() {
         </div>
 
         {/* Information Banner */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 md:p-4">
           <div className="flex gap-3">
-            <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+            <Info className="w-4 h-4 md:w-5 md:h-5 text-blue-600 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm text-blue-900 font-medium mb-1">Plan Information</p>
-              <ul className="text-sm text-blue-800 space-y-1">
+              <p className="text-xs md:text-sm text-blue-900 font-medium mb-1">Plan Information</p>
+              <ul className="text-xs md:text-sm text-blue-800 space-y-1">
                 <li>• All plans include 100% of features</li>
                 <li>• Card required at signup to unlock 14-day trial</li>
                 <li>• Yearly plan saves $89/year ($588 vs $499)</li>
@@ -180,15 +180,16 @@ export function DoctorChangePlan() {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-4 justify-end">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:justify-end">
           <Button
             variant="outline"
             onClick={() => navigate('/doctor/subscription')}
+            className="w-full sm:w-auto text-sm md:text-base"
           >
             Cancel
           </Button>
           <Button
-            className="bg-blue-600 hover:bg-blue-700"
+            className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto text-sm md:text-base"
             onClick={handleChangePlan}
             disabled={selectedPlan === currentPlan?.id}
           >
@@ -198,14 +199,14 @@ export function DoctorChangePlan() {
 
         {/* Success Message */}
         {showConfirmation && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-xl p-6 max-w-md mx-4">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 md:p-4">
+            <div className="bg-white rounded-xl p-4 md:p-6 max-w-md w-full mx-4">
               <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-8 h-8 text-green-600" />
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="w-6 h-6 md:w-8 md:h-8 text-green-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Plan Changed Successfully!</h3>
-                <p className="text-gray-600">
+                <h3 className="text-lg md:text-xl font-semibold mb-2">Plan Changed Successfully!</h3>
+                <p className="text-sm md:text-base text-gray-600">
                   Your subscription has been updated to the {plans.find(p => p.id === selectedPlan)?.name}. You will be charged for this plan in the next billing cycle.
                 </p>
               </div>

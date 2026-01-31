@@ -73,11 +73,11 @@ export function ReviewsList() {
 
   const renderStars = (rating: number) => {
     return (
-      <div className="flex gap-1">
+      <div className="flex gap-0.5 md:gap-1">
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}
-            className={`w-4 h-4 ${
+            className={`w-3.5 h-3.5 md:w-4 md:h-4 ${
               star <= rating ? 'fill-[#F59E0B] text-[#F59E0B]' : 'text-[#E5E7EB]'
             }`}
           />
@@ -92,46 +92,46 @@ export function ReviewsList() {
     <DoctorLayout title="Patient Reviews">
       <div className="max-w-4xl">
         {/* Summary Card */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-[#E5E7EB] mb-6">
-          <div className="flex items-center justify-between">
+        <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm border border-[#E5E7EB] mb-4 md:mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h2 className="text-2xl font-semibold text-[#1F2937] mb-2">Patient Reviews</h2>
-              <p className="text-[#6B7280]">{reviews.length} total reviews</p>
+              <h2 className="text-xl md:text-2xl font-semibold text-[#1F2937] mb-1 md:mb-2">Patient Reviews</h2>
+              <p className="text-sm md:text-base text-[#6B7280]">{reviews.length} total reviews</p>
             </div>
-            <div className="text-center">
-              <div className="flex items-center gap-2 mb-2">
-                <Star className="w-8 h-8 fill-[#F59E0B] text-[#F59E0B]" />
-                <span className="text-3xl font-semibold text-[#1F2937]">{averageRating}</span>
+            <div className="text-left sm:text-center flex items-center sm:flex-col gap-3 sm:gap-0">
+              <div className="flex items-center gap-2 sm:mb-2">
+                <Star className="w-6 h-6 md:w-8 md:h-8 fill-[#F59E0B] text-[#F59E0B]" />
+                <span className="text-2xl md:text-3xl font-semibold text-[#1F2937]">{averageRating}</span>
               </div>
-              <p className="text-sm text-[#6B7280]">Average Rating</p>
+              <p className="text-xs md:text-sm text-[#6B7280]">Average Rating</p>
             </div>
           </div>
         </div>
 
         {/* Reviews List */}
-        <div className="space-y-4">
+        <div className="space-y-3 md:space-y-4">
           {reviews.map((review) => (
-            <div key={review.id} className="bg-white rounded-xl p-6 shadow-sm border border-[#E5E7EB]">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#F3F4F6] rounded-full flex items-center justify-center flex-shrink-0">
-                  <User className="w-6 h-6 text-[#6B7280]" />
+            <div key={review.id} className="bg-white rounded-xl p-4 md:p-6 shadow-sm border border-[#E5E7EB]">
+              <div className="flex items-start gap-3 md:gap-4">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-[#F3F4F6] rounded-full flex items-center justify-center flex-shrink-0">
+                  <User className="w-5 h-5 md:w-6 md:h-6 text-[#6B7280]" />
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-start justify-between mb-2">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-2 mb-2">
                     <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-medium text-[#1F2937]">{review.patientName}</h3>
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
+                        <h3 className="text-sm md:text-base font-medium text-[#1F2937]">{review.patientName}</h3>
                         {review.verified && (
-                          <span className="px-2 py-0.5 bg-[#D1FAE5] text-[#10B981] text-xs rounded">
-                            Verified Patient
+                          <span className="px-1.5 md:px-2 py-0.5 bg-[#D1FAE5] text-[#10B981] text-xs rounded">
+                            Verified
                           </span>
                         )}
                       </div>
                       {renderStars(review.rating)}
                     </div>
-                    <span className="text-sm text-[#6B7280]">{review.date}</span>
+                    <span className="text-xs md:text-sm text-[#6B7280]">{review.date}</span>
                   </div>
-                  <p className="text-[#1F2937] leading-relaxed">{review.comment}</p>
+                  <p className="text-sm md:text-base text-[#1F2937] leading-relaxed">{review.comment}</p>
                 </div>
               </div>
             </div>

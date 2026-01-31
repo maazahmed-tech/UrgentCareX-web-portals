@@ -329,8 +329,8 @@ export function DashboardLayout({ children, title, role }: DashboardLayoutProps)
 
       {/* Main content */}
       <main className="pt-16 lg:pl-64">
-        <div className="p-6 min-h-[calc(100vh-4rem-80px)]">
-          <h1 className="text-2xl font-bold mb-6">{title}</h1>
+        <div className="p-4 md:p-6 min-h-[calc(100vh-4rem-80px)]">
+          <h1 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">{title}</h1>
           {children}
         </div>
       </main>
@@ -342,42 +342,42 @@ export function DashboardLayout({ children, title, role }: DashboardLayoutProps)
 
       {/* Session Timeout Warning */}
       {showTimeoutWarning && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-md w-full p-6">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-3 md:p-4">
+          <div className="bg-white rounded-xl max-w-md w-full p-4 md:p-6">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                <Clock className="w-6 h-6 text-orange-600" />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <Clock className="w-5 h-5 md:w-6 md:h-6 text-orange-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900">Session Timeout Warning</h3>
-                <p className="text-sm text-gray-600">Your session is about to expire</p>
+                <h3 className="text-lg md:text-xl font-semibold text-gray-900">Session Timeout Warning</h3>
+                <p className="text-xs md:text-sm text-gray-600">Your session is about to expire</p>
               </div>
             </div>
 
-            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
-              <p className="text-sm text-orange-900 mb-3">
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 md:p-4 mb-4 md:mb-6">
+              <p className="text-xs md:text-sm text-orange-900 mb-3">
                 For your security, you will be automatically logged out due to inactivity.
               </p>
-              <div className="flex items-center justify-center gap-2 p-3 bg-white rounded-lg border border-orange-200">
-                <Clock className="w-5 h-5 text-orange-600" />
-                <span className="text-2xl font-bold text-orange-600">{formatTime(timeRemaining)}</span>
+              <div className="flex items-center justify-center gap-2 p-2 md:p-3 bg-white rounded-lg border border-orange-200">
+                <Clock className="w-4 h-4 md:w-5 md:h-5 text-orange-600" />
+                <span className="text-xl md:text-2xl font-bold text-orange-600">{formatTime(timeRemaining)}</span>
               </div>
-              <p className="text-xs text-orange-800 mt-3 text-center">
+              <p className="text-xs text-orange-800 mt-2 md:mt-3 text-center">
                 Click "Extend Session" to continue working
               </p>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               <Button
                 onClick={handleLogout}
                 variant="outline"
-                className="flex-1"
+                className="flex-1 text-sm md:text-base"
               >
                 Logout Now
               </Button>
               <Button
                 onClick={handleExtendSession}
-                className="flex-1 bg-gray-900 hover:bg-gray-800"
+                className="flex-1 bg-gray-900 hover:bg-gray-800 text-sm md:text-base"
               >
                 Extend Session
               </Button>

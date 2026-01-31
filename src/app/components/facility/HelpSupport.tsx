@@ -155,24 +155,24 @@ export function HelpSupport() {
 
   return (
     <DashboardLayout title="Help & Support" role="facility">
-      <div className="space-y-6 max-w-6xl">
+      <div className="space-y-4 md:space-y-6 max-w-6xl">
         {/* Success Message */}
         {submitSuccess && (
-          <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center gap-2">
-            <CheckCircle className="w-5 h-5" />
-            Your message has been submitted successfully! Our support team will get back to you within 24 hours.
+          <div className="bg-green-50 border border-green-200 text-green-800 px-3 md:px-4 py-3 rounded-lg flex items-start gap-2 text-sm md:text-base">
+            <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <span>Your message has been submitted successfully! Our support team will get back to you within 24 hours.</span>
           </div>
         )}
 
         {/* Header */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 md:p-6">
           <div className="flex items-start gap-3">
-            <HelpCircle className="w-6 h-6 text-blue-600 mt-0.5" />
+            <HelpCircle className="w-5 h-5 md:w-6 md:h-6 text-blue-600 mt-0.5 flex-shrink-0" />
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
+              <h2 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">
                 How can we help you?
               </h2>
-              <p className="text-gray-700">
+              <p className="text-sm md:text-base text-gray-700">
                 Browse our frequently asked questions or contact our support team for personalized assistance.
               </p>
             </div>
@@ -180,56 +180,56 @@ export function HelpSupport() {
         </div>
 
         {/* Quick Contact Info */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Mail className="w-5 h-5 text-blue-600" />
+              <div className="w-9 h-9 md:w-10 md:h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Mail className="w-4 h-4 md:w-5 md:h-5 text-blue-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">Email Support</h3>
+                <h3 className="font-semibold text-sm md:text-base text-gray-900">Email Support</h3>
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-2">Get help via email</p>
-            <a href="mailto:support@urgentcarex.com" className="text-sm text-blue-600 hover:underline">
+            <p className="text-xs md:text-sm text-gray-600 mb-2">Get help via email</p>
+            <a href="mailto:support@urgentcarex.com" className="text-xs md:text-sm text-blue-600 hover:underline break-all">
               support@urgentcarex.com
             </a>
           </div>
 
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <Phone className="w-5 h-5 text-green-600" />
+              <div className="w-9 h-9 md:w-10 md:h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Phone className="w-4 h-4 md:w-5 md:h-5 text-green-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">Phone Support</h3>
+                <h3 className="font-semibold text-sm md:text-base text-gray-900">Phone Support</h3>
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-2">Call us directly</p>
-            <a href="tel:+18005551234" className="text-sm text-blue-600 hover:underline">
+            <p className="text-xs md:text-sm text-gray-600 mb-2">Call us directly</p>
+            <a href="tel:+18005551234" className="text-xs md:text-sm text-blue-600 hover:underline">
               1-800-555-1234
             </a>
           </div>
 
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <Clock className="w-5 h-5 text-purple-600" />
+              <div className="w-9 h-9 md:w-10 md:h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Clock className="w-4 h-4 md:w-5 md:h-5 text-purple-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">Support Hours</h3>
+                <h3 className="font-semibold text-sm md:text-base text-gray-900">Support Hours</h3>
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Mon-Fri: 8am - 8pm EST</p>
-            <p className="text-sm text-gray-600">Sat-Sun: 10am - 6pm EST</p>
+            <p className="text-xs md:text-sm text-gray-600 mb-1">Mon-Fri: 8am - 8pm EST</p>
+            <p className="text-xs md:text-sm text-gray-600">Sat-Sun: 10am - 6pm EST</p>
           </div>
         </div>
 
         {/* FAQ Section */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-center gap-2 mb-6">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex items-center gap-2 mb-4 md:mb-6">
             <MessageSquare className="w-5 h-5 text-gray-600" />
-            <h2 className="text-xl font-semibold">Frequently Asked Questions</h2>
+            <h2 className="text-lg md:text-xl font-semibold">Frequently Asked Questions</h2>
           </div>
 
           {/* FAQ List */}
@@ -241,21 +241,21 @@ export function HelpSupport() {
               >
                 <button
                   onClick={() => toggleFAQ(faq.id)}
-                  className="w-full p-4 flex items-center justify-between hover:bg-gray-50 transition-colors text-left"
+                  className="w-full p-3 md:p-4 flex items-center justify-between hover:bg-gray-50 transition-colors text-left"
                 >
-                  <div className="flex-1">
-                    <span className="font-medium text-gray-900">{faq.question}</span>
+                  <div className="flex-1 min-w-0">
+                    <span className="font-medium text-sm md:text-base text-gray-900">{faq.question}</span>
                   </div>
                   {expandedFAQ === faq.id ? (
-                    <ChevronUp className="w-5 h-5 text-gray-600 flex-shrink-0 ml-4" />
+                    <ChevronUp className="w-5 h-5 text-gray-600 flex-shrink-0 ml-3" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-600 flex-shrink-0 ml-4" />
+                    <ChevronDown className="w-5 h-5 text-gray-600 flex-shrink-0 ml-3" />
                   )}
                 </button>
 
                 {expandedFAQ === faq.id && (
-                  <div className="px-4 pb-4 pt-2 bg-gray-50 border-t border-gray-200">
-                    <p className="text-sm text-gray-700 leading-relaxed">{faq.answer}</p>
+                  <div className="px-3 md:px-4 pb-3 md:pb-4 pt-2 bg-gray-50 border-t border-gray-200">
+                    <p className="text-xs md:text-sm text-gray-700 leading-relaxed">{faq.answer}</p>
                   </div>
                 )}
               </div>
@@ -264,18 +264,18 @@ export function HelpSupport() {
         </div>
 
         {/* Contact Support Form */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-center gap-2 mb-6">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex items-center gap-2 mb-4 md:mb-6">
             <Send className="w-5 h-5 text-gray-600" />
-            <h2 className="text-xl font-semibold">Contact Support</h2>
+            <h2 className="text-lg md:text-xl font-semibold">Contact Support</h2>
           </div>
 
-          <p className="text-sm text-gray-600 mb-6">
+          <p className="text-xs md:text-sm text-gray-600 mb-4 md:mb-6">
             Can't find what you're looking for? Submit a support request and our team will get back to you within 24 hours.
           </p>
 
           <form onSubmit={handleSubmitQuery} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="name">Your Name *</Label>
                 <Input
@@ -326,7 +326,7 @@ export function HelpSupport() {
               />
             </div>
 
-            <Button type="submit" className="w-full md:w-auto">
+            <Button type="submit" className="w-full sm:w-auto">
               <Send className="w-4 h-4 mr-2" />
               Submit Support Request
             </Button>
@@ -334,8 +334,8 @@ export function HelpSupport() {
         </div>
 
         {/* Additional Resources */}
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-          <p className="text-sm text-gray-700">
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 md:p-4">
+          <p className="text-xs md:text-sm text-gray-700">
             <strong>Note:</strong> For urgent technical issues affecting patient care, please call our emergency support line at <a href="tel:+18005559999" className="text-blue-600 hover:underline">1-800-555-9999</a> (available 24/7).
           </p>
         </div>

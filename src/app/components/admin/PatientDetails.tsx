@@ -100,37 +100,46 @@ export function PatientDetails() {
 
   return (
     <DashboardLayout title="Patient Details" role="admin">
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Back Button */}
         <Button
           variant="ghost"
           onClick={() => navigate('/admin/patients')}
-          className="mb-4"
+          className="mb-2 md:mb-4"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Patients
         </Button>
 
         {/* Header Card */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-start justify-between">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">{patient.name}</h2>
-              <div className="mt-4 space-y-2">
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Mail className="w-4 h-4" />
-                  <span>{patient.email}</span>
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900">{patient.name}</h2>
+                <span
+                  className={`inline-flex items-center px-2 md:px-3 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium text-white ${
+                    patient.status === 'active' ? 'bg-green-600' : 'bg-red-600'
+                  }`}
+                >
+                  {patient.status.charAt(0).toUpperCase() + patient.status.slice(1)}
+                </span>
+              </div>
+              <div className="mt-3 md:mt-4 space-y-2">
+                <div className="flex items-center gap-2 text-sm md:text-base text-gray-600">
+                  <Mail className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate">{patient.email}</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Phone className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-sm md:text-base text-gray-600">
+                  <Phone className="w-4 h-4 flex-shrink-0" />
                   <span>{patient.phone}</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Calendar className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-sm md:text-base text-gray-600">
+                  <Calendar className="w-4 h-4 flex-shrink-0" />
                   <span>
                     Registered on{' '}
                     {new Date(patient.registrationDate).toLocaleDateString('en-US', {
-                      month: 'long',
+                      month: 'short',
                       day: 'numeric',
                       year: 'numeric',
                     })}
@@ -138,20 +147,13 @@ export function PatientDetails() {
                 </div>
               </div>
             </div>
-            <span
-              className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white ${
-                patient.status === 'active' ? 'bg-green-600' : 'bg-red-600'
-              }`}
-            >
-              {patient.status.charAt(0).toUpperCase() + patient.status.slice(1)}
-            </span>
           </div>
         </div>
 
         {/* Account Information */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 className="text-lg font-semibold mb-4">Account Information</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <h3 className="text-base md:text-lg font-semibold mb-4">Account Information</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             <div>
               <p className="text-sm text-gray-600">Account Type</p>
               <p className="text-sm font-medium text-gray-900 mt-1">Patient (Free)</p>
@@ -166,7 +168,7 @@ export function PatientDetails() {
               <p className="text-sm text-gray-600">Registration Date</p>
               <p className="text-sm font-medium text-gray-900 mt-1">
                 {new Date(patient.registrationDate).toLocaleDateString('en-US', {
-                  month: 'long',
+                  month: 'short',
                   day: 'numeric',
                   year: 'numeric',
                 })}
@@ -176,8 +178,8 @@ export function PatientDetails() {
         </div>
 
         {/* Account Actions */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 className="text-lg font-semibold mb-4">Account Actions</h3>
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <h3 className="text-base md:text-lg font-semibold mb-4">Account Actions</h3>
           <div className="flex flex-wrap gap-3">
             {patient.status === 'suspended' ? (
               <Button

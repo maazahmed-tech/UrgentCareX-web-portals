@@ -141,34 +141,34 @@ export function FacilityRegistration() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-8">
-      <div className="w-full max-w-2xl px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-4 md:py-8">
+      <div className="w-full max-w-2xl px-4 md:px-8">
         {/* Back Button */}
         <button
           onClick={() => currentStep === 1 ? navigate('/facility') : setCurrentStep((currentStep - 1) as Step)}
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 md:mb-6"
         >
           <ArrowLeft className="w-4 h-4" />
           <span className="text-sm">{currentStep === 1 ? 'Back to Login' : 'Previous Step'}</span>
         </button>
 
-        <div className="bg-white rounded-lg p-8 shadow-sm border border-gray-200">
+        <div className="bg-white rounded-lg p-4 md:p-8 shadow-sm border border-gray-200">
           {/* Logo */}
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gray-900 rounded-lg mx-auto flex items-center justify-center mb-4">
-              <span className="text-white text-2xl font-bold">UC</span>
+          <div className="text-center mb-6 md:mb-8">
+            <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-900 rounded-lg mx-auto flex items-center justify-center mb-3 md:mb-4">
+              <span className="text-white text-xl md:text-2xl font-bold">UC</span>
             </div>
-            <h1 className="text-xl font-semibold mb-2">Create Facility Account</h1>
-            <p className="text-gray-600">Step {currentStep} of 4</p>
+            <h1 className="text-lg md:text-xl font-semibold mb-1 md:mb-2">Create Facility Account</h1>
+            <p className="text-sm md:text-base text-gray-600">Step {currentStep} of 4</p>
           </div>
 
           {/* Progress Bar */}
-          <div className="mb-8">
-            <div className="flex gap-2">
+          <div className="mb-6 md:mb-8">
+            <div className="flex gap-1 md:gap-2">
               {[1, 2, 3, 4].map((step) => (
                 <div
                   key={step}
-                  className={`h-2 flex-1 rounded-full ${
+                  className={`h-1.5 md:h-2 flex-1 rounded-full ${
                     step <= currentStep ? 'bg-gray-900' : 'bg-gray-200'
                   }`}
                 />

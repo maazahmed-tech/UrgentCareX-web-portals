@@ -179,52 +179,54 @@ export function DoctorDetails() {
 
   return (
     <DashboardLayout title="Doctor Details" role="admin">
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Back Button */}
-        <Button variant="ghost" onClick={() => navigate('/admin/doctors')} className="mb-4">
+        <Button variant="ghost" onClick={() => navigate('/admin/doctors')} className="mb-2 md:mb-4">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Doctors
         </Button>
 
         {/* Header Card */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold text-gray-900">{doctor.name}</h2>
-              <p className="text-lg text-gray-600 mt-1">{doctor.specialty}</p>
-              <div className="mt-4 space-y-2">
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Mail className="w-4 h-4" />
-                  <span>{doctor.email}</span>
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900">{doctor.name}</h2>
+                <span
+                  className={`inline-flex items-center px-2 md:px-3 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium text-white ${
+                    doctor.status === 'active' ? 'bg-green-600' : 'bg-red-600'
+                  }`}
+                >
+                  {doctor.status.charAt(0).toUpperCase() + doctor.status.slice(1)}
+                </span>
+              </div>
+              <p className="text-base md:text-lg text-gray-600 mt-1">{doctor.specialty}</p>
+              <div className="mt-3 md:mt-4 space-y-2">
+                <div className="flex items-center gap-2 text-sm md:text-base text-gray-600">
+                  <Mail className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate">{doctor.email}</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Phone className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-sm md:text-base text-gray-600">
+                  <Phone className="w-4 h-4 flex-shrink-0" />
                   <span>{doctor.phone}</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <MapPin className="w-4 h-4" />
+                <div className="flex items-start gap-2 text-sm md:text-base text-gray-600">
+                  <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
                   <span>
                     {doctor.facility}, {doctor.location}
                   </span>
                 </div>
               </div>
             </div>
-            <span
-              className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white ${
-                doctor.status === 'active' ? 'bg-green-600' : 'bg-red-600'
-              }`}
-            >
-              {doctor.status.charAt(0).toUpperCase() + doctor.status.slice(1)}
-            </span>
           </div>
         </div>
 
         {/* Profile Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
           {/* Profile Completion */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <p className="text-sm text-gray-600 mb-2">Profile Completion</p>
-            <p className="text-3xl font-bold text-gray-900">{doctor.profileCompletion}%</p>
+            <p className="text-2xl md:text-3xl font-bold text-gray-900">{doctor.profileCompletion}%</p>
             <div className="mt-3 w-full bg-gray-200 rounded-full h-2">
               <div
                 className="bg-green-600 h-2 rounded-full"
@@ -234,31 +236,31 @@ export function DoctorDetails() {
           </div>
 
           {/* Profile Views */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center gap-2 mb-2">
               <Eye className="w-4 h-4 text-gray-600" />
               <p className="text-sm text-gray-600">Profile Views</p>
             </div>
-            <p className="text-3xl font-bold text-gray-900">{doctor.profileViews.toLocaleString()}</p>
+            <p className="text-2xl md:text-3xl font-bold text-gray-900">{doctor.profileViews.toLocaleString()}</p>
             <p className="text-sm text-green-600 mt-1">+{doctor.profileViewsThisWeek} this week</p>
           </div>
 
           {/* Recommendations */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200 sm:col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-2">
               <ThumbsUp className="w-4 h-4 text-gray-600" />
               <p className="text-sm text-gray-600">Recommendations</p>
             </div>
-            <p className="text-3xl font-bold text-gray-900">{doctor.recommendations}</p>
+            <p className="text-2xl md:text-3xl font-bold text-gray-900">{doctor.recommendations}</p>
             <p className="text-sm text-gray-500 mt-1">Times recommended to patients</p>
           </div>
         </div>
 
         {/* Review Summary */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
           <div className="flex items-center gap-2 mb-4">
             <Star className="w-5 h-5 text-gray-600" />
-            <h3 className="text-lg font-semibold">Review Summary</h3>
+            <h3 className="text-base md:text-lg font-semibold">Review Summary</h3>
           </div>
           <div className="space-y-3">
             {[
@@ -268,67 +270,97 @@ export function DoctorDetails() {
               { stars: 2, count: doctor.reviews.two },
               { stars: 1, count: doctor.reviews.one },
             ].map((review) => (
-              <div key={review.stars} className="flex items-center gap-3">
-                <span className="text-sm text-gray-600 w-16">{review.stars} stars</span>
+              <div key={review.stars} className="flex items-center gap-2 md:gap-3">
+                <span className="text-xs md:text-sm text-gray-600 w-12 md:w-16">{review.stars} stars</span>
                 <div className="flex-1 bg-gray-200 rounded-full h-2">
                   <div
                     className="bg-yellow-400 h-2 rounded-full"
                     style={{ width: getReviewBarWidth(review.count) }}
                   ></div>
                 </div>
-                <span className="text-sm text-gray-600 w-24 text-right">{review.count.toLocaleString()} reviews</span>
+                <span className="text-xs md:text-sm text-gray-600 w-16 md:w-24 text-right">{review.count.toLocaleString()}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Diagnostic & Clinical Services */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+        <div className="grid grid-cols-2 gap-3 md:gap-4">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center gap-2 mb-2">
               <Stethoscope className="w-4 h-4 text-gray-600" />
-              <p className="text-sm text-gray-600">Diagnostic Capabilities</p>
+              <p className="text-xs md:text-sm text-gray-600">Diagnostic Capabilities</p>
             </div>
-            <p className="text-3xl font-bold text-gray-900">{doctor.diagnosticCapabilities}</p>
+            <p className="text-2xl md:text-3xl font-bold text-gray-900">{doctor.diagnosticCapabilities}</p>
           </div>
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center gap-2 mb-2">
               <Activity className="w-4 h-4 text-gray-600" />
-              <p className="text-sm text-gray-600">Clinical Services</p>
+              <p className="text-xs md:text-sm text-gray-600">Clinical Services</p>
             </div>
-            <p className="text-3xl font-bold text-gray-900">{doctor.clinicalServices}</p>
+            <p className="text-2xl md:text-3xl font-bold text-gray-900">{doctor.clinicalServices}</p>
           </div>
         </div>
 
         {/* Education & Training */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
           <div className="flex items-center gap-2 mb-4">
             <GraduationCap className="w-5 h-5 text-gray-600" />
-            <h3 className="text-lg font-semibold">Education & Training</h3>
+            <h3 className="text-base md:text-lg font-semibold">Education & Training</h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             <div>
               <p className="text-sm text-gray-600 mb-1">Medical School</p>
-              <p className="font-medium text-gray-900">{doctor.education.medicalSchool}</p>
+              <p className="text-sm md:text-base font-medium text-gray-900">{doctor.education.medicalSchool}</p>
             </div>
             <div>
               <p className="text-sm text-gray-600 mb-1">Residency Program</p>
-              <p className="font-medium text-gray-900">{doctor.education.residencyProgram}</p>
+              <p className="text-sm md:text-base font-medium text-gray-900">{doctor.education.residencyProgram}</p>
             </div>
             <div>
               <p className="text-sm text-gray-600 mb-1">Years of Experience</p>
-              <p className="font-medium text-gray-900">{doctor.education.yearsOfExperience}</p>
+              <p className="text-sm md:text-base font-medium text-gray-900">{doctor.education.yearsOfExperience}</p>
             </div>
           </div>
         </div>
 
         {/* Credentials */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
           <div className="flex items-center gap-2 mb-4">
             <FileCheck className="w-5 h-5 text-gray-600" />
-            <h3 className="text-lg font-semibold">Credentials</h3>
+            <h3 className="text-base md:text-lg font-semibold">Credentials</h3>
           </div>
-          <div className="overflow-x-auto">
+
+          {/* Mobile Card View */}
+          <div className="block lg:hidden space-y-3">
+            {doctor.credentials.map((credential, index) => (
+              <div key={index} className="border border-gray-200 rounded-lg p-3 space-y-2">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <p className="font-medium text-gray-900 text-sm">{credential.type}</p>
+                    <p className="text-xs text-gray-600">{credential.number}</p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => window.open(credential.documentUrl, '_blank')}
+                    className="h-7 text-xs"
+                  >
+                    <ExternalLink className="w-3 h-3 mr-1" />
+                    View
+                  </Button>
+                </div>
+                <p className="text-xs text-gray-600">{credential.issuer}</p>
+                <div className="flex justify-between text-xs text-gray-500 pt-1 border-t border-gray-100">
+                  <span>Issued: {new Date(credential.issuedDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
+                  <span>Expires: {new Date(credential.expiryDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop Table View */}
+          <div className="hidden lg:block overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-200">
@@ -378,12 +410,12 @@ export function DoctorDetails() {
         </div>
 
         {/* Subscription Info */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
           <div className="flex items-center gap-2 mb-4">
             <CreditCard className="w-5 h-5 text-gray-600" />
-            <h3 className="text-lg font-semibold">Subscription</h3>
+            <h3 className="text-base md:text-lg font-semibold">Subscription</h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
               <p className="text-sm text-gray-600">Plan</p>
               <span
@@ -400,9 +432,9 @@ export function DoctorDetails() {
             </div>
             <div>
               <p className="text-sm text-gray-600">Start Date</p>
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-xs md:text-sm font-medium text-gray-900">
                 {new Date(doctor.subscription.startDate).toLocaleDateString('en-US', {
-                  month: 'long',
+                  month: 'short',
                   day: 'numeric',
                   year: 'numeric',
                 })}
@@ -410,9 +442,9 @@ export function DoctorDetails() {
             </div>
             <div>
               <p className="text-sm text-gray-600">Renewal Date</p>
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-xs md:text-sm font-medium text-gray-900">
                 {new Date(doctor.subscription.renewalDate).toLocaleDateString('en-US', {
-                  month: 'long',
+                  month: 'short',
                   day: 'numeric',
                   year: 'numeric',
                 })}
@@ -422,8 +454,8 @@ export function DoctorDetails() {
         </div>
 
         {/* Account Actions */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 className="text-lg font-semibold mb-4">Account Actions</h3>
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <h3 className="text-base md:text-lg font-semibold mb-4">Account Actions</h3>
           <div className="flex flex-wrap gap-3">
             {doctor.status === 'suspended' ? (
               <Button

@@ -132,62 +132,62 @@ export function SupportTickets() {
 
   return (
     <DashboardLayout title="Support Tickets" role="admin">
-      <div className="space-y-6 max-w-5xl">
+      <div className="space-y-4 md:space-y-6 max-w-5xl">
         {/* Header */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-              <Headphones className="w-5 h-5 text-blue-600" />
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+              <Headphones className="w-4 h-4 md:w-5 md:h-5 text-blue-600" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-gray-900">Support Tickets</h2>
-              <p className="text-sm text-gray-600">View support requests from facilities and doctors</p>
+              <h2 className="text-lg md:text-xl font-semibold text-gray-900">Support Tickets</h2>
+              <p className="text-xs md:text-sm text-gray-600">Support requests from facilities and doctors</p>
             </div>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <p className="text-sm text-gray-600">Total Tickets</p>
-            <p className="text-2xl font-bold text-gray-900">{tickets.length}</p>
+        <div className="grid grid-cols-3 gap-2 md:gap-4">
+          <div className="bg-white rounded-xl p-3 md:p-4 border border-gray-200">
+            <p className="text-xs md:text-sm text-gray-600">Total</p>
+            <p className="text-xl md:text-2xl font-bold text-gray-900">{tickets.length}</p>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-purple-600" />
-              <p className="text-sm text-gray-600">From Facilities</p>
+          <div className="bg-white rounded-xl p-3 md:p-4 border border-gray-200">
+            <div className="flex items-center gap-1 md:gap-2">
+              <Building2 className="w-3 h-3 md:w-4 md:h-4 text-purple-600" />
+              <p className="text-xs md:text-sm text-gray-600">Facilities</p>
             </div>
-            <p className="text-2xl font-bold text-purple-600">{facilityCount}</p>
+            <p className="text-xl md:text-2xl font-bold text-purple-600">{facilityCount}</p>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="flex items-center gap-2">
-              <Stethoscope className="w-4 h-4 text-green-600" />
-              <p className="text-sm text-gray-600">From Doctors</p>
+          <div className="bg-white rounded-xl p-3 md:p-4 border border-gray-200">
+            <div className="flex items-center gap-1 md:gap-2">
+              <Stethoscope className="w-3 h-3 md:w-4 md:h-4 text-green-600" />
+              <p className="text-xs md:text-sm text-gray-600">Doctors</p>
             </div>
-            <p className="text-2xl font-bold text-green-600">{doctorCount}</p>
+            <p className="text-xl md:text-2xl font-bold text-green-600">{doctorCount}</p>
           </div>
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-xl p-4 border border-gray-200">
-          <div className="flex flex-col sm:flex-row gap-4">
+        <div className="bg-white rounded-xl p-3 md:p-4 border border-gray-200">
+          <div className="flex flex-col gap-3 md:gap-4">
             {/* Search */}
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search by name, email, or subject..."
+                placeholder="Search tickets..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-10 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full h-10 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
               />
             </div>
 
             {/* Source Filter */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 overflow-x-auto pb-1">
               <button
                 onClick={() => setSourceFilter('all')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-medium transition-colors whitespace-nowrap ${
                   sourceFilter === 'all'
                     ? 'bg-gray-900 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -197,24 +197,24 @@ export function SupportTickets() {
               </button>
               <button
                 onClick={() => setSourceFilter('facility')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
+                className={`px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-medium transition-colors flex items-center gap-1 md:gap-2 whitespace-nowrap ${
                   sourceFilter === 'facility'
                     ? 'bg-purple-600 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                <Building2 className="w-4 h-4" />
+                <Building2 className="w-3 h-3 md:w-4 md:h-4" />
                 Facilities
               </button>
               <button
                 onClick={() => setSourceFilter('doctor')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
+                className={`px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-medium transition-colors flex items-center gap-1 md:gap-2 whitespace-nowrap ${
                   sourceFilter === 'doctor'
                     ? 'bg-green-600 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                <Stethoscope className="w-4 h-4" />
+                <Stethoscope className="w-3 h-3 md:w-4 md:h-4" />
                 Doctors
               </button>
             </div>

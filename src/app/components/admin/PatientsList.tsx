@@ -130,17 +130,17 @@ export function PatientsList() {
 
   return (
     <DashboardLayout title="Patients" role="admin">
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Filters Section */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {/* Search */}
-            <div className="md:col-span-2">
+            <div className="sm:col-span-2">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input
                   type="text"
-                  placeholder="Search patients by name, email, or phone..."
+                  placeholder="Search patients..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -165,14 +165,79 @@ export function PatientsList() {
         </div>
 
         {/* Results Count */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between px-1">
           <p className="text-sm text-gray-600">
             Showing {filteredPatients.length} of {mockPatients.length} patients
           </p>
         </div>
 
-        {/* Patients Table */}
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        {/* Mobile Card View */}
+        <div className="block lg:hidden space-y-3">
+          {filteredPatients.map((patient) => (
+            <div
+              key={patient.id}
+              className="bg-white rounded-xl border border-gray-200 p-4 space-y-3"
+            >
+              {/* Header: Name and Status */}
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-gray-900 truncate">{patient.name}</h3>
+                </div>
+                <span
+                  className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium text-white ${getStatusColor(
+                    patient.status
+                  )}`}
+                >
+                  {patient.status.charAt(0).toUpperCase() + patient.status.slice(1)}
+                </span>
+              </div>
+
+              {/* Contact Info */}
+              <div className="space-y-1.5 text-sm text-gray-600">
+                <div className="flex items-center gap-2">
+                  <Mail className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+                  <span className="truncate">{patient.email}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+                  <span>{patient.phone}</span>
+                </div>
+              </div>
+
+              {/* Footer: Registration Date and View Button */}
+              <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                <div className="flex items-center gap-1 text-sm text-gray-600">
+                  <Calendar className="w-3.5 h-3.5 text-gray-400" />
+                  <span>
+                    {new Date(patient.registrationDate).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })}
+                  </span>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate(`/admin/patients/${patient.id}`)}
+                  className="h-8"
+                >
+                  <Eye className="w-4 h-4 mr-1" />
+                  View
+                </Button>
+              </div>
+            </div>
+          ))}
+
+          {filteredPatients.length === 0 && (
+            <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
+              <p className="text-gray-500">No patients found</p>
+            </div>
+          )}
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden lg:block bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">

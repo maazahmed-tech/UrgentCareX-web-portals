@@ -428,11 +428,11 @@ export function DoctorProfile() {
     <DashboardLayout title="My Profile" role="doctor">
       <div className="max-w-5xl h-full flex flex-col">
         {/* Profile Header with Progress - Fixed */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200 mb-6 flex-shrink-0">
-          <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200 mb-4 md:mb-6 flex-shrink-0">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
             {/* Profile Photo */}
-            <div className="flex flex-col items-center">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center text-gray-600 text-2xl font-semibold relative overflow-hidden shadow-lg">
+            <div className="flex flex-col items-center w-full md:w-auto">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center text-gray-600 text-xl md:text-2xl font-semibold relative overflow-hidden shadow-lg">
                 {profileData.photoUrl ? (
                   <img src={profileData.photoUrl} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
@@ -446,14 +446,14 @@ export function DoctorProfile() {
             </div>
 
             {/* Profile Summary */}
-            <div className="flex-1">
-              <h1 className="text-2xl font-semibold text-gray-900 mb-4">{profileData.name}</h1>
+            <div className="flex-1 w-full">
+              <h1 className="text-xl md:text-2xl font-semibold text-gray-900 mb-3 md:mb-4 text-center md:text-left">{profileData.name}</h1>
 
               {/* Profile Completion Progress */}
-              <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">Profile Completion</span>
-                  <span className="text-sm font-semibold text-gray-900">{completeness}% • {completedSections}/{profileSections.length} sections</span>
+              <div className="bg-gray-50 rounded-lg p-3 md:p-4 border border-gray-200">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                  <span className="text-xs md:text-sm font-medium text-gray-700">Profile Completion</span>
+                  <span className="text-xs md:text-sm font-semibold text-gray-900">{completeness}% • {completedSections}/{profileSections.length} sections</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
                   <div
@@ -461,15 +461,15 @@ export function DoctorProfile() {
                     style={{ width: `${completeness}%` }}
                   />
                 </div>
-                
+
                 {/* Checklist */}
-                <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                <div className="grid grid-cols-2 gap-x-3 md:gap-x-4 gap-y-2">
                   {profileSections.map((section) => (
                     <div key={section.name} className="flex items-center gap-2">
                       {section.completed ? (
-                        <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-green-600 flex-shrink-0" />
                       ) : (
-                        <X className="w-4 h-4 text-red-500 flex-shrink-0" />
+                        <X className="w-3 h-3 md:w-4 md:h-4 text-red-500 flex-shrink-0" />
                       )}
                       <span className={`text-xs ${section.completed ? 'text-gray-700' : 'text-red-600'}`}>
                         {section.name}
@@ -489,8 +489,8 @@ export function DoctorProfile() {
         </div>
 
         {/* Tabs Navigation - Fixed */}
-        <div className="bg-white rounded-t-xl border border-b-0 border-gray-200 flex-shrink-0">
-          <div className="flex border-b border-gray-200">
+        <div className="bg-white rounded-t-xl border border-b-0 border-gray-200 flex-shrink-0 overflow-x-auto">
+          <div className="flex border-b border-gray-200 min-w-max">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
@@ -501,14 +501,15 @@ export function DoctorProfile() {
                     setIsEditing(false);
                     setEditedData(profileData);
                   }}
-                  className={`flex-1 flex items-center justify-center gap-2 px-6 py-4 text-sm font-medium transition-all ${
+                  className={`flex-1 flex items-center justify-center gap-1.5 md:gap-2 px-3 md:px-6 py-3 md:py-4 text-xs md:text-sm font-medium transition-all whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'text-gray-900 border-b-2 border-gray-900 bg-gray-50'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
-                  {tab.label}
+                  <span className="hidden sm:inline">{tab.label}</span>
+                  <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
                 </button>
               );
             })}
@@ -519,29 +520,30 @@ export function DoctorProfile() {
         <div className="bg-white rounded-b-xl border border-gray-200 flex-1 flex flex-col overflow-hidden">
           {/* Edit/Save Buttons - Fixed within content area */}
           {activeTab !== 'credentials' && activeTab !== 'reviews' && (
-            <div className="flex justify-end px-6 pt-6 pb-4 border-b border-gray-200 flex-shrink-0">
+            <div className="flex justify-end px-4 md:px-6 pt-4 md:pt-6 pb-3 md:pb-4 border-b border-gray-200 flex-shrink-0">
               {!isEditing ? (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="flex items-center gap-2 bg-gray-900 text-white px-6 h-11 rounded-lg hover:bg-gray-800"
+                  className="flex items-center gap-2 bg-gray-900 text-white px-4 md:px-6 h-10 md:h-11 rounded-lg hover:bg-gray-800 text-sm md:text-base"
                 >
                   <Edit2 className="w-4 h-4" />
-                  Edit {tabs.find(t => t.id === activeTab)?.label}
+                  <span className="hidden sm:inline">Edit {tabs.find(t => t.id === activeTab)?.label}</span>
+                  <span className="sm:hidden">Edit</span>
                 </button>
               ) : (
-                <div className="flex gap-3">
+                <div className="flex gap-2 md:gap-3 w-full sm:w-auto">
                   <button
                     onClick={handleCancel}
-                    className="border border-gray-300 text-gray-700 px-6 h-11 rounded-lg hover:bg-gray-50"
+                    className="flex-1 sm:flex-none border border-gray-300 text-gray-700 px-4 md:px-6 h-10 md:h-11 rounded-lg hover:bg-gray-50 text-sm md:text-base"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleSave}
-                    className="flex items-center gap-2 bg-gray-900 text-white px-6 h-11 rounded-lg hover:bg-gray-800"
+                    className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-gray-900 text-white px-4 md:px-6 h-10 md:h-11 rounded-lg hover:bg-gray-800 text-sm md:text-base"
                   >
                     <Save className="w-4 h-4" />
-                    Save Changes
+                    Save
                   </button>
                 </div>
               )}
@@ -549,14 +551,14 @@ export function DoctorProfile() {
           )}
 
           {/* Scrollable Content Area */}
-          <div className="flex-1 overflow-y-auto px-6 pb-6">
+          <div className="flex-1 overflow-y-auto px-4 md:px-6 pb-4 md:pb-6">
             {/* Basic Info Tab */}
             {activeTab === 'basic' && (
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {/* Personal Information */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Personal Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                       {isEditing ? (
@@ -670,7 +672,7 @@ export function DoctorProfile() {
 
                 {/* About Me */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">About Me</h3>
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">About Me</h3>
                   {isEditing ? (
                     <textarea
                       value={editedData.bio}
@@ -686,7 +688,7 @@ export function DoctorProfile() {
 
                 {/* Specialties */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Specialties</h3>
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Specialties</h3>
                   <div className="flex flex-wrap gap-2">
                     {(isEditing ? editedData.specialties : profileData.specialties).map((specialty) => (
                       <span
@@ -737,7 +739,7 @@ export function DoctorProfile() {
 
                 {/* Languages Spoken */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Languages Spoken</h3>
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Languages Spoken</h3>
                   <div className="flex flex-wrap gap-2">
                     {(isEditing ? editedData.languages : profileData.languages).map((language) => (
                       <span
@@ -807,10 +809,10 @@ export function DoctorProfile() {
 
             {/* Education Tab */}
             {activeTab === 'education' && (
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Education & Training</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Education & Training</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Medical School</label>
                       {isEditing ? (

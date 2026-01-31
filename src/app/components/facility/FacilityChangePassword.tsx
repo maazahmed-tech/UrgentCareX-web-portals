@@ -50,14 +50,14 @@ export function FacilityChangePassword() {
 
   return (
     <DashboardLayout title="Change Password" role="facility">
-      <div className="max-w-2xl space-y-6">
-        <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-gray-900 mb-2">Change Password</h1>
-          <p className="text-gray-600">Update your password to keep your account secure</p>
+      <div className="max-w-2xl space-y-4 md:space-y-6">
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">Change Password</h1>
+          <p className="text-sm md:text-base text-gray-600">Update your password to keep your account secure</p>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
+          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
             {/* Current Password */}
             <div>
               <Label htmlFor="currentPassword">Current Password</Label>
@@ -152,9 +152,9 @@ export function FacilityChangePassword() {
             </div>
 
             {/* Password Requirements */}
-            <div className="bg-gray-50 rounded-lg p-4">
-              <p className="text-sm font-medium text-gray-900 mb-3">Password must contain:</p>
-              <div className="space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 md:p-4">
+              <p className="text-xs md:text-sm font-medium text-gray-900 mb-3">Password must contain:</p>
+              <div className="space-y-2 text-xs md:text-sm">
                 <div className="flex items-center gap-2">
                   <div className={`w-4 h-4 rounded-full flex items-center justify-center ${
                     hasMinLength ? 'bg-green-100' : 'bg-gray-200'
@@ -204,10 +204,10 @@ export function FacilityChangePassword() {
               </div>
             )}
 
-            <div className="flex gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <Button
                 type="submit"
-                className="bg-gray-900 hover:bg-gray-800"
+                className="bg-gray-900 hover:bg-gray-800 w-full sm:w-auto"
               >
                 Change Password
               </Button>
@@ -215,6 +215,7 @@ export function FacilityChangePassword() {
                 type="button"
                 onClick={() => navigate('/facility/settings')}
                 variant="outline"
+                className="w-full sm:w-auto"
               >
                 Cancel
               </Button>

@@ -33,17 +33,17 @@ export function AdminDashboard() {
 
   return (
     <DashboardLayout title="Dashboard" role="admin">
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {stats.map((stat) => (
-            <div key={stat.label} className="bg-white rounded-xl p-6 border border-gray-200">
+            <div key={stat.label} className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">{stat.label}</p>
-                  <p className="text-3xl font-bold mt-1">{stat.value}</p>
+                  <p className="text-xs md:text-sm text-gray-600">{stat.label}</p>
+                  <p className="text-xl md:text-3xl font-bold mt-1">{stat.value}</p>
                 </div>
-                <stat.icon className={`w-8 h-8 ${stat.color}`} />
+                <stat.icon className={`w-6 h-6 md:w-8 md:h-8 ${stat.color}`} />
               </div>
             </div>
           ))}
@@ -51,14 +51,14 @@ export function AdminDashboard() {
 
         {/* Subscription Summary */}
         <div>
-          <h2 className="text-xl font-semibold mb-4">Subscription Summary</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <h2 className="text-lg md:text-xl font-semibold mb-3 md:mb-4">Subscription Summary</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
             {subscriptions.map((sub) => (
-              <div key={sub.label} className="bg-white rounded-xl p-6 border border-gray-200">
-                <div className={`w-12 h-12 ${sub.color} rounded-lg flex items-center justify-center text-white text-2xl font-bold mb-3`}>
+              <div key={sub.label} className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+                <div className={`w-10 h-10 md:w-12 md:h-12 ${sub.color} rounded-lg flex items-center justify-center text-white text-xl md:text-2xl font-bold mb-2 md:mb-3`}>
                   {sub.count}
                 </div>
-                <p className="text-gray-900 font-medium">{sub.label}</p>
+                <p className="text-sm md:text-base text-gray-900 font-medium">{sub.label}</p>
               </div>
             ))}
           </div>

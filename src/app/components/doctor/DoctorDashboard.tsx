@@ -235,120 +235,120 @@ export function DoctorDashboard() {
 
   return (
     <DashboardLayout title="Dashboard" role="doctor">
-      <div className="space-y-6 max-w-7xl">
+      <div className="space-y-4 md:space-y-6 max-w-7xl">
         {/* Welcome Message */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h2 className="text-2xl font-bold mb-2">Welcome back, {user?.name || 'Doctor'}!</h2>
-          <p className="text-gray-600">Here's an overview of your practice performance and profile status.</p>
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <h2 className="text-xl md:text-2xl font-bold mb-2">Welcome back, {user?.name || 'Doctor'}!</h2>
+          <p className="text-sm md:text-base text-gray-600">Here's an overview of your practice performance and profile status.</p>
         </div>
 
         {/* Top Stats Row - 3 Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
           {/* Available Status */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-600">Available Status</p>
-              <CheckCircle className={`w-5 h-5 ${isAvailable ? 'text-green-600' : 'text-gray-600'}`} />
+              <p className="text-xs md:text-sm text-gray-600">Available Status</p>
+              <CheckCircle className={`w-4 h-4 md:w-5 md:h-5 ${isAvailable ? 'text-green-600' : 'text-gray-600'}`} />
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-3xl font-bold">{isAvailable ? 'Available' : 'Unavailable'}</p>
+              <p className="text-xl md:text-3xl font-bold">{isAvailable ? 'Available' : 'Unavailable'}</p>
               <button
                 onClick={handleToggleAvailability}
-                className={`p-2 rounded-lg transition-colors ${
+                className={`p-1.5 md:p-2 rounded-lg transition-colors ${
                   isAvailable
                     ? 'bg-green-100 text-green-600 hover:bg-green-200'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 {isAvailable ? (
-                  <ToggleRight className="w-6 h-6" />
+                  <ToggleRight className="w-5 h-5 md:w-6 md:h-6" />
                 ) : (
-                  <ToggleLeft className="w-6 h-6" />
+                  <ToggleLeft className="w-5 h-5 md:w-6 md:h-6" />
                 )}
               </button>
             </div>
             {isAvailable && (
-              <p className="text-sm text-gray-500 mt-2">Expires in: {timeRemaining}</p>
+              <p className="text-xs md:text-sm text-gray-500 mt-2">Expires in: {timeRemaining}</p>
             )}
           </div>
 
           {/* Plan Type */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-600">Plan Type</p>
-              <CreditCard className="w-5 h-5 text-gray-600" />
+              <p className="text-xs md:text-sm text-gray-600">Plan Type</p>
+              <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
             </div>
-            <p className="text-3xl font-bold">Monthly</p>
+            <p className="text-xl md:text-3xl font-bold">Monthly</p>
           </div>
 
           {/* Profile Completion */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-gray-600">Profile Completion</p>
-              <UserCog className="w-5 h-5 text-gray-600" />
+              <p className="text-xs md:text-sm text-gray-600">Profile Completion</p>
+              <UserCog className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
             </div>
-            <p className="text-3xl font-bold text-gray-900">{profileCompletionData.overallProgress}%</p>
+            <p className="text-xl md:text-3xl font-bold text-gray-900">{profileCompletionData.overallProgress}%</p>
           </div>
         </div>
 
         {/* Platform Statistics - 4 Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {/* Total Doctors */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6 text-gray-600" />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                <Users className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Total Doctors on Platform</p>
-            <p className="text-3xl font-bold text-gray-900">{platformStats.totalDoctors.toLocaleString()}</p>
+            <p className="text-xs md:text-sm text-gray-600 mb-1">Total Doctors</p>
+            <p className="text-xl md:text-3xl font-bold text-gray-900">{platformStats.totalDoctors.toLocaleString()}</p>
           </div>
 
           {/* Total Patients */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                <Download className="w-6 h-6 text-gray-600" />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                <Download className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Patients on Platform</p>
-            <p className="text-3xl font-bold text-gray-900">{platformStats.totalPatients.toLocaleString()}</p>
+            <p className="text-xs md:text-sm text-gray-600 mb-1">Patients</p>
+            <p className="text-xl md:text-3xl font-bold text-gray-900">{platformStats.totalPatients.toLocaleString()}</p>
           </div>
 
           {/* Profile Views */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                <Eye className="w-6 h-6 text-gray-600" />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                <Eye className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Profile Views</p>
-            <p className="text-3xl font-bold text-gray-900">{platformStats.profileViews.toLocaleString()}</p>
+            <p className="text-xs md:text-sm text-gray-600 mb-1">Profile Views</p>
+            <p className="text-xl md:text-3xl font-bold text-gray-900">{platformStats.profileViews.toLocaleString()}</p>
           </div>
 
           {/* Recommendations */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-2">
-              <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                <UserCheck className="w-6 h-6 text-gray-600" />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                <UserCheck className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Recommendations</p>
-            <p className="text-3xl font-bold text-gray-900">{platformStats.recommendations.toLocaleString()}</p>
+            <p className="text-xs md:text-sm text-gray-600 mb-1">Recommendations</p>
+            <p className="text-xl md:text-3xl font-bold text-gray-900">{platformStats.recommendations.toLocaleString()}</p>
           </div>
         </div>
 
         {/* Performance Comparison Chart */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-center justify-between mb-6">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 md:mb-6">
             <div className="flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-gray-600" />
-              <h2 className="text-xl font-semibold">Performance Comparison</h2>
+              <h2 className="text-lg md:text-xl font-semibold">Performance Comparison</h2>
             </div>
             <div className="flex gap-2">
               <button
                 onClick={() => setSelectedMetric('reviews')}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-3 py-1.5 rounded-lg text-xs md:text-sm font-medium transition-colors ${
                   selectedMetric === 'reviews'
                     ? 'bg-gray-900 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -358,7 +358,7 @@ export function DoctorDashboard() {
               </button>
               <button
                 onClick={() => setSelectedMetric('recommendations')}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-3 py-1.5 rounded-lg text-xs md:text-sm font-medium transition-colors ${
                   selectedMetric === 'recommendations'
                     ? 'bg-gray-900 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -369,11 +369,11 @@ export function DoctorDashboard() {
             </div>
           </div>
 
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-xs md:text-sm text-gray-600 mb-4">
             Compare your performance with the top 5 doctors on UrgentCareX
           </p>
 
-          <ResponsiveContainer width="100%" height={350}>
+          <ResponsiveContainer width="100%" height={280} className="md:!h-[350px]">
             <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
               <XAxis 
@@ -413,32 +413,32 @@ export function DoctorDashboard() {
         </div>
 
         {/* Top 3 Most Booked Services */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-center gap-2 mb-6">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex items-center gap-2 mb-4 md:mb-6">
             <Stethoscope className="w-5 h-5 text-gray-600" />
-            <h2 className="text-xl font-semibold">Most Requested Specialist Types</h2>
+            <h2 className="text-lg md:text-xl font-semibold">Most Requested Specialist Types</h2>
           </div>
 
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-xs md:text-sm text-gray-600 mb-4">
             Top 3 specialist types most frequently requested by patients on the platform
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
             {topServices.map((service, index) => (
-              <div 
+              <div
                 key={service.type}
-                className="relative bg-gradient-to-br from-gray-50 to-white p-6 rounded-xl border border-gray-200"
+                className="relative bg-gradient-to-br from-gray-50 to-white p-4 md:p-6 rounded-xl border border-gray-200"
               >
                 {/* Rank Badge */}
-                <div className="absolute top-4 right-4 w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                <div className="absolute top-3 right-3 md:top-4 md:right-4 w-7 h-7 md:w-8 md:h-8 bg-gray-900 text-white rounded-full flex items-center justify-center text-xs md:text-sm font-bold">
                   #{index + 1}
                 </div>
 
                 {/* Icon */}
-                <div className="text-4xl mb-3">{service.icon}</div>
+                <div className="text-3xl md:text-4xl mb-2 md:mb-3">{service.icon}</div>
 
                 {/* Service Type */}
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-2">
                   {service.type}
                 </h3>
               </div>
@@ -447,10 +447,10 @@ export function DoctorDashboard() {
         </div>
 
         {/* Review Summary */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-center gap-2 mb-6">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex items-center gap-2 mb-4 md:mb-6">
             <Star className="w-5 h-5 text-gray-600" />
-            <h2 className="text-xl font-semibold">Review Summary</h2>
+            <h2 className="text-lg md:text-xl font-semibold">Review Summary</h2>
           </div>
 
           <div className="space-y-3">
@@ -518,11 +518,11 @@ export function DoctorDashboard() {
 
         {/* Today's Schedule */}
         <div>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Today's Schedule</h2>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 md:mb-4">
+            <h2 className="text-lg md:text-xl font-semibold">Today's Schedule</h2>
             <button
               onClick={() => navigate('/doctor/appointments-calendar-week')}
-              className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              className="text-xs md:text-sm text-gray-600 hover:text-gray-900 transition-colors"
             >
               View Full Calendar →
             </button>

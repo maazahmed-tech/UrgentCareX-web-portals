@@ -123,55 +123,57 @@ export function FacilityDetails() {
 
   return (
     <DashboardLayout title="Facility Details" role="admin">
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Back Button */}
         <Button
           variant="ghost"
           onClick={() => navigate('/admin/facilities')}
-          className="mb-4"
+          className="mb-2 md:mb-4"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Facilities
         </Button>
 
         {/* Header Card */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-start justify-between">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">{facility.name}</h2>
-              <div className="mt-4 space-y-2">
-                <div className="flex items-center gap-2 text-gray-600">
-                  <MapPin className="w-4 h-4" />
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900">{facility.name}</h2>
+                <span
+                  className={`inline-flex items-center px-2 md:px-3 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium text-white ${
+                    facility.status === 'active' ? 'bg-green-600' : 'bg-red-600'
+                  }`}
+                >
+                  {facility.status.charAt(0).toUpperCase() + facility.status.slice(1)}
+                </span>
+              </div>
+              <div className="mt-3 md:mt-4 space-y-2">
+                <div className="flex items-start gap-2 text-sm md:text-base text-gray-600">
+                  <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
                   <span>
                     {facility.address}, {facility.city}, {facility.state} {facility.zip}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Mail className="w-4 h-4" />
-                  <span>{facility.email}</span>
+                <div className="flex items-center gap-2 text-sm md:text-base text-gray-600">
+                  <Mail className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate">{facility.email}</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Phone className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-sm md:text-base text-gray-600">
+                  <Phone className="w-4 h-4 flex-shrink-0" />
                   <span>{facility.phone}</span>
                 </div>
               </div>
             </div>
-            <span
-              className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white ${
-                facility.status === 'active' ? 'bg-green-600' : 'bg-red-600'
-              }`}
-            >
-              {facility.status.charAt(0).toUpperCase() + facility.status.slice(1)}
-            </span>
           </div>
         </div>
 
         {/* Profile Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
           {/* Profile Completion */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <p className="text-sm text-gray-600 mb-2">Profile Completion</p>
-            <p className="text-3xl font-bold text-gray-900">{facility.profileCompletion}%</p>
+            <p className="text-2xl md:text-3xl font-bold text-gray-900">{facility.profileCompletion}%</p>
             <div className="mt-3 w-full bg-gray-200 rounded-full h-2">
               <div
                 className="bg-green-600 h-2 rounded-full"
@@ -181,31 +183,31 @@ export function FacilityDetails() {
           </div>
 
           {/* Profile Views */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
             <div className="flex items-center gap-2 mb-2">
               <Eye className="w-4 h-4 text-gray-600" />
               <p className="text-sm text-gray-600">Profile Views</p>
             </div>
-            <p className="text-3xl font-bold text-gray-900">{facility.profileViews.toLocaleString()}</p>
+            <p className="text-2xl md:text-3xl font-bold text-gray-900">{facility.profileViews.toLocaleString()}</p>
             <p className="text-sm text-green-600 mt-1">+{facility.profileViewsThisWeek} this week</p>
           </div>
 
           {/* Recommendations */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200 sm:col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-2">
               <ThumbsUp className="w-4 h-4 text-gray-600" />
               <p className="text-sm text-gray-600">Recommendations</p>
             </div>
-            <p className="text-3xl font-bold text-gray-900">{facility.recommendations}</p>
+            <p className="text-2xl md:text-3xl font-bold text-gray-900">{facility.recommendations}</p>
             <p className="text-sm text-gray-500 mt-1">Times recommended to patients</p>
           </div>
         </div>
 
         {/* Review Summary */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
           <div className="flex items-center gap-2 mb-4">
             <Star className="w-5 h-5 text-gray-600" />
-            <h3 className="text-lg font-semibold">Review Summary</h3>
+            <h3 className="text-base md:text-lg font-semibold">Review Summary</h3>
           </div>
           <div className="space-y-3">
             {[
@@ -215,27 +217,27 @@ export function FacilityDetails() {
               { stars: 2, count: facility.reviews.two },
               { stars: 1, count: facility.reviews.one },
             ].map((review) => (
-              <div key={review.stars} className="flex items-center gap-3">
-                <span className="text-sm text-gray-600 w-16">{review.stars} stars</span>
+              <div key={review.stars} className="flex items-center gap-2 md:gap-3">
+                <span className="text-xs md:text-sm text-gray-600 w-12 md:w-16">{review.stars} stars</span>
                 <div className="flex-1 bg-gray-200 rounded-full h-2">
                   <div
                     className="bg-yellow-400 h-2 rounded-full"
                     style={{ width: getReviewBarWidth(review.count) }}
                   ></div>
                 </div>
-                <span className="text-sm text-gray-600 w-24 text-right">{review.count.toLocaleString()} reviews</span>
+                <span className="text-xs md:text-sm text-gray-600 w-16 md:w-24 text-right">{review.count.toLocaleString()}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Subscription Info */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
           <div className="flex items-center gap-2 mb-4">
             <CreditCard className="w-5 h-5 text-gray-600" />
-            <h3 className="text-lg font-semibold">Subscription</h3>
+            <h3 className="text-base md:text-lg font-semibold">Subscription</h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
               <p className="text-sm text-gray-600">Plan</p>
               <span
@@ -252,9 +254,9 @@ export function FacilityDetails() {
             </div>
             <div>
               <p className="text-sm text-gray-600">Start Date</p>
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-xs md:text-sm font-medium text-gray-900">
                 {new Date(facility.subscription.startDate).toLocaleDateString('en-US', {
-                  month: 'long',
+                  month: 'short',
                   day: 'numeric',
                   year: 'numeric',
                 })}
@@ -262,9 +264,9 @@ export function FacilityDetails() {
             </div>
             <div>
               <p className="text-sm text-gray-600">Renewal Date</p>
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-xs md:text-sm font-medium text-gray-900">
                 {new Date(facility.subscription.renewalDate).toLocaleDateString('en-US', {
-                  month: 'long',
+                  month: 'short',
                   day: 'numeric',
                   year: 'numeric',
                 })}
@@ -274,8 +276,8 @@ export function FacilityDetails() {
         </div>
 
         {/* Account Actions */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 className="text-lg font-semibold mb-4">Account Actions</h3>
+        <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+          <h3 className="text-base md:text-lg font-semibold mb-4">Account Actions</h3>
           <div className="flex flex-wrap gap-3">
             {facility.status === 'suspended' ? (
               <Button
