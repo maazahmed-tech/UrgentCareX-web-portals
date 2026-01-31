@@ -1041,11 +1041,6 @@ export function DoctorProfile() {
                         </div>
                       </div>
                       <p className="text-sm text-gray-700 leading-relaxed">{review.comment}</p>
-                      <div className="mt-2 pt-2 border-t border-gray-100">
-                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                          {review.appointmentType}
-                        </span>
-                      </div>
                     </div>
                   ))}
                 </div>
