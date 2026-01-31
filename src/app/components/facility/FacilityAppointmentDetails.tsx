@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { ArrowLeft, User, Calendar, Clock, AlertCircle, Pill, FileText, CheckCircle, XCircle, Star } from 'lucide-react';
+import { ArrowLeft, User, Calendar, Clock, AlertCircle, Pill, FileText, CheckCircle, XCircle, Star, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react';
 import { DashboardLayout } from '@/app/components/layouts/DashboardLayout';
 
 interface ROSItem {
@@ -13,6 +13,7 @@ export function FacilityAppointmentDetails() {
   const { id } = useParams();
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [isAISummaryExpanded, setIsAISummaryExpanded] = useState(false);
 
   useEffect(() => {
     console.log('Current Screen: Facility Appointment Details - ID:', id);
@@ -402,6 +403,39 @@ export function FacilityAppointmentDetails() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* AI Pre-Visit Conversation Summary */}
+          <div className="border-b border-[#E5E7EB]">
+            <button
+              onClick={() => setIsAISummaryExpanded(!isAISummaryExpanded)}
+              className="w-full p-4 md:p-6 flex items-center justify-between hover:bg-gray-50 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 md:w-10 md:h-10 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <MessageSquare className="w-4 h-4 md:w-5 md:h-5 text-indigo-600" />
+                </div>
+                <div className="text-left">
+                  <h2 className="font-semibold text-[#1F2937] text-sm md:text-base">AI Pre-Visit Conversation Summary</h2>
+                  <p className="text-xs md:text-sm text-[#6B7280]">Summary of patient's conversation with AI assistant</p>
+                </div>
+              </div>
+              {isAISummaryExpanded ? (
+                <ChevronUp className="w-5 h-5 text-[#6B7280] flex-shrink-0" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-[#6B7280] flex-shrink-0" />
+              )}
+            </button>
+
+            {isAISummaryExpanded && (
+              <div className="px-4 md:px-6 pb-4 md:pb-6">
+                <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg p-4 md:p-5 border border-indigo-100">
+                  <p className="text-sm md:text-base text-[#374151] leading-relaxed">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Patient reported experiencing persistent headaches for the past week, primarily in the frontal region. Symptoms are worse in the morning and tend to improve throughout the day. No visual disturbances or nausea reported. Patient mentioned increased stress at work and reduced sleep quality over the past month. Has been taking over-the-counter pain relievers with moderate relief. No history of migraines or similar episodes. Patient expressed interest in discussing preventive measures and lifestyle modifications during the appointment.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Patient Medical Information */}
