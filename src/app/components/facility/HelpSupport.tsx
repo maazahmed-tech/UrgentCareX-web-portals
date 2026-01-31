@@ -332,13 +332,6 @@ export function HelpSupport() {
             </Button>
           </form>
         </div>
-
-        {/* Additional Resources */}
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 md:p-4">
-          <p className="text-xs md:text-sm text-gray-700">
-            <strong>Note:</strong> For urgent technical issues affecting patient care, please call our emergency support line at <a href="tel:+18005559999" className="text-blue-600 hover:underline">1-800-555-9999</a> (available 24/7).
-          </p>
-        </div>
       </div>
     </DashboardLayout>
   );
