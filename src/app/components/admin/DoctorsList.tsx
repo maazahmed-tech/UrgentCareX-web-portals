@@ -252,8 +252,8 @@ export function DoctorsList() {
                 <tr>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Doctor</th>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Specialty</th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Facility</th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Patients</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Address</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Appointments</th>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Rating</th>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Status</th>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Plan</th>
@@ -280,12 +280,9 @@ export function DoctorsList() {
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-900">{doctor.specialty}</td>
                     <td className="px-6 py-4">
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">{doctor.facility}</p>
-                        <div className="flex items-center gap-1 text-sm text-gray-500 mt-1">
-                          <MapPin className="w-3 h-3" />
-                          {doctor.location}
-                        </div>
+                      <div className="flex items-center gap-1 text-sm text-gray-900">
+                        <MapPin className="w-3 h-3 text-gray-500" />
+                        {doctor.location}
                       </div>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-900">{doctor.patientsSeen}</td>

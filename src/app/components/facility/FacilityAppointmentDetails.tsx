@@ -25,6 +25,7 @@ export function FacilityAppointmentDetails() {
       patientName: 'John Smith',
       patientAge: 45,
       patientGender: 'Male',
+      patientPronouns: 'he/him',
       doctorName: 'Dr. Sarah Johnson',
       status: 'Completed',
       date: 'Monday, January 20, 2026',
@@ -52,6 +53,7 @@ export function FacilityAppointmentDetails() {
       patientName: 'Mary Wilson',
       patientAge: 32,
       patientGender: 'Female',
+      patientPronouns: 'she/her',
       doctorName: 'Dr. Michael Chen',
       status: 'Completed',
       date: 'Monday, January 20, 2026',
@@ -78,6 +80,7 @@ export function FacilityAppointmentDetails() {
       patientName: 'Bob Johnson',
       patientAge: 58,
       patientGender: 'Male',
+      patientPronouns: 'he/him',
       doctorName: 'Dr. Sarah Johnson',
       status: 'Completed',
       date: 'Monday, January 20, 2026',
@@ -105,6 +108,7 @@ export function FacilityAppointmentDetails() {
       patientName: 'Lisa Park',
       patientAge: 28,
       patientGender: 'Female',
+      patientPronouns: 'she/they',
       doctorName: 'Dr. Emily Davis',
       status: 'Cancelled',
       date: 'Tuesday, January 21, 2026',
@@ -128,6 +132,7 @@ export function FacilityAppointmentDetails() {
       patientName: 'David Chen',
       patientAge: 42,
       patientGender: 'Male',
+      patientPronouns: undefined,
       doctorName: 'Dr. Michael Chen',
       status: 'Pending Confirmation',
       date: 'Tuesday, January 21, 2026',
@@ -148,6 +153,7 @@ export function FacilityAppointmentDetails() {
       patientName: 'Sarah Anderson',
       patientAge: 35,
       patientGender: 'Female',
+      patientPronouns: 'they/them',
       doctorName: 'Dr. Sarah Johnson',
       status: 'Confirmed',
       date: 'Wednesday, January 22, 2026',
@@ -170,6 +176,7 @@ export function FacilityAppointmentDetails() {
       patientName: 'Michael Brown',
       patientAge: 50,
       patientGender: 'Male',
+      patientPronouns: 'he/him',
       doctorName: 'Dr. Emily Davis',
       status: 'Pending Confirmation',
       date: 'Wednesday, January 22, 2026',
@@ -192,6 +199,7 @@ export function FacilityAppointmentDetails() {
       patientName: 'Emily Davis',
       patientAge: 29,
       patientGender: 'Female',
+      patientPronouns: 'she/her',
       doctorName: 'Dr. Sarah Johnson',
       status: 'Confirmed',
       date: 'Thursday, January 23, 2026',
@@ -364,7 +372,7 @@ export function FacilityAppointmentDetails() {
               <div>
                 <p className="font-semibold text-[#1F2937]">{appointment.patientName}</p>
                 <p className="text-sm text-[#6B7280]">
-                  {appointment.patientAge} yrs, {appointment.patientGender}
+                  {appointment.patientAge} yrs, {appointment.patientGender} ({appointment.patientPronouns || 'Not specified'})
                 </p>
               </div>
             </div>

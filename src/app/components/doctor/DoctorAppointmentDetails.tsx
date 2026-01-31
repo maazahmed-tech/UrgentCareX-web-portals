@@ -25,6 +25,7 @@ export function DoctorAppointmentDetails() {
       patientName: 'John Smith',
       patientAge: 45,
       patientGender: 'Male',
+      patientPronouns: 'he/him',
       status: 'Completed',
       date: 'Monday, January 20, 2026',
       time: '9:00 AM - 9:30 AM',
@@ -51,6 +52,7 @@ export function DoctorAppointmentDetails() {
       patientName: 'Mary Wilson',
       patientAge: 32,
       patientGender: 'Female',
+      patientPronouns: 'she/her',
       status: 'Completed',
       date: 'Monday, January 20, 2026',
       time: '9:30 AM - 10:00 AM',
@@ -76,6 +78,7 @@ export function DoctorAppointmentDetails() {
       patientName: 'Bob Johnson',
       patientAge: 58,
       patientGender: 'Male',
+      patientPronouns: 'he/him',
       status: 'Completed',
       date: 'Monday, January 20, 2026',
       time: '10:00 AM - 10:30 AM',
@@ -102,6 +105,7 @@ export function DoctorAppointmentDetails() {
       patientName: 'Lisa Park',
       patientAge: 28,
       patientGender: 'Female',
+      patientPronouns: 'she/they',
       status: 'Cancelled',
       date: 'Tuesday, January 21, 2026',
       time: '10:30 AM - 11:00 AM',
@@ -124,6 +128,7 @@ export function DoctorAppointmentDetails() {
       patientName: 'David Chen',
       patientAge: 42,
       patientGender: 'Male',
+      patientPronouns: undefined,
       status: 'Pending Confirmation',
       date: 'Tuesday, January 21, 2026',
       time: '2:00 PM - 2:30 PM',
@@ -143,6 +148,7 @@ export function DoctorAppointmentDetails() {
       patientName: 'Sarah Anderson',
       patientAge: 35,
       patientGender: 'Female',
+      patientPronouns: 'they/them',
       status: 'Confirmed',
       date: 'Wednesday, January 22, 2026',
       time: '9:00 AM - 9:30 AM',
@@ -164,6 +170,7 @@ export function DoctorAppointmentDetails() {
       patientName: 'Michael Brown',
       patientAge: 50,
       patientGender: 'Male',
+      patientPronouns: 'he/him',
       status: 'Pending Confirmation',
       date: 'Wednesday, January 22, 2026',
       time: '11:00 AM - 11:30 AM',
@@ -185,6 +192,7 @@ export function DoctorAppointmentDetails() {
       patientName: 'Emily Davis',
       patientAge: 29,
       patientGender: 'Female',
+      patientPronouns: 'she/her',
       status: 'Confirmed',
       date: 'Thursday, January 23, 2026',
       time: '3:00 PM - 3:30 PM',
@@ -204,6 +212,7 @@ export function DoctorAppointmentDetails() {
       patientName: 'James Wilson',
       patientAge: 62,
       patientGender: 'Male',
+      patientPronouns: 'he/him',
       status: 'Confirmed',
       date: 'Friday, January 24, 2026',
       time: '10:00 AM - 10:30 AM',
@@ -365,7 +374,7 @@ export function DoctorAppointmentDetails() {
               <div>
                 <p className="font-semibold text-[#1F2937]">{appointment.patientName}</p>
                 <p className="text-sm text-[#6B7280]">
-                  {appointment.patientAge} yrs, {appointment.patientGender}
+                  {appointment.patientAge} yrs, {appointment.patientGender} ({appointment.patientPronouns || 'Not specified'})
                 </p>
               </div>
             </div>
