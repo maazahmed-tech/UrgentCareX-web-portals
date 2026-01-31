@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { ArrowLeft, User, Calendar, Clock, AlertCircle, Pill, FileText, CheckCircle, XCircle, Star, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowLeft, User, Calendar, Clock, AlertCircle, CheckCircle, XCircle, Star, MessageSquare, ChevronDown, ChevronUp, Heart, AlertTriangle, Pill, Scissors, Users, Activity } from 'lucide-react';
 import { DashboardLayout } from '@/app/components/layouts/DashboardLayout';
 
 interface ROSItem {
@@ -364,74 +364,80 @@ export function DoctorAppointmentDetails() {
         </button>
 
         {/* Main Card */}
-        <div className="bg-white rounded-xl border border-[#E5E7EB] overflow-hidden">
+        <div className="bg-white rounded-2xl border border-[#E5E7EB] shadow-md overflow-hidden">
           {/* Header */}
-          <div className="border-b border-[#E5E7EB] p-4 md:p-6">
-            <h1 className="text-xl md:text-2xl font-semibold text-[#1F2937] mb-2">Appointment Details</h1>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-full flex items-center justify-center text-xl md:text-2xl flex-shrink-0">
-                👨‍⚕️
+          <div className="border-b border-[#E5E7EB] p-4 md:p-6 bg-gradient-to-r from-slate-50 to-white">
+            <h1 className="text-xl md:text-2xl font-bold text-[#111827] mb-3">Appointment Details</h1>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
+                <User className="w-6 h-6 md:w-7 md:h-7 text-white" />
               </div>
               <div className="min-w-0">
-                <p className="font-semibold text-[#1F2937] truncate">{appointment.patientName}</p>
-                <p className="text-xs md:text-sm text-[#6B7280]">
+                <p className="font-bold text-lg md:text-xl text-[#111827] truncate">{appointment.patientName}</p>
+                <p className="text-sm md:text-base text-[#6B7280]">
                   {appointment.patientAge} yrs, {appointment.patientGender} ({appointment.patientPronouns || 'Not specified'})
                 </p>
               </div>
             </div>
-            <div className="mt-3 md:mt-4">
-              <span className={`px-3 py-1.5 rounded-full text-xs md:text-sm font-medium ${getStatusColor(currentStatus)}`}>
+            <div className="mt-4">
+              <span className={`inline-flex items-center px-4 py-2 rounded-full text-xs md:text-sm font-semibold shadow-sm ${getStatusColor(currentStatus)}`}>
                 {currentStatus}
               </span>
             </div>
           </div>
 
           {/* Details Section */}
-          <div className="p-4 md:p-6 border-b border-[#E5E7EB]">
-            <h2 className="font-semibold text-[#1F2937] mb-3 md:mb-4">Details</h2>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <Calendar className="w-5 h-5 text-[#6B7280] mt-0.5" />
+          <div className="p-4 md:p-6 border-b border-[#E5E7EB] bg-white">
+            <h2 className="font-bold text-lg text-[#111827] mb-4">Details</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex items-center gap-4 bg-slate-50 rounded-xl p-4">
+                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-5 h-5 text-blue-600" />
+                </div>
                 <div>
-                  <p className="text-sm text-[#6B7280]">Date</p>
-                  <p className="font-medium text-[#1F2937]">{appointment.date}</p>
+                  <p className="text-xs font-medium text-[#6B7280] uppercase tracking-wide">Date</p>
+                  <p className="font-semibold text-[#111827]">{appointment.date}</p>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <Clock className="w-5 h-5 text-[#6B7280] mt-0.5" />
+              <div className="flex items-center gap-4 bg-slate-50 rounded-xl p-4">
+                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-5 h-5 text-green-600" />
+                </div>
                 <div>
-                  <p className="text-sm text-[#6B7280]">Time</p>
-                  <p className="font-medium text-[#1F2937]">{appointment.time}</p>
+                  <p className="text-xs font-medium text-[#6B7280] uppercase tracking-wide">Time</p>
+                  <p className="font-semibold text-[#111827]">{appointment.time}</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* AI Pre-Visit Conversation Summary */}
-          <div className="border-b border-[#E5E7EB]">
+          <div className="border-b border-[#E5E7EB] bg-gradient-to-r from-indigo-50/50 to-purple-50/50">
             <button
               onClick={() => setIsAISummaryExpanded(!isAISummaryExpanded)}
-              className="w-full p-4 md:p-6 flex items-center justify-between hover:bg-gray-50 transition-colors"
+              className="w-full p-4 md:p-6 flex items-center justify-between"
             >
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 md:w-10 md:h-10 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <MessageSquare className="w-4 h-4 md:w-5 md:h-5 text-indigo-600" />
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 md:w-12 md:h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
+                  <MessageSquare className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
                 <div className="text-left">
-                  <h2 className="font-semibold text-[#1F2937] text-sm md:text-base">AI Pre-Visit Conversation Summary</h2>
+                  <h2 className="font-bold text-[#111827] text-base md:text-lg">AI Pre-Visit Conversation Summary</h2>
                   <p className="text-xs md:text-sm text-[#6B7280]">Summary of patient's conversation with AI assistant</p>
                 </div>
               </div>
-              {isAISummaryExpanded ? (
-                <ChevronUp className="w-5 h-5 text-[#6B7280] flex-shrink-0" />
-              ) : (
-                <ChevronDown className="w-5 h-5 text-[#6B7280] flex-shrink-0" />
-              )}
+              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
+                {isAISummaryExpanded ? (
+                  <ChevronUp className="w-5 h-5 text-[#6B7280]" />
+                ) : (
+                  <ChevronDown className="w-5 h-5 text-[#6B7280]" />
+                )}
+              </div>
             </button>
 
             {isAISummaryExpanded && (
               <div className="px-4 md:px-6 pb-4 md:pb-6">
-                <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg p-4 md:p-5 border border-indigo-100">
+                <div className="bg-white rounded-xl p-4 md:p-5 border border-indigo-100 shadow-sm">
                   <p className="text-sm md:text-base text-[#374151] leading-relaxed">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Patient reported experiencing persistent headaches for the past week, primarily in the frontal region. Symptoms are worse in the morning and tend to improve throughout the day. No visual disturbances or nausea reported. Patient mentioned increased stress at work and reduced sleep quality over the past month. Has been taking over-the-counter pain relievers with moderate relief. No history of migraines or similar episodes. Patient expressed interest in discussing preventive measures and lifestyle modifications during the appointment.
                   </p>
@@ -441,21 +447,23 @@ export function DoctorAppointmentDetails() {
           </div>
 
           {/* Patient Medical Information */}
-          <div className="p-4 md:p-6 border-b border-[#E5E7EB]">
-            <h2 className="font-semibold text-[#1F2937] mb-4 md:mb-6">Medical History</h2>
-            
-            <div className="space-y-6">
+          <div className="p-4 md:p-6 border-b border-[#E5E7EB] bg-white">
+            <h2 className="font-bold text-lg text-[#111827] mb-5">Medical History</h2>
+
+            <div className="space-y-4">
               {/* Chronic Conditions */}
               {appointment.chronicConditions.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xl">🏥</span>
-                    <h3 className="font-semibold text-[#1F2937]">Chronic Conditions</h3>
+                <div className="bg-red-50 rounded-xl p-4 border border-red-100">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Heart className="w-5 h-5 text-red-600" />
+                    </div>
+                    <h3 className="font-semibold text-[#111827]">Chronic Conditions</h3>
                   </div>
-                  <ul className="space-y-1 ml-8">
+                  <ul className="space-y-2 ml-12">
                     {appointment.chronicConditions.map((condition, index) => (
-                      <li key={index} className="text-[#6B7280] text-sm flex items-start gap-2">
-                        <span className="text-[#1F2937] mt-1.5">•</span>
+                      <li key={index} className="text-[#374151] text-sm flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
                         <span>{condition}</span>
                       </li>
                     ))}
@@ -464,15 +472,17 @@ export function DoctorAppointmentDetails() {
               )}
 
               {/* Allergies */}
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xl">⚠️</span>
-                  <h3 className="font-semibold text-[#1F2937]">Allergies</h3>
+              <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-9 h-9 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <AlertTriangle className="w-5 h-5 text-amber-600" />
+                  </div>
+                  <h3 className="font-semibold text-[#111827]">Allergies</h3>
                 </div>
-                <ul className="space-y-1 ml-8">
+                <ul className="space-y-2 ml-12">
                   {appointment.allergies.map((allergy, index) => (
-                    <li key={index} className="text-[#6B7280] text-sm flex items-start gap-2">
-                      <span className="text-[#1F2937] mt-1.5">•</span>
+                    <li key={index} className="text-[#374151] text-sm flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
                       <span>{allergy}</span>
                     </li>
                   ))}
@@ -481,18 +491,18 @@ export function DoctorAppointmentDetails() {
 
               {/* Current Medications */}
               {appointment.medications.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xl">💊</span>
-                    <h3 className="font-semibold text-[#1F2937]">Current Medications</h3>
+                <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Pill className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <h3 className="font-semibold text-[#111827]">Current Medications</h3>
                   </div>
-                  <ul className="space-y-1 ml-8">
+                  <ul className="space-y-2 ml-12">
                     {appointment.medications.map((med, index) => (
-                      <li key={index} className="text-[#6B7280] text-sm flex items-start gap-2">
-                        <span className="text-[#1F2937] mt-1.5">•</span>
-                        <span>
-                          {med.name} - <span className="text-[#6B7280]">{med.frequency}</span>
-                        </span>
+                      <li key={index} className="text-[#374151] text-sm flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>
+                        <span>{med.name} - <span className="text-[#6B7280]">{med.frequency}</span></span>
                       </li>
                     ))}
                   </ul>
@@ -501,15 +511,17 @@ export function DoctorAppointmentDetails() {
 
               {/* Past Surgeries */}
               {appointment.pastSurgeries.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xl">🔪</span>
-                    <h3 className="font-semibold text-[#1F2937]">Past Surgeries</h3>
+                <div className="bg-purple-50 rounded-xl p-4 border border-purple-100">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Scissors className="w-5 h-5 text-purple-600" />
+                    </div>
+                    <h3 className="font-semibold text-[#111827]">Past Surgeries</h3>
                   </div>
-                  <ul className="space-y-1 ml-8">
+                  <ul className="space-y-2 ml-12">
                     {appointment.pastSurgeries.map((surgery, index) => (
-                      <li key={index} className="text-[#6B7280] text-sm flex items-start gap-2">
-                        <span className="text-[#1F2937] mt-1.5">•</span>
+                      <li key={index} className="text-[#374151] text-sm flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
                         <span>{surgery}</span>
                       </li>
                     ))}
@@ -519,15 +531,17 @@ export function DoctorAppointmentDetails() {
 
               {/* Family History */}
               {appointment.familyHistory.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xl">👨‍👩‍👧‍👦</span>
-                    <h3 className="font-semibold text-[#1F2937]">Family History</h3>
+                <div className="bg-green-50 rounded-xl p-4 border border-green-100">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Users className="w-5 h-5 text-green-600" />
+                    </div>
+                    <h3 className="font-semibold text-[#111827]">Family History</h3>
                   </div>
-                  <ul className="space-y-1 ml-8">
+                  <ul className="space-y-2 ml-12">
                     {appointment.familyHistory.map((history, index) => (
-                      <li key={index} className="text-[#6B7280] text-sm flex items-start gap-2">
-                        <span className="text-[#1F2937] mt-1.5">•</span>
+                      <li key={index} className="text-[#374151] text-sm flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                         <span>{history}</span>
                       </li>
                     ))}
@@ -536,23 +550,25 @@ export function DoctorAppointmentDetails() {
               )}
 
               {/* Lifestyle & Social History */}
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xl">🏃</span>
-                  <h3 className="font-semibold text-[#1F2937]">Lifestyle & Social History</h3>
+              <div className="bg-teal-50 rounded-xl p-4 border border-teal-100">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-9 h-9 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Activity className="w-5 h-5 text-teal-600" />
+                  </div>
+                  <h3 className="font-semibold text-[#111827]">Lifestyle & Social History</h3>
                 </div>
-                <div className="space-y-2 ml-8">
-                  <div className="flex items-start gap-2 text-sm">
-                    <span className="font-medium text-[#1F2937] min-w-[80px]">Smoking:</span>
-                    <span className="text-[#6B7280]">{appointment.lifestyle.smoking}</span>
+                <div className="space-y-2 ml-12">
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="font-medium text-[#111827] min-w-[80px]">Smoking:</span>
+                    <span className="text-[#374151]">{appointment.lifestyle.smoking}</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm">
-                    <span className="font-medium text-[#1F2937] min-w-[80px]">Alcohol:</span>
-                    <span className="text-[#6B7280]">{appointment.lifestyle.alcohol}</span>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="font-medium text-[#111827] min-w-[80px]">Alcohol:</span>
+                    <span className="text-[#374151]">{appointment.lifestyle.alcohol}</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm">
-                    <span className="font-medium text-[#1F2937] min-w-[80px]">Exercise:</span>
-                    <span className="text-[#6B7280]">{appointment.lifestyle.exercise}</span>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="font-medium text-[#111827] min-w-[80px]">Exercise:</span>
+                    <span className="text-[#374151]">{appointment.lifestyle.exercise}</span>
                   </div>
                 </div>
               </div>
@@ -560,17 +576,13 @@ export function DoctorAppointmentDetails() {
           </div>
 
           {/* ROS Summary Section */}
-          <div className="p-4 md:p-6 border-b border-[#E5E7EB]">
-            <h2 className="font-semibold text-[#1F2937] mb-3 md:mb-4">ROS Summary</h2>
-            <div className="space-y-3">
+          <div className="p-4 md:p-6 border-b border-[#E5E7EB] bg-slate-50">
+            <h2 className="font-bold text-lg text-[#111827] mb-4">ROS Summary</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {rosSummary.map((item, index) => (
-                <div key={index} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
-                  <div className="sm:min-w-[160px]">
-                    <p className="text-xs md:text-sm font-medium text-[#1F2937]">{item.category}</p>
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-xs md:text-sm text-[#6B7280]">{item.value}</p>
-                  </div>
+                <div key={index} className="bg-white rounded-lg p-3 border border-slate-200">
+                  <p className="text-xs font-semibold text-[#111827] uppercase tracking-wide mb-1">{item.category}</p>
+                  <p className="text-sm text-[#6B7280]">{item.value}</p>
                 </div>
               ))}
             </div>
@@ -578,46 +590,48 @@ export function DoctorAppointmentDetails() {
 
           {/* Patient Review Section - Only for Completed Appointments */}
           {currentStatus === 'Completed' && appointment.review && (
-            <div className="p-4 md:p-6 border-b border-[#E5E7EB] bg-gradient-to-br from-blue-50 to-white">
-              <h2 className="font-semibold text-[#1F2937] mb-3 md:mb-4">Patient Review</h2>
-              <div className="space-y-3">
+            <div className="p-4 md:p-6 border-b border-[#E5E7EB] bg-gradient-to-br from-yellow-50 to-orange-50">
+              <h2 className="font-bold text-lg text-[#111827] mb-4">Patient Review</h2>
+              <div className="bg-white rounded-xl p-4 md:p-5 border border-yellow-200 shadow-sm">
                 {/* Star Rating */}
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="flex items-center gap-0.5">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star
                         key={star}
-                        className={`w-5 h-5 ${
+                        className={`w-6 h-6 ${
                           star <= appointment.review.rating
                             ? 'fill-yellow-400 text-yellow-400'
-                            : 'text-gray-300'
+                            : 'text-gray-200'
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="text-lg font-semibold text-[#1F2937]">
-                    {appointment.review.rating} / 5
+                  <span className="text-xl font-bold text-[#111827]">
+                    {appointment.review.rating}/5
                   </span>
                 </div>
 
                 {/* Review Comment */}
-                <div className="bg-white rounded-lg p-4 border border-gray-200">
-                  <p className="text-[#374151] leading-relaxed italic">
+                <div className="bg-slate-50 rounded-lg p-4 mb-4">
+                  <p className="text-[#374151] leading-relaxed italic text-base">
                     "{appointment.review.comment}"
                   </p>
                 </div>
 
                 {/* Reviewer Info */}
                 <div className="flex items-center gap-2 text-sm text-[#6B7280]">
-                  <User className="w-4 h-4" />
-                  <span>Review by {appointment.patientName}</span>
+                  <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
+                    <User className="w-3.5 h-3.5 text-gray-600" />
+                  </div>
+                  <span>Review by <span className="font-medium text-[#374151]">{appointment.patientName}</span></span>
                 </div>
               </div>
             </div>
           )}
 
           {/* Action Buttons Based on Status */}
-          <div className="p-4 md:p-6 bg-[#F3F4F6]">
+          <div className="p-4 md:p-6 bg-gradient-to-r from-slate-100 to-slate-50">
             {currentStatus === 'Pending Confirmation' && (
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
