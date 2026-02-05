@@ -15,7 +15,8 @@ import {
   BarChart3,
   Stethoscope,
   Star,
-  Calendar
+  Calendar,
+  Clock
 } from 'lucide-react';
 import { getCurrentUser } from '@/lib/auth';
 import { DashboardLayout } from '@/app/components/layouts/DashboardLayout';
@@ -113,6 +114,15 @@ export function FacilityDashboard() {
     return stored !== 'false'; // Default to true
   });
   const [selectedMetric, setSelectedMetric] = useState<'reviews' | 'recommendations'>('reviews');
+  const [waitTime, setWaitTime] = useState(() => {
+    const stored = localStorage.getItem('facilityWaitTime');
+    return stored ? parseInt(stored) : 15;
+  });
+  const [lastWaitTimeUpdate, setLastWaitTimeUpdate] = useState(() => {
+    const stored = localStorage.getItem('facilityWaitTimeUpdated');
+    return stored ? new Date(stored) : new Date();
+  });
+  const [customWaitTime, setCustomWaitTime] = useState('');
 
   useEffect(() => {
     if (!user || user.role !== 'facility') {
@@ -134,6 +144,37 @@ export function FacilityDashboard() {
     localStorage.setItem('facilityAcceptsAppointments', String(newValue));
     // Dispatch event so DashboardLayout can react
     window.dispatchEvent(new Event('appointmentSettingChange'));
+  };
+
+  const handlePresetClick = (minutes: number) => {
+    setWaitTime(minutes);
+    setLastWaitTimeUpdate(new Date());
+    localStorage.setItem('facilityWaitTime', String(minutes));
+    localStorage.setItem('facilityWaitTimeUpdated', new Date().toISOString());
+    setCustomWaitTime('');
+  };
+
+  const handleCustomWaitTimeUpdate = () => {
+    const value = parseInt(customWaitTime);
+    if (!isNaN(value) && value >= 0) {
+      setWaitTime(value);
+      setLastWaitTimeUpdate(new Date());
+      localStorage.setItem('facilityWaitTime', String(value));
+      localStorage.setItem('facilityWaitTimeUpdated', new Date().toISOString());
+      setCustomWaitTime('');
+    }
+  };
+
+  const getTimeSinceUpdate = () => {
+    const now = new Date();
+    const diff = now.getTime() - lastWaitTimeUpdate.getTime();
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(minutes / 60);
+
+    if (minutes < 1) return 'Just now';
+    if (minutes < 60) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    return lastWaitTimeUpdate.toLocaleDateString();
   };
 
   const chartData = performanceData.map(facility => ({
@@ -231,6 +272,98 @@ export function FacilityDashboard() {
                 ? 'Patients can book appointments'
                 : 'Appointment booking is disabled'}
             </p>
+          </div>
+        </div>
+
+        {/* Current Wait Time Section */}
+        <div className={`relative bg-white rounded-xl p-4 md:p-6 border border-gray-200 ${!acceptsAppointments ? 'overflow-hidden' : ''}`}>
+          {/* Disabled Overlay when appointments are off */}
+          {!acceptsAppointments && (
+            <div className="absolute inset-0 bg-gray-100/80 backdrop-blur-[1px] z-10 flex items-center justify-center rounded-xl">
+              <div className="text-center px-4">
+                <Clock className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                <p className="text-sm font-medium text-gray-600">Wait time is unavailable</p>
+                <p className="text-xs text-gray-500 mt-1">Enable "Accepts Appointments" to update wait time</p>
+              </div>
+            </div>
+          )}
+
+          {/* Header */}
+          <div className={`flex items-center gap-3 mb-4 ${!acceptsAppointments ? 'opacity-40' : ''}`}>
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+              <Clock className="w-5 h-5 md:w-6 md:h-6 text-orange-600" />
+            </div>
+            <div>
+              <h2 className="text-lg md:text-xl font-semibold text-gray-900">Current Wait Time</h2>
+              <p className="text-xs md:text-sm text-gray-500">Last updated: {getTimeSinceUpdate()}</p>
+            </div>
+          </div>
+
+          {/* Current Value Display */}
+          <div className={`flex items-center gap-3 mb-5 ${!acceptsAppointments ? 'opacity-40' : ''}`}>
+            <div className="text-4xl md:text-5xl font-bold text-gray-900">
+              {waitTime}
+            </div>
+            <div className="text-lg md:text-xl text-gray-500">minutes</div>
+          </div>
+
+          {/* Quick Update Presets */}
+          <div className={`mb-4 ${!acceptsAppointments ? 'opacity-40' : ''}`}>
+            <p className="text-sm font-medium text-gray-700 mb-3">Quick Update:</p>
+            <div className="flex flex-wrap gap-2">
+              {[5, 15, 30, 45, 60].map((minutes) => (
+                <button
+                  key={minutes}
+                  onClick={() => handlePresetClick(minutes)}
+                  disabled={!acceptsAppointments}
+                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                    waitTime === minutes
+                      ? 'bg-orange-500 text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  } disabled:cursor-not-allowed`}
+                >
+                  {minutes} min
+                </button>
+              ))}
+              <button
+                onClick={() => handlePresetClick(90)}
+                disabled={!acceptsAppointments}
+                className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  waitTime >= 90
+                    ? 'bg-orange-500 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                } disabled:cursor-not-allowed`}
+              >
+                60+ min
+              </button>
+            </div>
+          </div>
+
+          {/* Custom Input */}
+          <div className={`pt-4 border-t border-gray-200 ${!acceptsAppointments ? 'opacity-40' : ''}`}>
+            <p className="text-sm font-medium text-gray-700 mb-3">Or enter custom:</p>
+            <div className="flex gap-3">
+              <div className="flex items-center gap-2 flex-1">
+                <input
+                  type="number"
+                  min="0"
+                  max="180"
+                  value={customWaitTime}
+                  onChange={(e) => setCustomWaitTime(e.target.value)}
+                  placeholder="Enter minutes"
+                  disabled={!acceptsAppointments}
+                  className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-50 disabled:cursor-not-allowed"
+                />
+                <span className="text-sm text-gray-500 whitespace-nowrap">minutes</span>
+              </div>
+              <button
+                onClick={handleCustomWaitTimeUpdate}
+                disabled={!acceptsAppointments || !customWaitTime || isNaN(parseInt(customWaitTime))}
+                className="px-4 py-2.5 text-sm font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+              >
+                Update
+              </button>
+            </div>
           </div>
         </div>
 
